@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('imunisasis', function (Blueprint $table) {
-            $table->id();
+            $table->string('vaksin_id')->primary();
+            $table->string('posyandu_id');
+            $table->string('nama');
+            $table->string('jenis');
+            $table->integer('usia_minimum');
+            $table->integer('usia_maksimum');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

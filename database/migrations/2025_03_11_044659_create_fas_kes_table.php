@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fas_kes', function (Blueprint $table) {
-            $table->id();
+            $table->string('faskes_id')->primary();
+            $table->string('orangtua_id');
+            $table->string('puskesmas');
+            $table->string('no_reg_kohort_ibu');
+            $table->string('no_reg_kohort_anak');
             $table->timestamps();
         });
     }
