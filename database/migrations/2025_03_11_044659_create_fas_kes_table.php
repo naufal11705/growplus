@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('no_reg_kohort_ibu');
             $table->string('no_reg_kohort_anak');
             $table->timestamps();
+
+            $table->foreign('orangtua_id')->references('orangtua_id')->on('orangtuas');
         });
     }
 

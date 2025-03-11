@@ -28,6 +28,8 @@ return new class extends Migration
             $table->integer('tanggungan_listrik');
             $table->integer('tanggungan_air');
             $table->timestamps();
+
+            $table->foreign('pengguna_id')->references('pengguna_id')->on('penggunas');
         });
     }
 
