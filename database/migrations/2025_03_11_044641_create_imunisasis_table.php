@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('imunisasis', function (Blueprint $table) {
-            $table->string('vaksin_id')->primary();
-            $table->string('puskesmas_id');
+            $table->id('vaksin_id')->primary();
+            $table->unsignedBigInteger('puskesmas_id')->index();
             $table->string('nama');
             $table->string('jenis');
             $table->integer('usia_minimum');
