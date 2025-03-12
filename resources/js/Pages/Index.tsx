@@ -1,4 +1,5 @@
 import Layout from '@/Layouts/Anonymous';
+import Banner from "@/Components/Widget/Banner";
 export default function Welcome() {
     return (
         <>
@@ -22,6 +23,7 @@ export default function Welcome() {
                         </div>
                     </div>
                 </section>
+                <Banner/>
             </Layout>
         </>
     );
