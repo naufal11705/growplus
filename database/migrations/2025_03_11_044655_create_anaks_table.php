@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('tinggi_badan');
             $table->timestamps();
 
-            $table->foreign('orangtua_id')->references('orangtua_id')->on('orangtuas');
+            $table->foreign('orangtua_id')->references('orangtua_id')->on('orang_tuas');
         });
     }
 
