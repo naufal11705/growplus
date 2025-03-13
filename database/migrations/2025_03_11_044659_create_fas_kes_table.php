@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('no_reg_kohort_anak');
             $table->timestamps();
 
-            $table->foreign('orangtua_id')->references('orangtua_id')->on('orangtuas');
+            $table->foreign('orangtua_id')->references('orangtua_id')->on('orang_tuas');
             $table->foreign('puskesmas_id')->references('puskesmas_id')->on('puskesmas');
         });
     }
