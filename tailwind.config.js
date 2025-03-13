@@ -11,13 +11,19 @@ export default {
         "./node_modules/flowbite/**/*.js"
     ],
 
+    darkMode: "media",
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'wine': '#411A2D',
+                'pinky': '#D84E89',
+                'light-pinky': '#FBD3E3',
+            },
         },
     },
 
-    plugins: [forms],
+    plugins: [require('flowbite/plugin')],
 };

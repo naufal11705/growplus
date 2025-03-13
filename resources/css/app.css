@@ -3,3 +3,12 @@
 @tailwind utilities;
 
 @import "flowbite";
+
+body {
+    position: relative;
+    background-image: url("../assets/images/Background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
