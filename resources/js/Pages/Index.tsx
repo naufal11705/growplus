@@ -1,6 +1,11 @@
-import Layout from '@/Layouts/Anonymous';
-import Banner from "@/Components/Widget/Banner";
-export default function Welcome() {
+import About from "../Components/UI/About";
+import Category from "../Components/UI/Category";
+import Features from "../Components/UI/Features";
+import Promotion from "../Components/UI/Promotion";
+import Ads from "../Components/Widget/Ads";
+import Banner from "../Components/Widget/Banner";
+import Layout from "../Layouts/Anonymous";
+export default function Index() {
     return (
         <>
             <Layout>
@@ -23,7 +28,12 @@ export default function Welcome() {
                         </div>
                     </div>
                 </section>
-                <Banner/>
+                <Banner />
+                <Category />
+                <About />
+                <Features />
+                <Ads />
+                <Promotion />
             </Layout>
         </>
     );
