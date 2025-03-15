@@ -12,8 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orang_tuas', function (Blueprint $table) {
-            $table->id();
+            $table->id('orangtua_id')->primary();
+            $table->unsignedBigInteger('pengguna_id')->index();
+            $table->string('nik');
+            $table->string('no_jkn');
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
+            $table->string('golongan_darah');
+            $table->text('alamat');
+            $table->string('pekerjaan');
+            $table->integer('penghasilan');
+            $table->string('sumber_penghasilan');
+            $table->string('jumlah_tanggungan');
+            $table->enum('status_rumah', ['sendiri', 'sewa', 'kontrak']);
+            $table->integer('tanggungan_listrik');
+            $table->integer('tanggungan_air');
             $table->timestamps();
+
+            $table->foreign('pengguna_id')->references('pengguna_id')->on('penggunas');
         });
     }
 
