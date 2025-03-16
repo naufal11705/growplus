@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Artikel;
 use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 
-class ArticlesRepository implements ArtikelRepositoryInterface
+class ArtikelRepository implements ArtikelRepositoryInterface
 {
     public function getAllArtikel()
     {
