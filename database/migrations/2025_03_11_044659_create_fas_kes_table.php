@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fas_kes', function (Blueprint $table) {
-            $table->id();
+            $table->id('faskes_id')->primary();
+            $table->unsignedBigInteger('orangtua_id')->index();
+            $table->unsignedBigInteger('puskesmas_id')->index();
+            $table->string('no_reg_kohort_ibu');
+            $table->string('no_reg_kohort_anak');
             $table->timestamps();
+
+            $table->foreign('orangtua_id')->references('orangtua_id')->on('orang_tuas');
+            $table->foreign('puskesmas_id')->references('puskesmas_id')->on('puskesmas');
         });
     }
 
