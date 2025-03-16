@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anak;
+use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AnakController extends Controller
+class ArtikelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Inertia::render('User/Artikel');
     }
 
     /**
@@ -35,7 +35,7 @@ class AnakController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Anak $anak)
+    public function show(Artikel $artikel)
     {
         //
     }
@@ -43,7 +43,7 @@ class AnakController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Anak $anak)
+    public function edit(Artikel $artikel)
     {
         //
     }
@@ -51,7 +51,7 @@ class AnakController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Anak $anak)
+    public function update(Request $request, Artikel $artikel)
     {
         //
     }
@@ -59,13 +59,8 @@ class AnakController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Anak $anak)
+    public function destroy(Artikel $artikel)
     {
         //
-    }
-
-    public function perhitunganStunting()
-    {
-        return Inertia::render('User/PerhitunganStunting');
     }
 }
