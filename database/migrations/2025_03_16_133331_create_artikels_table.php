@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('artikels', function (Blueprint $table) {
             $table->id('artikel_id')->primary();
-            $table->unsignedBigInteger('phase_id')->index();
+            $table->unsignedBigInteger('fase_id')->index();
             $table->string('title');
             $table->string('content');
             $table->timestamps();
