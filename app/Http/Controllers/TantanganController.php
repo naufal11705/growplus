@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Challenge;
+use App\Models\Tantangan;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class ChallengeController extends Controller
+class TantanganController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Inertia::render('User/Tantangan');
     }
 
     /**
@@ -20,7 +21,7 @@ class ChallengeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('User/DetailTantangan');
     }
 
     /**
@@ -34,7 +35,7 @@ class ChallengeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Challenge $challenge)
+    public function show(Tantangan $tantangan)
     {
         //
     }
@@ -42,7 +43,7 @@ class ChallengeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Challenge $challenge)
+    public function edit(Tantangan $tantangan)
     {
         //
     }
@@ -50,7 +51,7 @@ class ChallengeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Challenge $challenge)
+    public function update(Request $request, Tantangan $tantangan)
     {
         //
     }
@@ -58,7 +59,7 @@ class ChallengeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Challenge $challenge)
+    public function destroy(Tantangan $tantangan)
     {
         //
     }

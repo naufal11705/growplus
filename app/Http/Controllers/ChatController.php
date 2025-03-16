@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phase;
+use App\Models\Chat;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class PhaseController extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Inertia::render('User/ChatAI');
     }
 
     /**
@@ -34,7 +35,7 @@ class PhaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Phase $phase)
+    public function show(Chat $chat)
     {
         //
     }
@@ -42,7 +43,7 @@ class PhaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Phase $phase)
+    public function edit(Chat $chat)
     {
         //
     }
@@ -50,7 +51,7 @@ class PhaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Phase $phase)
+    public function update(Request $request, Chat $chat)
     {
         //
     }
@@ -58,7 +59,7 @@ class PhaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Phase $phase)
+    public function destroy(Chat $chat)
     {
         //
     }

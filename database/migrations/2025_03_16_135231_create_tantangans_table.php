@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('challenges', function (Blueprint $table) {
-            $table->id('challenge_id')->primary();
-            $table->unsignedBigInteger('phase_id')->index();
+        Schema::create('tantangans', function (Blueprint $table) {
+            $table->id('tantangan_id')->primary();
+            $table->unsignedBigInteger('fase_id')->index();
             $table->string('activity');
             $table->integer('point');
             $table->boolean('status')->default(false);
             $table->timestamps();
 
-            $table->foreign('phase_id')->references('phase_id')->on('phases');
+            $table->foreign('fase_id')->references('fase_id')->on('fases');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('challenges');
+        Schema::dropIfExists('tantangans');
     }
 };

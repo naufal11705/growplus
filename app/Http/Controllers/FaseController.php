@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Articles;
+use App\Models\Fase;
 use Illuminate\Http\Request;
 
-class ArticlesController extends Controller
+class FaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Articles $articles)
+    public function show(Fase $fase)
     {
         //
     }
@@ -42,7 +42,7 @@ class ArticlesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Articles $articles)
+    public function edit(Fase $fase)
     {
         //
     }
@@ -50,7 +50,7 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Articles $articles)
+    public function update(Request $request, Fase $fase)
     {
         //
     }
@@ -58,7 +58,7 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Articles $articles)
+    public function destroy(Fase $fase)
     {
         //
     }

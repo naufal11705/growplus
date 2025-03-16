@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Phase extends Model
+class Fase extends Model
 {
+    /** @use HasFactory<\Database\Factories\FaseFactory> */
     use HasFactory;
 
-    protected $table = 'phases';
-    protected $primaryKey = 'phase_id';
+    protected $table = 'fases';
+    protected $primaryKey = 'fase_id';
 
     protected $fillable = [
         'title',

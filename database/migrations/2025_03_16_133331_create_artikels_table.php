@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('phases', function (Blueprint $table) {
-            $table->id('phase_id')->primary();
+        Schema::create('artikels', function (Blueprint $table) {
+            $table->id('artikel_id')->primary();
+            $table->unsignedBigInteger('phase_id')->index();
             $table->string('title');
-            $table->string('description');
-            $table->string('benefits');
-            $table->string('banner');
-            $table->string('progress');
-            $table->boolean('status')->default(false);
+            $table->string('content');
             $table->timestamps();
+
+            $table->foreign('fase_id')->references('fase_id')->on('fases');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phases');
+        Schema::dropIfExists('artikels');
     }
 };
