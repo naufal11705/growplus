@@ -74,9 +74,9 @@ Route::get('/admin/puskesmas/tambah', function () {
 
 Route::get('/admin/imunisasi', function () {
     return Inertia::render('Admin/Imunisasi');
-
-
-
+});
+Route::get('/admin/imunisasi/tambah', function () {
+    return Inertia::render('Admin/Functions/Imunisasi/Tambah');
 });
 
 
