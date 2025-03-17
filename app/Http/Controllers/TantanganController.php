@@ -21,7 +21,7 @@ class TantanganController extends Controller
      */
     public function create()
     {
-        return Inertia::render('User/DetailTantangan');
+        //
     }
 
     /**
@@ -37,7 +37,7 @@ class TantanganController extends Controller
      */
     public function show(Tantangan $tantangan)
     {
-        //
+        return Inertia::render('User/DetailTantangan');
     }
 
     /**

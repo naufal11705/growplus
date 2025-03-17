@@ -19,6 +19,7 @@ export default {
             },
             colors: {
                 'wine': '#411A2D',
+                'dark-wine': '#29101c',
                 'pinky': '#D84E89',
                 'light-pinky': '#FBD3E3',
             },
