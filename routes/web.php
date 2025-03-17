@@ -38,6 +38,24 @@ Route::group([], function () {
 Route::get('/admin', function () {
     return Inertia::render('Admin/Index');
 });
+Route::get('/admin/artikel', function () {
+    return Inertia::render('Admin/Artikel');
+});
+Route::get('/admin/fase', function () {
+    return Inertia::render('Admin/Fase');
+});
+Route::get('/admin/tantangan', function () {
+    return Inertia::render('Admin/Tantangan');
+});
+Route::get('/admin/puskesmas', function () {
+    return Inertia::render('Admin/Puskesmas');
+});
+Route::get('/admin/imunisasi', function () {
+    return Inertia::render('Admin/Imunisasi');
+});
+Route::get('/admin/faskes', function () {
+    return Inertia::render('Admin/Faskes');
+});
 
 
 require __DIR__ . '/auth.php';
