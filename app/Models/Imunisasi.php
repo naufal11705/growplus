@@ -10,7 +10,7 @@ class Imunisasi extends Model
     /** @use HasFactory<\Database\Factories\ImunisasiFactory> */
     use HasFactory;
 
-    protected $table = 'imunisasi';
+    protected $table = 'imunisasis';
     protected $primaryKey = 'vaksin_id';
 
     protected $fillable = [
