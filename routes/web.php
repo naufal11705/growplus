@@ -53,6 +53,9 @@ Route::get('/admin/fase/tambah', function () {
 Route::get('/admin/tantangan', function () {
     return Inertia::render('Admin/Tantangan');
 });
+Route::get('/admin/tantangan/tambah', function () {
+    return Inertia::render('Admin/Functions/Tantangan/Tambah');
+});
 Route::get('/admin/puskesmas', function () {
     return Inertia::render('Admin/Puskesmas');
 });
