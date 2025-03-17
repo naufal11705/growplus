@@ -35,4 +35,9 @@ Route::group([], function () {
     Route::get('/user/artikel', [ArtikelController::class, 'artikel']);
 });
 
+Route::get('/admin', function () {
+    return Inertia::render('Admin/Index');
+});
+
+
 require __DIR__ . '/auth.php';
