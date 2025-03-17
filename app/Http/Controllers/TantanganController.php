@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tantangan;
-use Illuminate\Http\Request;
+use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Http\Requests\TantanganStoreRequest;
+use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use Inertia\Inertia;
 
 class TantanganController extends Controller
 {
+    protected $tantanganRepository;
+
+    public function __construct(TantanganRepositoryInterface $tantanganRepository)
+    {
+        $this->tantanganRepository = $tantanganRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('User/Tantangan');
+        $this->tantanganRepository->getAllTantangan();
+        return Inertia::render('Admin/Tantangan');
     }
 
     /**
@@ -21,46 +29,54 @@ class TantanganController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Functions/Tantangan/Tambah');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TantanganStoreRequest $request)
     {
-        //
+        $request->validated();
+
+        $this->tantanganRepository->createTantangan($request->all());
+
+        return Inertia::render('Admin/Tantangan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Tantangan $tantangan)
+    public function show($id)
     {
-        return Inertia::render('User/DetailTantangan');
+        $this->tantanganRepository->getTantanganById($id);
+        return Inertia::render('Admin/Tantangan/Show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tantangan $tantangan)
+    public function edit($id)
     {
-        //
+        $this->tantanganRepository->getTantanganById($id);
+        return Inertia::render('Admin/Functions/Tantangan/Edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tantangan $tantangan)
+    public function update(ImunisasiUpdateRequest $request, $id)
     {
-        //
+        $request->validated();
+
+        $this->tantanganRepository->updateTantangan($id, $request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tantangan $tantangan)
+    public function destroy($id)
     {
-        //
+        $this->tantanganRepository->deleteTantangan($id);
     }
 }

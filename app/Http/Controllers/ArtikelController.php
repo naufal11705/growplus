@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artikel;
-use Illuminate\Http\Request;
+use App\Http\Requests\ArtikelStoreRequest;
+use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use Inertia\Inertia;
 
 class ArtikelController extends Controller
 {
+    protected $artikelRepository;
+
+    public function __construct(ArtikelRepositoryInterface $artikelRepository)
+    {
+        $this->artikelRepository = $artikelRepository;
+    }
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('User/Artikel');
+        return Inertia::render('Admin/Artikel');
     }
 
     /**
@@ -21,46 +29,54 @@ class ArtikelController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Functions/Artikel/Tambah');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ArtikelStoreRequest $request)
     {
-        //
+        $request->validated();
+
+        $this->artikelRepository->createArtikel($request->all());
+
+        return Inertia::render('Admin/Artikel');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Artikel $artikel)
+    public function show($id)
     {
-        //
+        $this->artikelRepository->getArtikelById($id);
+        return Inertia::render('Admin/Artikel/Show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Artikel $artikel)
+    public function edit($id)
     {
-        //
+        $this->artikelRepository->getArtikelById($id);
+        return Inertia::render('Admin/Functions/Artikel/Edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Artikel $artikel)
+    public function update(ImunisasiUpdateRequest $request, $id)
     {
-        //
+        $request->validated();
+
+        $this->artikelRepository->updateArtikel($id, $request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Artikel $artikel)
+    public function destroy($id)
     {
-        //
+        $this->artikelRepository->deleteArtikel($id);
     }
 }
