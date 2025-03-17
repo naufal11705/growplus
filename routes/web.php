@@ -41,6 +41,9 @@ Route::get('/admin', function () {
 Route::get('/admin/artikel', function () {
     return Inertia::render('Admin/Artikel');
 });
+Route::get('/admin/artikel/tambah', function () {
+    return Inertia::render('Admin/Functions/Artikel/Tambah');
+});
 Route::get('/admin/fase', function () {
     return Inertia::render('Admin/Fase');
 });
