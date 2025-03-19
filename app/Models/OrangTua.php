@@ -10,7 +10,7 @@ class OrangTua extends Model
     /** @use HasFactory<\Database\Factories\OrangTuaFactory> */
     use HasFactory;
 
-    protected $table = 'orangtuas';
+    protected $table = 'orang_tuas';
     protected $primaryKey = 'orangtua_id';
 
     protected $fillable = [
