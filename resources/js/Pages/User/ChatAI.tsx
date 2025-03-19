@@ -62,7 +62,7 @@ export default function User() {
                         </div>
                         <div className="flex w-full mt-3">
                             <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Apa pertanyaan kamu??" className="flex-1 p-2 bg-gray-200 text-gray-900 font-medium border border-gray-300 rounded-xl outline-none" />
-                            <button onClick={handleSend} className="ml-2 bg-wine text-white px-4 py-2 rounded-xl hover:bg-pinky transition duration-200">Kirim</button>
+                            <button onClick={handleSend} className="ml-2 bg-wine text-white px-4 py-2 rounded-xl hover:bg-dark-wine transition duration-200">Kirim</button>
                         </div>
                     </div>
                 </div>

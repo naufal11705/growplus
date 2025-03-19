@@ -137,7 +137,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                         <label htmlFor="riwayat-kesehatan" className="block mb-2 text-sm font-medium text-gray-900">Riwayat Kesehatan  Anak</label>
                         <input type="text" name="riwayat-kesehatan" id="riwayat-kesehatan" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" placeholder="Riwayat Kesehatan" required />
                     </div>
-                    <button type="submit" className="w-full text-white bg-wine hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
+                    <button type="submit" className="w-full text-white bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
                         Selanjutnya
                     </button>
                 </form>

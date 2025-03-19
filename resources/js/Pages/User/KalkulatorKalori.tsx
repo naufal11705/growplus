@@ -100,7 +100,7 @@ export default function KalkulatorKalori() {
                                         )}
                                     </div>
                                 </div>
-                                <button type="button" className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky">
+                                <button type="button" className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
                                     Hitung Kalori
                                 </button>
                             </div>

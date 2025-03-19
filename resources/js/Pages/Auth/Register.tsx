@@ -44,7 +44,7 @@ export default function Register() {
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Kata Sandi</label>
                                     <input type="password" name="password" id="password" disabled={isLoading} placeholder="••••••••" className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" required />
                                 </div>
-                                <button onClick={handleClick} disabled={isLoading} type="submit" className="w-full text-white bg-wine hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
+                                <button onClick={handleClick} disabled={isLoading} type="submit" className="w-full text-white bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
                                     {isLoading ? (
                                         <>
                                             <svg aria-hidden="true" role="status" className="inline w-4 h-4 me-3 mb-[2px] text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

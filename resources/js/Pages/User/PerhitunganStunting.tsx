@@ -51,7 +51,7 @@ export default function PerhitunganStunting() {
                                 <label className="block mb-2 text-sm font-bold text-gray-900">Berapa usia anak Anda?</label>
                                 <input type="text" value={usia} onChange={(e) => setUsia(e.target.value)} className="text-gray-500 w-full bg-gray-100 border border-gray-100 flex justify-between items-center font-bold rounded-xl text-sm px-5 py-2.5" placeholder="Masukkan berat badan (kg)" />
                             </div>
-                            <button type="button" className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky">
+                            <button type="button" className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
                                 Hitung Stunting
                             </button>
                         </div>

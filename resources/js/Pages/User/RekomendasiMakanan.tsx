@@ -104,7 +104,7 @@ export default function RekomendasiMakanan() {
                                 />
                             </div>
                         </div>
-                        <button type="button" className="mt-5 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky">
+                        <button type="button" className="mt-5 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
                             Analisis Rekomendasi
                         </button>
                     </div>
