@@ -84,7 +84,7 @@ Route::get('/admin/faskes', function () {
     return Inertia::render('Admin/Faskes');
 });
 Route::get('/admin/faskes/tambah', function () {
-    return Inertia::render('Admin/Functions/Faskes/Tambah');
+    return Inertia::render('Admin/Functions/Faskes  /Tambah');
 });
 
 require __DIR__ . '/auth.php';
