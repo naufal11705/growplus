@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('penggunas', function (Blueprint $table) {
             $table->id('pengguna_id')->primary();
-            $table->unsignedBigInteger('level_id')->index();
+            $table->unsignedBigInteger('role_id')->index();
             $table->string('username');
             $table->string('password');
             $table->string('nama');
             $table->string('email');
             $table->timestamps();
+
+            $table->foreign('role_id')->references('role_id')->on('roles');
         });
     }
 
