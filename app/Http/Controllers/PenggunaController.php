@@ -86,6 +86,6 @@ class PenggunaController extends Controller
 
     public function registerStep()
     {
-        return Inertia::render('User/RegisterStep');
+        return Inertia::render('Auth/RegisterStep');
     }
 }
