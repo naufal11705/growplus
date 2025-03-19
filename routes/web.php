@@ -81,4 +81,14 @@ Route::get('/admin', function () {
     return Inertia::render('Admin/Index');
 });
 
+Route::get('/petugas', function () {
+    return Inertia::render('Petugas/Index');
+});
+Route::get('/petugas/imunisasi', function () {
+    return Inertia::render('Petugas/Imunisasi');
+});
+Route::get('/petugas/imunisasi/tambah', function () {
+    return Inertia::render('Petugas/Functions/Petugas/Tambah');
+});
+
 require __DIR__ . '/auth.php';
