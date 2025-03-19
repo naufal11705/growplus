@@ -19,7 +19,7 @@ class TantanganFactory extends Factory
     {
         return [
             'fase_id' => Fase::query()->exists() ? Fase::inRandomOrder()->first()->fase_id : Fase::factory()->create()->fase_id,
-            'activity' => $this->faker->paragraph(),
+            'activity' => $this->faker->title(),
             'point' => $this->faker->randomDigit(),
             'status' => $this->faker->randomElement([1, 0]),
             'created_at' => now(),
