@@ -36,11 +36,13 @@ export default function Login() {
                                         id="email"
                                         value={data.email}
                                         onChange={(e) => setData("email", e.target.value)}
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${
+                                            errors.email ? "border-red-500" : "border-gray-300"
+                                        }`}
                                         placeholder="name@company.com"
                                         required
                                     />
-                                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                                    {errors.email && <p className="text-red-500 text-sm mt-2">{errors.email}</p>}
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
@@ -52,11 +54,13 @@ export default function Login() {
                                         id="password"
                                         value={data.password}
                                         onChange={(e) => setData("password", e.target.value)}
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${
+                                            errors.password ? "border-red-500" : "border-gray-300"
+                                        }`}
                                         placeholder="••••••••"
                                         required
                                     />
-                                    {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                                    {errors.password && <p className="text-red-500 text-sm mt-2">{errors.password}</p>}
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-start">
