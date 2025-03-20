@@ -32,8 +32,9 @@ class ImunisasiController extends Controller
      */
     public function create()
     {
-        $this->puskesmasRepository->getAllPuskesmas();
-        return Inertia::render('Admin/Functions/Imunisasi/Tambah');
+        return Inertia::render('Admin/Functions/Imunisasi/Tambah', [
+            'puskesmas' => $this->puskesmasRepository->getAllPuskesmas()
+        ]);
     }
 
     /**

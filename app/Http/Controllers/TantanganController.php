@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ImunisasiUpdateRequest;
 use App\Http\Requests\TantanganStoreRequest;
+use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
+use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use Inertia\Inertia;
 
 class TantanganController extends Controller
 {
     protected $tantanganRepository;
+    protected $faseRepository;
 
-    public function __construct(TantanganRepositoryInterface $tantanganRepository)
+    public function __construct(TantanganRepositoryInterface $tantanganRepository, FaseRepositoryInterface $faseRepository)
     {
         $this->tantanganRepository = $tantanganRepository;
+        $this->faseRepository = $faseRepository;
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +33,9 @@ class TantanganController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Tantangan/Tambah');
+        return Inertia::render('Admin/Functions/Tantangan/Tambah', [
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**

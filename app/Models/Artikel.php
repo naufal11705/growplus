@@ -14,13 +14,13 @@ class Artikel extends Model
     protected $primaryKey = 'artikel_id';
 
     protected $fillable = [
-        'phase_id',
+        'fase_id',
         'title',
         'content'
     ];
 
-    public function phase()
+    public function fase()
     {
-        return $this->belongsTo(Fase::class, 'phase_id', 'phase_id');
+        return $this->belongsTo(Fase::class, 'fase_id', 'fase_id');
     }
 }
