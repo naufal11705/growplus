@@ -33,7 +33,7 @@ export default function Login() {
                                     </div>
                                     <a href="/forgotPassword" className="text-sm font-medium text-wine hover:underline">Lupa Kata Sandi?</a>
                                 </div>
-                                <button type="submit" className="w-full text-white bg-wine hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">Masuk</button>
+                                <button type="submit" className="w-full text-white bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">Masuk</button>
                                 <p className="text-sm font-light text-gray-500">
                                     Belum Punya Akun? <a href="/register" className="font-bold text-wine hover:underline">Daftar</a>
                                 </p>

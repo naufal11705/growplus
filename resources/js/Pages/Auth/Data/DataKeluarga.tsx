@@ -137,7 +137,7 @@ export default function DataKeluarga({ onNext }: DataKeluargaProps) {
                     <div className="flex justify-end mt-6">
                         <button
                             type="submit"
-                            className="bg-wine text-white font-medium rounded-xl w-full px-6 py-2.5 hover:bg-pinky"
+                            className="bg-wine text-white font-medium rounded-xl w-full px-6 py-2.5 hover:bg-dark-wine"
                         >
                             Selanjutnya
                         </button>

@@ -19,7 +19,7 @@ export default function Promotion() {
                                 </div>
                                 <input type="text" id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pinky focus:border-pinky block w-full ps-10 p-2.5" placeholder="name@flowbite.com" />
                             </div>
-                            <button type="button" className="px-6 py-2.5 mt-5 text-base font-medium text-center text-white bg-wine rounded-lg hover:bg-pinky focus:ring-4 focus:outline-none focus:ring-light-pinky">Berlangganan</button>
+                            <button type="button" className="px-6 py-2.5 mt-5 text-base font-medium text-center text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">Berlangganan</button>
                         </form>
                     </div>
                 </div>

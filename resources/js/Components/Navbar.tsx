@@ -8,7 +8,7 @@ export default function Navbar() {
                 </a>
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <a href="/login">
-                        <button type="button" className="lg:block hidden text-white bg-wine hover:bg-pinky font-medium rounded-xl text-md px-6 py-2 text-center">
+                        <button type="button" className="lg:block hidden text-white bg-wine hover:bg-dark-wine font-medium rounded-xl text-md px-6 py-2 text-center">
                             Login
                         </button>
                     </a>
