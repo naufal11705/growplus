@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Pengguna extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\PenggunaFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $table = 'penggunas';
     protected $guard = 'pengguna';
@@ -19,7 +20,7 @@ class Pengguna extends Authenticatable
         'role_id',
         'username',
         'password',
-        'name',
+        'nama',
         'email'
     ];
 
@@ -36,6 +37,11 @@ class Pengguna extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'level_id', 'level_id');
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
     }
 }
