@@ -1,4 +1,4 @@
-export const getCsrfToken = (): string | null => {
+/*export const getCsrfToken = (): string | null => {
     const tokenElement = document.head.querySelector("meta[name='csrf-token']");
 
     if (tokenElement instanceof HTMLMetaElement) {
@@ -8,4 +8,9 @@ export const getCsrfToken = (): string | null => {
         console.log('CSRF Token Tidak Ditemukan');
         return null;
     }
-};
+};*/
+
+export default function useCsrfToken() {
+    return (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || "";
+}
+

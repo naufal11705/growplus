@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImunisasiStoreRequest;
 use App\Http\Requests\ImunisasiUpdateRequest;
 use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
+use App\Repositories\Interfaces\PuskesmasRepositoryInterface;;
 use Inertia\Inertia;
 
 class ImunisasiController extends Controller
 {
     protected $imunisasiRepository;
+    protected $puskesmasRepository;
 
-    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository)
+    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository, PuskesmasRepositoryInterface $puskesmasRepository)
     {
         $this->imunisasiRepository = $imunisasiRepository;
+        $this->puskesmasRepository = $puskesmasRepository;
     }
     /**
      * Display a listing of the resource.
@@ -29,6 +32,7 @@ class ImunisasiController extends Controller
      */
     public function create()
     {
+        $this->puskesmasRepository->getAllPuskesmas();
         return Inertia::render('Admin/Functions/Imunisasi/Tambah');
     }
 
