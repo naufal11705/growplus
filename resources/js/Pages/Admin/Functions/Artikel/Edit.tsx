@@ -101,7 +101,7 @@ export default function Artikel() {
                         </div>
                         <div className="flex items-center space-x-2">
                             <button type="submit" className="px-5 py-3 text-sm font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine">
-                                {artikel ? "Update Artikel" : "Buat Artikel"}
+                                Update Artikel
                             </button>
                             <a href="/admin/artikel">
                                 <button type="button" className="px-5 py-3 text-sm font-medium text-center text-gray-900 bg-white rounded-xl hover:bg-gray-100 border border-gray-200">
