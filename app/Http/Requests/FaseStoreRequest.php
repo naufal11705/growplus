@@ -17,7 +17,7 @@ class FaseStoreRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'benefits' => ['required', 'string'],
-            'banner' => ['required', 'string'],
+            'banner' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
             'progress' => ['required', 'string'],
             'status' => ['required', 'boolean'],
         ];

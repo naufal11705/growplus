@@ -1,16 +1,27 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnakController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TantanganController;
 use App\Http\Controllers\PuskesmasController;
 use App\Http\Controllers\FasKesController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\RegisterOrangtuaMiddleware;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,65 +35,54 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', HomeController::class);
+Route::get('/', HomeController::class)->name('home');
 
-Route::get('/', HomeController::class);
-Route::get('/login', [PenggunaController::class, 'login']);
-Route::get('/register', [PenggunaController::class, 'register']);
-Route::get('/register/step', [PenggunaController::class, 'registerStep']);
+Route::middleware(RedirectIfAuthenticated::class)->group(function () {
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-Route::group([], function () {
-    Route::get('/dashboard', [PenggunaController::class, 'dashboard']);
-    Route::get('/chat-ai', [ChatController::class, 'index']);
-    Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-    Route::get('/profile', [PenggunaController::class, 'profile']);
-    Route::get('/tantangan', [HomeController::class, 'tantangan']);
-    Route::get('/tantanganDetail', [HomeController::class, 'tantanganDetail']);
-    Route::get('/artikel', [HomeController::class, 'artikel']);
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 });
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/dashboard', [PenggunaController::class, 'dashboard']);
-
-    Route::get('/puskesmas', [PuskesmasController::class, 'index']);
-    Route::get('/puskesmas/tambah', [PuskesmasController::class, 'create']);
-    Route::post('/puskesmas', [PuskesmasController::class, 'store']);
-    Route::put('/puskesmas/{id}', [PuskesmasController::class, 'update']);
-    Route::delete('/puskesmas/{id}', [PuskesmasController::class, 'destroy']);
-
-    Route::get('/faskes', [FasKesController::class, 'index']);
-    Route::get('/faskes/tambah', [FasKesController::class, 'create']);
-    Route::post('/faskes', [FasKesController::class, 'store']);
-    Route::put('/faskes/{id}', [FasKesController::class, 'update']);
-    Route::delete('/faskes/{id}', [FasKesController::class, 'destroy']);
-
-    Route::get('/imunisasi', [ImunisasiController::class, 'index']);
-    Route::get('/imunisasi/tambah', [ImunisasiController::class, 'create']);
-    Route::post('/imunisasi', [ImunisasiController::class, 'store']);
-    Route::put('/imunisasi/{id}', [ImunisasiController::class, 'update']);
-    Route::delete('/imunisasi/{id}', [ImunisasiController::class, 'destroy']);
-
-    Route::get('/fase', [FaseController::class, 'index']);
-    Route::get('/fase/tambah', [FaseController::class, 'create']);
-    Route::post('/fase', [FaseController::class, 'store']);
-    Route::put('/fase/{id}', [FaseController::class, 'update']);
-    Route::delete('/fase/{id}', [FaseController::class, 'destroy']);
-
-    Route::get('/artikel', [ArtikelController::class, 'index']);
-    Route::get('/artikel/tambah', [ArtikelController::class, 'create']);
-    Route::post('/artikel', [ArtikelController::class, 'store']);
-    Route::put('/artikel/{id}', [ArtikelController::class, 'update']);
-    Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy']);
-
-    Route::get('/tantangan', [TantanganController::class, 'index']);
-    Route::get('/tantangan/tambah', [TantanganController::class, 'create']);
-    Route::post('/tantangan', [TantanganController::class, 'store']);
-    Route::put('/tantangan/{id}', [TantanganController::class, 'update']);
-    Route::delete('/tantangan/{id}', [TantanganController::class, 'destroy']);
+Route::middleware('auth')->group(function () {
+    Route::get('/register-step', [UserController::class, 'registerStepForm'])->name('register.step');
+    Route::post('/register-step', [UserController::class, 'registerStep']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
-Route::group(['prefix' => 'petugas'], function () {
-    Route::get('/dashboard', [PenggunaController::class, 'dashboard']);
+Route::middleware(['auth'])->group(function () {
+    Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/chat-ai', [ChatController::class, 'index']);
+        Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
+        Route::get('/profile', [PenggunaController::class, 'profile']);
+        Route::get('/tantangan', [UserController::class, 'tantangan']);
+        Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+        Route::get('/artikel', [UserController::class, 'artikel']);
+    });
+
+    Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+        Route::resource('puskesmas', PuskesmasController::class);
+        Route::resource('faskes', FasKesController::class);
+        Route::resource('imunisasi', ImunisasiController::class);
+        Route::resource('fase', FaseController::class);
+        Route::resource('artikel', ArtikelController::class);
+        Route::resource('tantangan', TantanganController::class);
+
+    });
+
+    Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
+        Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
+    });
 });
 
 Route::get('/petugas/imunisasi', function () {

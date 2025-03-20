@@ -37,9 +37,14 @@ class FaseController extends Controller
      */
     public function store(FaseStoreRequest $request)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        $this->faseRepository->createFase($request->all());
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
+    
+        $this->faseRepository->createFase($validatedData);
 
         return Inertia::render('Admin/Fase');
     }
