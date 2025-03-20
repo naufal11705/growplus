@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfAuthenticated
+class RegisterOrangtuaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,8 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
-            return match (optional(auth()->user()->role->nama)) {
-                'Admin' => redirect()->route('admin.dashboard'),
-                'User' => redirect()->route('user.dashboard'),
-                'Petugas' => redirect()->route('petugas.dashboard'),
-                default => redirect()->route('home'),
-            };
+        if (count(auth()->user()->orangtua) == 0) {
+            return redirect()->route('register.step');
         }
 
         return $next($request);

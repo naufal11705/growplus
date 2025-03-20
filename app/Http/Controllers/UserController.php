@@ -31,4 +31,14 @@ class UserController extends Controller
     {
         return Inertia::render('User/Artikel');
     }
+
+    public function registerStepForm()
+    {
+        return Inertia::render('Auth/RegisterStep');
+    }
+
+    public function registerStep()
+    {
+        return redirect()->route('user.dashboard');
+    }
 }

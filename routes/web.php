@@ -20,6 +20,7 @@ use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\RegisterOrangtuaMiddleware;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -51,11 +52,13 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/register-step', [UserController::class, 'registerStepForm'])->name('register.step');
+    Route::post('/register-step', [UserController::class, 'registerStep']);
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware(RoleMiddleware::class . ':User')->group(function () {
+    Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
         Route::get('/chat-ai', [ChatController::class, 'index']);
         Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);

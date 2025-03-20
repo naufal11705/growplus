@@ -1,15 +1,25 @@
 import { useState } from "react";
 import Layout from "../../Layouts/Auth";
+import { useForm } from "@inertiajs/react";
+import { FormEvent } from "react";
 
 export default function Register() {
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { data, setData, post, processing, errors } = useForm({
+        username: "",
+        nama: "",
+        email: "",
+        password: "",
+    });
+
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);
+        post(route("register"));
     };
 
     return (
@@ -25,26 +35,26 @@ export default function Register() {
                             <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                                 Daftarkan Akun Anda!
                             </h1>
-                            <form className="space-y-4 md:space-y-6">
-                                <div className="lg:grid lg:grid-cols-2 lg:gap-2 grid grid-cols-1 gap-3">
+                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                                <div className="grid grid-cols-1 gap-3">
+                                    <div>
+                                        <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                                        <input type="text" name="username" id="username" disabled={isLoading} value={data.username} onChange={(e) => setData("username", e.target.value)} className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 " placeholder="Username" required />
+                                    </div>
                                     <div>
                                         <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap</label>
-                                        <input type="text" name="nama" id="nama" disabled={isLoading} className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" placeholder="Nama Lengkap" required />
+                                        <input type="text" name="nama" id="nama" disabled={isLoading} value={data.nama} onChange={(e) => setData("nama", e.target.value)} className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" placeholder="Nama Lengkap" required />
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                        <input type="email" name="email" id="email" disabled={isLoading} className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" placeholder="name@company.com" required />
+                                        <input type="email" name="email" id="email" disabled={isLoading} value={data.email} onChange={(e) => setData("email", e.target.value)} className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" placeholder="name@company.com" required />
                                     </div>
                                 </div>
                                 <div>
-                                    <label htmlFor="phone-number" className="block mb-2 text-sm font-medium text-gray-900">Nomor Handphone</label>
-                                    <input type="text" name="phone-number" id="phone-number" disabled={isLoading} placeholder="Nomor Handphone" className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" required />
-                                </div>
-                                <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Kata Sandi</label>
-                                    <input type="password" name="password" id="password" disabled={isLoading} placeholder="••••••••" className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" required />
+                                    <input type="password" name="password" id="password" disabled={isLoading} value={data.password} onChange={(e) => setData("password", e.target.value)} placeholder="••••••••" className="disabled:text-gray-400 bg-gray-50 border border-gray-300 text-gray-700 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" required />
                                 </div>
-                                <button onClick={handleClick} disabled={isLoading} type="submit" className="w-full text-white bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
+                                <button disabled={isLoading} type="submit" className="w-full text-white bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky font-medium rounded-xl text-md px-5 py-3 text-center">
                                     {isLoading ? (
                                         <>
                                             <svg aria-hidden="true" role="status" className="inline w-4 h-4 me-3 mb-[2px] text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

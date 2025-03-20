@@ -40,8 +40,8 @@ class Pengguna extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 
-    public function hasRole($role)
+    public function orangtua()
     {
-        return $this->roles()->where('name', $role)->exists();
+        return $this->hasMany(OrangTua::class, 'pengguna_id', 'pengguna_id');
     }
 }
