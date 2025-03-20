@@ -40,7 +40,7 @@ export default function Artikel() {
         
         Object.entries(formData).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
-                data.append(key, value.toString()); // Konversi ke string untuk menghindari error
+                data.append(key, value.toString());
             }
         });
     
