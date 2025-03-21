@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ImunisasiNotification;
 use App\Http\Requests\ImunisasiStoreRequest;
 use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Models\Imunisasi;
 use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;;
 use Inertia\Inertia;
@@ -42,9 +44,20 @@ class ImunisasiController extends Controller
      */
     public function store(ImunisasiStoreRequest $request)
     {
-        $request->validated();
+        // $request->validated();
 
-        $this->imunisasiRepository->createImunisasi($request->all());
+        $dummyData = [
+            'puskesmas_id' => 1,
+            'nama' => 'Imunisasi Campak',
+            'jenis' => 'Campak',
+            'usia_minimum' => 9,
+            'usia_maksimum' => 15,
+            'tanggal' => '2025-03-25',
+        ];
+
+        $imunisasi = $this->imunisasiRepository->createImunisasi($request->all());
+
+        event(new ImunisasiNotification($imunisasi));
 
         return Inertia::render('Admin/Imunisasi');
     }
@@ -83,5 +96,14 @@ class ImunisasiController extends Controller
     public function destroy($id)
     {
         $this->imunisasiRepository->deleteImunisasi($id);
+    }
+
+    public function sendNotification($kota)
+    {
+        $imunisasi = Imunisasi::whereHas('puskesmas', function ($query) use ($kota) {
+            $query->where('kota', $kota);
+        })->with('puskesmas')->get();
+
+        return response()->json($imunisasi);
     }
 }
