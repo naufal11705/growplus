@@ -2,19 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Interfaces\AnakRepositoryInterface;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
+    protected $orangTuaRepository, $anakRepository;
+
+    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository)
+    {
+        $this->orangTuaRepository = $orangTuaRepository;
+        $this->anakRepository = $anakRepository;
+    }
+
     public function dashboard()
     {
         return Inertia::render('User/Dashboard');
     }
 
-    public function profile()
+    public function profil()
     {
-        return Inertia::render('User/Profile');
+        return Inertia::render('User/Profil');
     }
 
     public function tantangan()
@@ -37,7 +48,7 @@ class UserController extends Controller
         return Inertia::render('Auth/RegisterStep');
     }
 
-    public function registerStep()
+    public function registerStep(Request $request)
     {
         return redirect()->route('user.dashboard');
     }

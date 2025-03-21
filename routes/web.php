@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
         Route::get('/chat-ai', [ChatController::class, 'index']);
         Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-        Route::get('/profile', [PenggunaController::class, 'profile']);
+        Route::get('/profil', [UserController::class, 'profil']);
         Route::get('/tantangan', [UserController::class, 'tantangan']);
         Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
         Route::get('/artikel', [UserController::class, 'artikel']);
@@ -99,6 +99,6 @@ Route::get('/artikel', function(){
 });
 Route::get('/detail-artikel', function(){
     return Inertia::render('Page');
-}); 
+});
 
 require __DIR__ . '/auth.php';
