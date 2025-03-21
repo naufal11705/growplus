@@ -92,8 +92,13 @@ Route::get('/petugas/imunisasi/tambah', function () {
     return Inertia::render('Petugas/Functions/Petugas/Tambah');
 });
 
-
 Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
 
+Route::get('/artikel', function(){
+    return Inertia::render('Artikel');
+});
+Route::get('/detail-artikel', function(){
+    return Inertia::render('Page');
+}); 
 
 require __DIR__ . '/auth.php';
