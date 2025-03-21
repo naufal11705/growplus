@@ -11,7 +11,7 @@ class Imunisasi extends Model
     use HasFactory;
 
     protected $table = 'imunisasis';
-    protected $primaryKey = 'vaksin_id';
+    protected $primaryKey = 'imunisasi_id';
 
     protected $fillable = [
         'puskesmas_id',
