@@ -36,10 +36,10 @@ export default function Navbar() {
                             <a href="/artikel" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Artikel</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Services</a>
+                            <a href="javascript:void(0)" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Services</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Contact</a>
+                            <a href="javascript:void(0)" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Contact</a>
                         </li>
                         {/* <li>
                             <button type="button" onClick={handleLogout} className="flex items-center p-2 text-red-500 transition duration-75 rounded-lg hover:bg-gray-100 group">

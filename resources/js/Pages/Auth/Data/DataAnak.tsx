@@ -222,7 +222,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                                 <ul className="py-2 text-gray-700 font-medium">
                                     {["Laki-Laki", "Perempuan"].map(option => (
                                         <li key={option}>
-                                            <a href="#" onClick={() => handleSelect(childId, "gender", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
+                                            <a href="javascript:void(0)" onClick={() => handleSelect(childId, "gender", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
                                                 {option}
                                             </a>
                                         </li>
@@ -244,7 +244,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                                 <ul className="py-2 text-gray-700 font-medium">
                                     {["Bayi (0-12 bulan)", "Balita (1-5 Tahun)", "Pra-Sekolah(5-7 Tahun)"].map(option => (
                                         <li key={option}>
-                                            <a href="#" onClick={() => handleSelect(childId, "age", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
+                                            <a href="javascript:void(0)" onClick={() => handleSelect(childId, "age", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
                                                 {option}
                                             </a>
                                         </li>
@@ -293,7 +293,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                             <ul className="py-2 text-gray-700 font-medium">
                                 {["Asi", "MPASI", "Makanan Padat"].map(option => (
                                     <li key={option}>
-                                        <a href="#" onClick={() => handleSelect(childId, "food", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
+                                        <a href="javascript:void(0)" onClick={() => handleSelect(childId, "food", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
                                             {option}
                                         </a>
                                     </li>
