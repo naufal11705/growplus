@@ -1,4 +1,4 @@
-import Layout from "../../Layouts/Layout"
+import Layout from "@/Layouts/Layout"
 import ForumCards from "@/Components/Widget/Forum_Cards";
 export default function Forum(){
     return(

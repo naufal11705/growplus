@@ -1,6 +1,6 @@
 import React from "react";
 import TantanganCards from "../Widget/Tantangan_Card";
-import { challenges } from "../../Data/ChallengeCard";
+import { challenges } from "@/Data/ChallengeCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";

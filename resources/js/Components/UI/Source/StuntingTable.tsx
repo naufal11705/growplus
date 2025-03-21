@@ -1,4 +1,4 @@
-import { StuntingTables } from "../../../Data/StuntingTables";
+import { StuntingTables } from "@/Data/StuntingTables";
 
 export default function StuntingTable() {
   return (

@@ -1,4 +1,4 @@
-import { Challenge } from "../../types/challenge";
+import { Challenge } from "@/types/challenge";
 
 interface TantanganCardsProps {
     challenges: Challenge[];

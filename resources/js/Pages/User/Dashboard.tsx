@@ -1,9 +1,9 @@
-import Layout from "../../Layouts/Layout"
+import Layout from "@/Layouts/Layout"
 import TableStunting from "@/Components/UI/Source/StuntingTable";
 import ParentProfile from "@/Components/Widget/ParentProfile";
 import ProgressStatus from "@/Components/Widget/ProgressStatus";
 import ComingUpNext from "@/Components/Widget/ComingUpNext";
-import { Stast } from "../../Data/Stats"
+import { Stast } from "@/Data/Stats"
 export default function User(){
     return(
         <Layout>

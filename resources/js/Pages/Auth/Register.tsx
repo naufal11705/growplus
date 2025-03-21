@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Layout from "../../Layouts/Auth";
+import Layout from "@/Layouts/Auth";
 import { useForm } from "@inertiajs/react";
 import { FormEvent } from "react";
 import Alert from "@/Components/Widget/Alert/Alert";

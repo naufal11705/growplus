@@ -1,4 +1,4 @@
-import AboutUs from "../../../assets/images/AboutUs.png";
+import AboutUs from "@/assets/images/AboutUs.png";
 import Presentase from "../Widget/Card_Presentase";
 export default function About() {
     return (

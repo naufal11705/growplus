@@ -1,6 +1,6 @@
 import { BrowserMultiFormatReader } from "@zxing/browser";
 import { useEffect, useRef, useState } from "react";
-import Layout from "../../Layouts/Layout";
+import Layout from "@/Layouts/Layout";
 
 export default function ScanBarcode() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
