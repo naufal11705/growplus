@@ -108,7 +108,7 @@ export default function ScanBarcode() {
                                     </div>
                                 </div>
                             </div>
-                            <a href="/user/scan-barcode" className="inline-flex items-center px-4 py-2 mt-10 text-sm font-medium text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
+                            <a href="/scan-barcode" className="inline-flex items-center px-4 py-2 mt-10 text-sm font-medium text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
                                 Kembali
                             </a>
                         </>

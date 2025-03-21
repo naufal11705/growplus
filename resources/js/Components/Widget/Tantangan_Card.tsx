@@ -60,7 +60,7 @@ export default function TantanganCards({ challenges, gridCols = "xl:grid-cols-4"
                         </ul>
                         <div className="grid items-center gap-3">
                             {challenge.progress > 0 ? (
-                                <a href="/user/tantangan/detail" className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5">
+                                <a href="/tantanganDetail" className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5">
                                     <button className="flex space-x-2">
                                         <span className="text-gray-900 text-sm font-semibold">
                                             {challenge.progress === 100 ? "Share Achievement" : "Selengkapnya"}
