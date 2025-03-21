@@ -10,39 +10,55 @@ interface TantanganCardsProps {
 }
 type FAQItem = {
     question: string;
-    answer: string;
+    answer?: string;
+    list?: string[];
 };
 
-export default function RightSide({ challenges: propChallenges }: TantanganCardsProps ) {
+export default function RightSide({ challenges: propChallenges }: TantanganCardsProps) {
     const dataTantangan = (propChallenges ?? challenges).filter((challenge) => challenge.id === 1);
     const [completed, setCompleted] = useState<{ [key: number]: boolean }>({});
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
         {
-            question: "Apa itu Pregnancy Challenge?",
-            answer: "Pregnancy Challenge adalah tantangan harian yang dirancang untuk membantu ibu hamil menjaga kesehatan fisik dan mental melalui berbagai aktivitas seperti olahraga ringan, meditasi, serta edukasi kehamilan."
+            question: "Apa yang akan ibu alami?",
+            answer: "Selama masa kehamilan 9 bulan, Ibu akan naik berat badannya sebanyak 5 - 18 kg sesuai dengan status gizi ibu sebelum hamil."
         },
         {
-            question: "Apakah challenge ini aman untuk semua ibu hamil?",
-            answer: "Challenge ini dirancang untuk ibu hamil secara umum, tetapi setiap ibu memiliki kondisi kesehatan yang berbeda. Sebaiknya konsultasikan dengan dokter sebelum mengikuti tantangan, terutama jika memiliki kondisi medis tertentu."
+            question: "Apakah ada layanan kesehatan yang gratis selama kehamilan?",
+            list: [
+                "Pemeriksaan kehamilan oleh dokter, bidan dan tenaga kesehatan",
+                "Pemeriksaan status gizi",
+                "Pemeriksaan laboratorium",
+                "Pemeriksaan kondisi bayi",
+                "USG 2 kali",
+                "Pemberian tablet tambah darah(TTD) / multivitamin bagi ibu hamil",
+                "Pemeriksaan tekanan darah",
+                "Skrining kesehatan jiwa",
+                "Imunisasi Tetanus",
+                "Kelas ibu hamil"
+            ]
         },
         {
-            question: "Apa manfaat mengikuti Pregnancy Challenge?",
-            answer: "Manfaatnya meliputi peningkatan kesehatan fisik, mengurangi stres, meningkatkan energi, serta membangun kebiasaan sehat selama kehamilan."
+            question: "Apa hal-hal yang tidak boleh dilakukan selama kehamilan?",
+            list: [
+                "Minum obat tanpa resep dokter",
+                "Merokok atau terpapar asap rokok",
+                "Stress berlebihan"
+            ]
         },
-        {
-            question: "Bagaimana jika saya melewatkan satu tantangan?",
-            answer: "Tidak masalah! Anda bisa melanjutkan ke tantangan berikutnya atau mengulang yang terlewat kapan saja sesuai kenyamanan Anda."
-        },
-        {
-            question: "Apakah diperlukan peralatan khusus untuk mengikuti challenge ini?",
-            answer: "Sebagian besar tantangan tidak memerlukan peralatan khusus. Namun, beberapa tantangan seperti yoga atau olahraga ringan mungkin memerlukan matras atau dumbbell ringan."
-        },
-        {
-            question: "Apakah challenge ini termasuk pola makan sehat?",
-            answer: "Ya! Beberapa tantangan mencakup rekomendasi makanan sehat untuk ibu hamil agar mendapatkan nutrisi yang cukup untuk mendukung perkembangan bayi."
-        }
-    ];    
+        // {
+        //     question: "Bagaimana jika saya melewatkan satu tantangan?",
+        //     answer: "Tidak masalah! Anda bisa melanjutkan ke tantangan berikutnya atau mengulang yang terlewat kapan saja sesuai kenyamanan Anda."
+        // },
+        // {
+        //     question: "Apakah diperlukan peralatan khusus untuk mengikuti challenge ini?",
+        //     answer: "Sebagian besar tantangan tidak memerlukan peralatan khusus. Namun, beberapa tantangan seperti yoga atau olahraga ringan mungkin memerlukan matras atau dumbbell ringan."
+        // },
+        // {
+        //     question: "Apakah challenge ini termasuk pola makan sehat?",
+        //     answer: "Ya! Beberapa tantangan mencakup rekomendasi makanan sehat untuk ibu hamil agar mendapatkan nutrisi yang cukup untuk mendukung perkembangan bayi."
+        // }
+    ];
 
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -54,7 +70,7 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
         setTimeout(() => {
             setCompleted((prev) => ({ ...prev, [challengeId]: false }));
         }, 10000);
-    };        
+    };
 
     return (
         <>
@@ -66,22 +82,21 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                         </div> */}
                         {completed[challenge.id] && <Confetti width={width} height={height} />}
                         <button
-                                onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
-                                className={`w-full font-medium text-sm py-2 rounded-lg ${
-                                challenge.progress === 0
-                                    ? "bg-wine text-white hover:bg-dark-wine"
-                                    : challenge.progress === 100
+                            onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
+                            className={`w-full font-medium text-sm py-2 rounded-lg ${challenge.progress === 0
+                                ? "bg-wine text-white hover:bg-dark-wine"
+                                : challenge.progress === 100
                                     ? "bg-wine text-white"
                                     : "bg-white border border-gray-200 text-gray-400 cursor-not-allowed"
-                            }`}
+                                }`}
                         >
                             {challenge.progress === 0
                                 ? "Mulai Challenge"
                                 : challenge.progress === 100
-                                ? completed
-                                    ? "Challenge Selesai"
-                                    : "Mark Challenge as Completed"
-                                : "Challenge Sedang Berjalan"}
+                                    ? completed
+                                        ? "Challenge Selesai"
+                                        : "Mark Challenge as Completed"
+                                    : "Challenge Sedang Berjalan"}
                         </button>
                         <div className="border-t border-gray-200 mt-3 pt-3 text-sm text-gray-700">
                             <div className="flex justify-between items-center mb-1">
@@ -152,13 +167,22 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                                         </svg>
                                     </div>
                                     {openIndex === index && (
-                                        <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
+                                        faq.list ? (
+                                            faq.list.map((list, i) => (
+                                                <ul className="list-disc px-4 text-gray-600">
+                                                    <li key={i}>{list}</li>
+                                                </ul>
+                                            ))
+                                        ) : (
+                                            faq.answer ??
+                                            <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
+                                        )
                                     )}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <BottomBar/>
+                    <BottomBar />
                 </div>
             ))}
         </>
