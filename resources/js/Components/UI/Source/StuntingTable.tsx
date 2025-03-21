@@ -25,7 +25,7 @@ export default function StuntingTable() {
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.percentage}%</td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.year}</td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                <a href="#" className="font-medium text-wine hover:underline">Edit</a>
+                <a href="javascript:void(0)" className="font-medium text-wine hover:underline">Edit</a>
               </td>
             </tr>
           ))}

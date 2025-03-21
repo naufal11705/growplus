@@ -41,7 +41,7 @@ export default function ProgressStatus() {
                         </div>
                     </div>
                     {/* <div className="mt-5">
-                        <a href="#" className="font-extrabold text-pinky hover:underline text-lg">Kunjungi Profile</a>
+                        <a href="javascript:void(0)" className="font-extrabold text-pinky hover:underline text-lg">Kunjungi Profile</a>
                     </div> */}
                 </div>
             </div>

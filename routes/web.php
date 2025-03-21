@@ -59,14 +59,30 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    // Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-    Route::get('/chat-ai', [ChatController::class, 'index']);
-    Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-    Route::get('/profile', [PenggunaController::class, 'profile']);
-    Route::get('/tantangan', [UserController::class, 'tantangan']);
-    Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
-    // Route::get('/artikel/{artikel:slug}', [UserController::class, 'artikel']);
+    Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/chat-ai', [ChatController::class, 'index']);
+        Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
+        Route::get('/profil', [UserController::class, 'profil']);
+        Route::get('/tantangan', [UserController::class, 'tantangan']);
+        Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+        Route::get('/artikel', [UserController::class, 'artikel']);
+    });
+
+    Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+        Route::resource('puskesmas', PuskesmasController::class);
+        Route::resource('faskes', FasKesController::class);
+        Route::resource('imunisasi', ImunisasiController::class);
+        Route::resource('fase', FaseController::class);
+        Route::resource('artikel', ArtikelController::class);
+        Route::resource('tantangan', TantanganController::class);
+    });
+
+    Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
+        Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
+    });
 });
 
 Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
@@ -76,7 +92,7 @@ Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(func
     Route::resource('faskes', FasKesController::class);
     Route::resource('imunisasi', ImunisasiController::class);
     Route::resource('fase', FaseController::class);
-    // Route::resource('artikel', ArtikelController::class);
+    Route::resource('artikel', ArtikelController::class);
     Route::resource('tantangan', TantanganController::class);
 });
 
@@ -94,17 +110,11 @@ Route::get('/petugas/imunisasi/tambah', function () {
 
 Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
 
-// Route::get('/artikel', function () {
-//     return Inertia::render('Artikel');
-// });
-
 Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
 Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])->name('artikel.showArticle');
 
-// Route::get('/detail-artikel/{article:slug}', function (Artikel $article) {
-//     return Inertia::render('Page', [
-//         'article' => $article
-//     ]);
-// });
+Route::get('/profil/edit', function () {
+    return Inertia::render('User/Functions/Profile/Edit_OrangTua');
+});
 
 require __DIR__ . '/auth.php';

@@ -1,13 +1,34 @@
 import Layout from "@/Layouts/Anonymous";
 import { Article } from "@/types/article";
+import { useEffect, useState } from 'react';
 
 interface ArtikelProps {
     article: Article
 }
 
 const Page: React.FC<ArtikelProps> = ({ article }) => {
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            setScrollProgress(progress);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     return (
         <Layout>
+            <div className="fixed top-0 left-0 w-full z-50">
+                <div className="w-full h-0 bg-gray-200">
+                    <div
+                        className="h-1 bg-wine transition-all duration-200 ease-out"
+                        style={{ width: `${scrollProgress}%` }}
+                    />
+                </div>
+            </div>
             <section className="lg:mt-24 mt-20 bg-white">
                 <div key={article.id} className="py-8 px-4 mx-auto max-w-screen-xl lg:text-left lg:py-16">
                     <a href="/artikel">
@@ -18,9 +39,9 @@ const Page: React.FC<ArtikelProps> = ({ article }) => {
                             Kembali ke Artikel
                         </button>
                     </a>
-                    <span className="bg-wine bg-opacity-50 px-4 py-2 text-xs text-white rounded-full">Persiapan</span>
+                    <span className="bg-wine bg-opacity-50 px-4 py-2 text-xs text-white rounded-full">Teknik</span>
                     <h1 className="mb-8 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">{article.title}</h1>
-                    <div className="flex flex-row gap-5">
+                    <div className="flex lg:flex-row flex-col gap-5">
                         <h1 className="inline-flex gap-3 items-center text-lg font-bold text-center text-black flex flex-row">
                             <img className="w-10 h-10 rounded-full" src="https://wridev.id/talents/riovaldo-alfiyan-fahmi-rahman.jpg" alt="Rounded avatar" />
                             {article.author}
