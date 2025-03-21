@@ -1,17 +1,53 @@
 import Layout from "@/Layouts/Admin";
 import useCsrfToken from "@/Utils/csrfToken";
 import { router } from "@inertiajs/react";
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
+import { usePage } from "@inertiajs/react";
+import { useState } from "react";
+
+interface Puskesmas {
+    puskesmas_id: number;
+    nama: string;
+    alamat: string;
+    kecamatan: string;
+    kota: string;
+    kontak: number;
+}
+
+interface PageProps extends InertiaPageProps {
+    puskesmas: Puskesmas;
+}
+
 export default function Puskesmas() {
+    const { puskesmas } = usePage<PageProps>().props;
     const csrf_token = useCsrfToken();
 
+    // State untuk form
+    const [formData, setFormData] = useState<Puskesmas>({ ...puskesmas });
+
+    // Handle perubahan input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        formData.append("_token", csrf_token);
-
-        router.post('/admin/puskesmas', formData);
+        router.put(`/admin/puskesmas/${formData.puskesmas_id}`, {
+            _token: csrf_token,
+            nama: formData.nama,
+            alamat: formData.alamat,
+            kecamatan: formData.kecamatan,
+            kota: formData.kota,
+            kontak: formData.kontak,
+        });
     };
+
     return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
@@ -23,31 +59,76 @@ export default function Puskesmas() {
                             {/* Nama Puskesmas */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama Puskesmas</label>
-                                <input type="text" name="nama" id="nama" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis nama puskesmas di sini..." required />
+                                <input
+                                    value={formData.nama}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="nama"
+                                    id="nama"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Tulis nama puskesmas di sini..."
+                                    required
+                                />
                             </div>
 
                             {/* Alamat */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="alamat" className="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
-                                <textarea id="alamat" name="alamat" rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis alamat puskesmas..." required></textarea>
+                                <textarea
+                                    value={formData.alamat}
+                                    onChange={handleChange}
+                                    id="alamat"
+                                    name="alamat"
+                                    rows={3}
+                                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Tulis alamat puskesmas..."
+                                    required
+                                ></textarea>
                             </div>
 
                             {/* Kecamatan */}
                             <div>
                                 <label htmlFor="kecamatan" className="block mb-2 text-sm font-medium text-gray-900">Kecamatan</label>
-                                <input type="text" name="kecamatan" id="kecamatan" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan kecamatan" required />
+                                <input
+                                    value={formData.kecamatan}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="kecamatan"
+                                    id="kecamatan"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Masukkan kecamatan"
+                                    required
+                                />
                             </div>
 
                             {/* Kota */}
                             <div>
                                 <label htmlFor="kota" className="block mb-2 text-sm font-medium text-gray-900">Kota</label>
-                                <input type="text" name="kota" id="kota" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan kota" required />
+                                <input
+                                    value={formData.kota}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="kota"
+                                    id="kota"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Masukkan kota"
+                                    required
+                                />
                             </div>
 
                             {/* Kontak */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="kontak" className="block mb-2 text-sm font-medium text-gray-900">Kontak</label>
-                                <input type="number" name="kontak" id="kontak" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan nomor telepon atau kontak puskesmas" required />
+                                <input
+                                    value={formData.kontak}
+                                    onChange={handleChange}
+                                    type="number"
+                                    name="kontak"
+                                    id="kontak"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Masukkan nomor telepon atau kontak puskesmas"
+                                    required
+                                />
                             </div>
                         </div>
 

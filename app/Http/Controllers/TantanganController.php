@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Http\Requests\TantanganUpdateRequest;
 use App\Http\Requests\TantanganStoreRequest;
-use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use Inertia\Inertia;
@@ -24,8 +23,9 @@ class TantanganController extends Controller
      */
     public function index()
     {
-        $this->tantanganRepository->getAllTantangan();
-        return Inertia::render('Admin/Tantangan');
+        return Inertia::render('Admin/Tantangan', [
+            'tantangan' => $this->tantanganRepository->getAllTantangan()
+        ]);
     }
 
     /**
@@ -47,7 +47,7 @@ class TantanganController extends Controller
 
         $this->tantanganRepository->createTantangan($request->all());
 
-        return Inertia::render('Admin/Tantangan');
+        return redirect()->route('tantangan.index');
     }
 
     /**
@@ -64,18 +64,22 @@ class TantanganController extends Controller
      */
     public function edit($id)
     {
-        $this->tantanganRepository->getTantanganById($id);
-        return Inertia::render('Admin/Functions/Tantangan/Edit');
+        return Inertia::render('Admin/Functions/Tantangan/Edit', [
+            'fase' => $this->faseRepository->getAllFase(),
+            'tantangan' => $this->tantanganRepository->getTantanganById($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ImunisasiUpdateRequest $request, $id)
+    public function update(TantanganUpdateRequest $request, $id)
     {
         $request->validated();
 
         $this->tantanganRepository->updateTantangan($id, $request->all());
+
+        return redirect()->route('tantangan.index');
     }
 
     /**

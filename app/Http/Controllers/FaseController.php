@@ -20,8 +20,9 @@ class FaseController extends Controller
      */
     public function index()
     {
-        $this->faseRepository->getAllFase();
-        return Inertia::render('Admin/Fase');
+        return Inertia::render('Admin/Fase', [
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**
@@ -29,7 +30,9 @@ class FaseController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Fase/Tambah');
+        return Inertia::render('Admin/Functions/Fase/Tambah', [
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**
@@ -46,7 +49,7 @@ class FaseController extends Controller
     
         $this->faseRepository->createFase($validatedData);
 
-        return Inertia::render('Admin/Fase');
+        return redirect()->route('fase.index');
     }
 
     /**
@@ -63,8 +66,9 @@ class FaseController extends Controller
      */
     public function edit($id)
     {
-        $this->faseRepository->getFaseById($id);
-        return Inertia::render('Admin/Functions/Fase/Edit');
+        return Inertia::render('Admin/Functions/Fase/Edit', [
+            'fase' => $this->faseRepository->getFaseById($id)
+        ]);
     }
 
     /**
@@ -75,6 +79,8 @@ class FaseController extends Controller
         $request->validated();
 
         $this->faseRepository->updateFase($id, $request->all());
+
+        return redirect()->route('fase.index');
     }
 
     /**
