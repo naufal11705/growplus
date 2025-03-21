@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('fase_id')->primary();
             $table->string('title');
             $table->string('description');
-            $table->string('benefits');
+            $table->text('benefits');
             $table->string('banner');
             $table->string('progress');
             $table->boolean('status')->default(false);
