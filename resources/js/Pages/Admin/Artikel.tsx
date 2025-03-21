@@ -45,9 +45,9 @@ export default function Artikel(){
                                         Disini
                                     </td>
                                     <td className="px-6 py-4 text-right flex gap-2">
-                                        <a href="#" className="font-medium text-wine hover:underline">Edit</a>
+                                        <a href="javascript:void(0)" className="font-medium text-wine hover:underline">Edit</a>
                                         │
-                                        <a href="#" className="font-medium text-red-500 hover:underline">Delete</a>
+                                        <a href="javascript:void(0)" className="font-medium text-red-500 hover:underline">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -89,7 +89,7 @@ export default function Artikel() {
                                             <img className="w-8 h-8 rounded-full" src="https://wridev.id/talents/riovaldo-alfiyan-fahmi-rahman.jpg" alt="Rounded avatar" />
                                             {article.author}
                                         </h1>
-                                        <a href={`/artikel/${article.slug}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                        <a href={`/artikel/${article.slug}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-wine">
                                             Baca Artikel
                                         </a>
                                     </div>
