@@ -1,4 +1,4 @@
-import { PresentaseData } from "../../Data/Card_Presentase";
+import { PresentaseData } from "@/Data/Card_Presentase";
 export default function Card_Presentase() {
     return(
         <div className="lg:flex lg:flex-row flex flex-col text-center gap-3">

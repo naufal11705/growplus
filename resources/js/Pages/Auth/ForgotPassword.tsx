@@ -1,4 +1,4 @@
-import Layout from "../../Layouts/Auth";
+import Layout from "@/Layouts/Auth";
 export default function ForgotPassword() {
     return (
         <Layout>

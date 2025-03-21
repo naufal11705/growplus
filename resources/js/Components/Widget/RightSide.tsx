@@ -1,5 +1,5 @@
-import { challenges } from "../../Data/ChallengeCard";
-import { Challenge } from "../../types/challenge";
+import { challenges } from "@/Data/ChallengeCard";
+import { Challenge } from "@/types/challenge";
 import { useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
@@ -10,26 +10,54 @@ interface TantanganCardsProps {
 }
 type FAQItem = {
     question: string;
-    answer: string;
+    answer?: string;
+    list?: string[];
 };
 
-export default function RightSide({ challenges: propChallenges }: TantanganCardsProps ) {
+export default function RightSide({ challenges: propChallenges }: TantanganCardsProps) {
     const dataTantangan = (propChallenges ?? challenges).filter((challenge) => challenge.id === 1);
     const [completed, setCompleted] = useState<{ [key: number]: boolean }>({});
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apa yang akan ibu alami?",
+            answer: "Selama masa kehamilan 9 bulan, Ibu akan naik berat badannya sebanyak 5 - 18 kg sesuai dengan status gizi ibu sebelum hamil."
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apakah ada layanan kesehatan yang gratis selama kehamilan?",
+            list: [
+                "Pemeriksaan kehamilan oleh dokter, bidan dan tenaga kesehatan",
+                "Pemeriksaan status gizi",
+                "Pemeriksaan laboratorium",
+                "Pemeriksaan kondisi bayi",
+                "USG 2 kali",
+                "Pemberian tablet tambah darah(TTD) / multivitamin bagi ibu hamil",
+                "Pemeriksaan tekanan darah",
+                "Skrining kesehatan jiwa",
+                "Imunisasi Tetanus",
+                "Kelas ibu hamil"
+            ]
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
-        }
+            question: "Apa hal-hal yang tidak boleh dilakukan selama kehamilan?",
+            list: [
+                "Minum obat tanpa resep dokter",
+                "Merokok atau terpapar asap rokok",
+                "Stress berlebihan"
+            ]
+        },
+        // {
+        //     question: "Bagaimana jika saya melewatkan satu tantangan?",
+        //     answer: "Tidak masalah! Anda bisa melanjutkan ke tantangan berikutnya atau mengulang yang terlewat kapan saja sesuai kenyamanan Anda."
+        // },
+        // {
+        //     question: "Apakah diperlukan peralatan khusus untuk mengikuti challenge ini?",
+        //     answer: "Sebagian besar tantangan tidak memerlukan peralatan khusus. Namun, beberapa tantangan seperti yoga atau olahraga ringan mungkin memerlukan matras atau dumbbell ringan."
+        // },
+        // {
+        //     question: "Apakah challenge ini termasuk pola makan sehat?",
+        //     answer: "Ya! Beberapa tantangan mencakup rekomendasi makanan sehat untuk ibu hamil agar mendapatkan nutrisi yang cukup untuk mendukung perkembangan bayi."
+        // }
     ];
 
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -42,35 +70,33 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
         setTimeout(() => {
             setCompleted((prev) => ({ ...prev, [challengeId]: false }));
         }, 10000);
-    };        
+    };
 
     return (
         <>
             {dataTantangan.map((challenge: Challenge) => (
                 <div key={challenge.id} id="card2" className="justify-end space-y-4 mb-36">
-                    {/* Challenge Card */}
                     <div className="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md lg:block hidden">
                         {/* <div className="flex items-center justify-end mb-3">
                             <LoveButton />
                         </div> */}
                         {completed[challenge.id] && <Confetti width={width} height={height} />}
                         <button
-                                onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
-                                className={`w-full font-medium text-sm py-2 rounded-lg ${
-                                challenge.progress === 0
-                                    ? "bg-gray-800 text-white hover:bg-gray-900"
-                                    : challenge.progress === 100
+                            onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
+                            className={`w-full font-medium text-sm py-2 rounded-lg ${challenge.progress === 0
+                                ? "bg-wine text-white hover:bg-dark-wine"
+                                : challenge.progress === 100
                                     ? "bg-wine text-white"
                                     : "bg-white border border-gray-200 text-gray-400 cursor-not-allowed"
-                            }`}
+                                }`}
                         >
                             {challenge.progress === 0
                                 ? "Mulai Challenge"
                                 : challenge.progress === 100
-                                ? completed
-                                    ? "Challenge Selesai"
-                                    : "Mark Challenge as Completed"
-                                : "Challenge Sedang Berjalan"}
+                                    ? completed
+                                        ? "Challenge Selesai"
+                                        : "Mark Challenge as Completed"
+                                    : "Challenge Sedang Berjalan"}
                         </button>
                         <div className="border-t border-gray-200 mt-3 pt-3 text-sm text-gray-700">
                             <div className="flex justify-between items-center mb-1">
@@ -104,7 +130,7 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                     </div>
                     {/* Progress bar */}
                     <div className="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md lg:block hidden">
-                        <h3 className="text-lg font-semibold text-gray-800">Your Progress</h3>
+                        <h3 className="text-lg font-semibold text-gray-800">Progress Anda</h3>
                         <div className="mt-2">
                             <p className="text-gray-600 text-sm justify-between flex">
                                 Progress <span className="font-semibold text-black">{challenge.progress ?? 0}%</span>
@@ -141,13 +167,22 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                                         </svg>
                                     </div>
                                     {openIndex === index && (
-                                        <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
+                                        faq.list ? (
+                                            faq.list.map((list, i) => (
+                                                <ul className="list-disc px-4 text-gray-600">
+                                                    <li key={i}>{list}</li>
+                                                </ul>
+                                            ))
+                                        ) : (
+                                            faq.answer ??
+                                            <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
+                                        )
                                     )}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <BottomBar/>
+                    <BottomBar />
                 </div>
             ))}
         </>

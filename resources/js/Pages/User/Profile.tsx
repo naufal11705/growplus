@@ -1,4 +1,4 @@
-import Layout from "../../Layouts/Layout"
+import Layout from "@/Layouts/Layout"
 import ParentProfile from "@/Components/Widget/ParentProfile"
 import ChildProfile from "@/Components/Widget/ChildProfile"
 export default function Profile(){

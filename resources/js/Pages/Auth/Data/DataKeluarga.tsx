@@ -11,7 +11,6 @@ export default function DataKeluarga({ onNext }: DataKeluargaProps) {
         education: "Pilih",
         economy: "Pilih",
         area: "Pilih",
-        childrenCount: "",
         healthAccess: "Pilih"
     });
 
@@ -121,18 +120,6 @@ export default function DataKeluarga({ onNext }: DataKeluargaProps) {
                                 )}
                             </div>
                         ))}
-                    </div>
-                    <div>
-                        <label htmlFor="childrenCount" className="block mb-2 text-sm font-medium text-gray-900">Jumlah Anak</label>
-                        <input
-                            type="number"
-                            id="childrenCount"
-                            value={formData.childrenCount}
-                            onChange={(e) => setFormData({ ...formData, childrenCount: e.target.value })}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
-                            placeholder="Masukkan jumlah anak"
-                            required
-                        />
                     </div>
                     <div className="flex justify-end mt-6">
                         <button

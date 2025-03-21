@@ -1,9 +1,9 @@
 import RightSide from "@/Components/Widget/RightSide";
 import DetailChallengeTabs from "@/Components/Widget/Tabs/DetailChallengeTabs";
 import { useState, useEffect } from "react";
-import { challenges } from "../../Data/ChallengeCard";
-import Layout from "../../Layouts/Layout";
-import { Challenge } from "../../types/challenge";
+import { challenges } from "@/Data/ChallengeCard";
+import Layout from "@/Layouts/Layout";
+import { Challenge } from "@/types/challenge";
 
 interface TantanganCardsProps {
     challenges?: Challenge[];

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Layout from "../../Layouts/Layout";
+import Layout from "@/Layouts/Layout";
 
 export default function RekomendasiMakanan() {
     const [alamat, setAlamat] = useState<string>("");

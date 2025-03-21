@@ -1,4 +1,4 @@
-import { StuntingTables } from "../../../Data/StuntingTables";
+import { StuntingTables } from "@/Data/StuntingTables";
 
 export default function StuntingTable() {
   return (
@@ -20,11 +20,11 @@ export default function StuntingTable() {
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {index + 1}
               </td>
-              <td className="px-6 py-4">{item.region}</td>
-              <td className="px-6 py-4">{item.totalCases.toLocaleString()}</td>
-              <td className="px-6 py-4">{item.percentage}%</td>
-              <td className="px-6 py-4">{item.year}</td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.region}</td>
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.totalCases.toLocaleString()}</td>
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.percentage}%</td>
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.year}</td>
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 <a href="#" className="font-medium text-wine hover:underline">Edit</a>
               </td>
             </tr>

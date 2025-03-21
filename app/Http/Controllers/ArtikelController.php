@@ -63,8 +63,12 @@ class ArtikelController extends Controller
      */
     public function edit($id)
     {
-        $this->artikelRepository->getArtikelById($id);
-        return Inertia::render('Admin/Functions/Artikel/Edit');
+        $artikel = $this->artikelRepository->getArtikelById($id);
+
+        return Inertia::render('Admin/Functions/Artikel/Edit', [
+            'artikel' => $artikel,
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**

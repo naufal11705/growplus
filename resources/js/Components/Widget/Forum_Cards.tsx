@@ -1,4 +1,4 @@
-import { forums } from "../../Data/ForumCard";
+import { forums } from "@/Data/ForumCard";
 export default function Forum_Cards() {
     return (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
