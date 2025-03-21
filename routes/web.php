@@ -45,7 +45,7 @@ Route::group([], function () {
     Route::post('/admin/puskesmas', [PuskesmasController::class, 'store']);
     Route::put('/admin/puskesmas/{id}', [PuskesmasController::class, 'update']);
     Route::delete('/admin/puskesmas/{id}', [PuskesmasController::class, 'destroy']);
-
+    
     Route::get('/admin/faskes', [FasKesController::class, 'index']);
     Route::get('/admin/faskes/tambah', [FasKesController::class, 'create']);
     Route::post('/admin/faskes', [FasKesController::class, 'store']);
@@ -57,7 +57,6 @@ Route::group([], function () {
     Route::post('/admin/imunisasi', [ImunisasiController::class, 'store']);
     Route::put('/admin/imunisasi/{id}', [ImunisasiController::class, 'update']);
     Route::delete('/admin/imunisasi/{id}', [ImunisasiController::class, 'destroy']);
-    Route::get('/admin/imunisasi/{kota}', [ImunisasiController::class, 'sendNotification']);
 
     Route::get('/admin/fase', [FaseController::class, 'index']);
     Route::get('/admin/fase/tambah', [FaseController::class, 'create']);
