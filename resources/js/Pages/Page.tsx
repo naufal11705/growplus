@@ -1,8 +1,29 @@
 import Layout from "@/Layouts/Anonymous";
+import { useEffect, useState } from 'react';
 
 export default function Artikel() {
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            setScrollProgress(progress);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     return (
         <Layout>
+            <div className="fixed top-0 left-0 w-full z-50">
+                <div className="w-full h-0 bg-gray-200">
+                    <div 
+                        className="h-1 bg-wine transition-all duration-200 ease-out"
+                        style={{ width: `${scrollProgress}%` }}
+                    />
+                </div>
+            </div>
             <section className="lg:mt-24 mt-20 bg-white">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:text-left lg:py-16">
                     <a href="/artikel">
