@@ -15,8 +15,8 @@ export default function RegisterStep() {
         setCurrentStep(2);
     };
 
-    const handleFinish = () => {
-        alert("Registrasi selesai!");
+    const handleFinish = (childData: any) => {
+        console.log("Data anak:", childData);
         setCurrentStep(3);
     };
 
@@ -28,7 +28,7 @@ export default function RegisterStep() {
                     <DataKeluarga onNext={handleNextStep} />
                 )}
                 {currentStep === 2 && (
-                    <DataAnak onNext={handleNextStep} />
+                    <DataAnak onNext={handleFinish} />
                 )}
                 {currentStep === 3 && (
                     <div className="text-center text-wine font-semibold">
