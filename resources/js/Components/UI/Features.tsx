@@ -1,5 +1,5 @@
 import Sample from '../../../assets/images/Sample.png';
-import { ListFeatures } from '../../Data/Features';
+import { ListFeatures } from '@/Data/Features';
 export default function Features() {
     return (
         <section className="">

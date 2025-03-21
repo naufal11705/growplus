@@ -1,5 +1,5 @@
-import AboutUs from "../../../assets/images/AboutUs.png";
-import Presentase from "../Widget/Card_Presentase";
+import AboutUs from "../../../assets/images/AboutUs.png"
+import Presentase from "@/Components/Widget/Card_Presentase";
 export default function About() {
     return (
         <section className="">

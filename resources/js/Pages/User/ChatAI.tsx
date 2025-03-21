@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ProfileAI from "../../../assets/images/AiProfile.png";
-import Layout from "../../Layouts/Layout";
+import ProfileAI from "@/assets/images/AiProfile.png";
+import Layout from "@/Layouts/Layout";
 
 export default function User() {
     const [messages, setMessages] = useState([{ sender: "ai", text: "Hello! How can I assist you today?" }]);

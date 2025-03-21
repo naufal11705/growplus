@@ -1,5 +1,5 @@
-import { challenges } from "../../Data/ChallengeCard";
-import { Challenge } from "../../types/challenge";
+import { challenges } from "@/Data/ChallengeCard";
+import { Challenge } from "@/types/challenge";
 import { useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
@@ -19,18 +19,30 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apa itu Pregnancy Challenge?",
+            answer: "Pregnancy Challenge adalah tantangan harian yang dirancang untuk membantu ibu hamil menjaga kesehatan fisik dan mental melalui berbagai aktivitas seperti olahraga ringan, meditasi, serta edukasi kehamilan."
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apakah challenge ini aman untuk semua ibu hamil?",
+            answer: "Challenge ini dirancang untuk ibu hamil secara umum, tetapi setiap ibu memiliki kondisi kesehatan yang berbeda. Sebaiknya konsultasikan dengan dokter sebelum mengikuti tantangan, terutama jika memiliki kondisi medis tertentu."
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apa manfaat mengikuti Pregnancy Challenge?",
+            answer: "Manfaatnya meliputi peningkatan kesehatan fisik, mengurangi stres, meningkatkan energi, serta membangun kebiasaan sehat selama kehamilan."
+        },
+        {
+            question: "Bagaimana jika saya melewatkan satu tantangan?",
+            answer: "Tidak masalah! Anda bisa melanjutkan ke tantangan berikutnya atau mengulang yang terlewat kapan saja sesuai kenyamanan Anda."
+        },
+        {
+            question: "Apakah diperlukan peralatan khusus untuk mengikuti challenge ini?",
+            answer: "Sebagian besar tantangan tidak memerlukan peralatan khusus. Namun, beberapa tantangan seperti yoga atau olahraga ringan mungkin memerlukan matras atau dumbbell ringan."
+        },
+        {
+            question: "Apakah challenge ini termasuk pola makan sehat?",
+            answer: "Ya! Beberapa tantangan mencakup rekomendasi makanan sehat untuk ibu hamil agar mendapatkan nutrisi yang cukup untuk mendukung perkembangan bayi."
         }
-    ];
+    ];    
 
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -48,7 +60,6 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
         <>
             {dataTantangan.map((challenge: Challenge) => (
                 <div key={challenge.id} id="card2" className="justify-end space-y-4 mb-36">
-                    {/* Challenge Card */}
                     <div className="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md lg:block hidden">
                         {/* <div className="flex items-center justify-end mb-3">
                             <LoveButton />
@@ -58,7 +69,7 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                                 onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
                                 className={`w-full font-medium text-sm py-2 rounded-lg ${
                                 challenge.progress === 0
-                                    ? "bg-gray-800 text-white hover:bg-gray-900"
+                                    ? "bg-wine text-white hover:bg-dark-wine"
                                     : challenge.progress === 100
                                     ? "bg-wine text-white"
                                     : "bg-white border border-gray-200 text-gray-400 cursor-not-allowed"
@@ -104,7 +115,7 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                     </div>
                     {/* Progress bar */}
                     <div className="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md lg:block hidden">
-                        <h3 className="text-lg font-semibold text-gray-800">Your Progress</h3>
+                        <h3 className="text-lg font-semibold text-gray-800">Progress Anda</h3>
                         <div className="mt-2">
                             <p className="text-gray-600 text-sm justify-between flex">
                                 Progress <span className="font-semibold text-black">{challenge.progress ?? 0}%</span>

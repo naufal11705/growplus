@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Layout from "../../Layouts/Layout";
+import Layout from "@/Layouts/Layout";
 export default function PerhitunganStunting() {
     const [isGenderOpen, setIsGenderOpen] = useState(false);
     const [selectedGender, setSelectedGender] = useState<string>("Pilih");
