@@ -1,4 +1,4 @@
-import Sample from '@/assets/images/Sample.png';
+import Sample from '../../../assets/images/Sample.png';
 import { ListFeatures } from '@/Data/Features';
 export default function Features() {
     return (
