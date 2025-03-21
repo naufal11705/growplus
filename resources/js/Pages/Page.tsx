@@ -34,7 +34,7 @@ export default function Artikel() {
                             Kembali ke Artikel
                         </button>
                     </a>
-                    <span className="bg-wine bg-opacity-50 px-4 py-2 text-xs text-white rounded-full">Persiapan</span>
+                    <span className="bg-wine bg-opacity-50 px-4 py-2 text-xs text-white rounded-full">Teknik</span>
                     <h1 className="mb-8 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Persiapan Persalinan yang Harus Diketahui Agar Proses Melahirkan Lebih Lancar dan Nyaman</h1>
                     <div className="flex lg:flex-row flex-col gap-5">
                         <h1 className="inline-flex gap-3 items-center text-lg font-bold text-center text-black flex flex-row">
