@@ -17,7 +17,14 @@ class FaseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->bs(),
+            'description' => $this->faker->paragraph(),
+            'benefits' => $this->faker->paragraph(),
+            'banner' => asset('images/Sample.png'),
+            'progress' => $this->faker->randomElement([20, 40, 60, 80, 100]),
+            'status' => $this->faker->randomElement([1, 0]),
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }

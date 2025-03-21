@@ -17,7 +17,13 @@ class PuskesmasFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => $this->faker->city(),
+            'alamat' => $this->faker->address(),
+            'kecamatan' => $this->faker->state(),
+            'kota' => $this->faker->city(),
+            'kontak' => $this->faker->phoneNumber(),
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }

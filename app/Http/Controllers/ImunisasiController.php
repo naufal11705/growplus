@@ -7,15 +7,18 @@ use App\Http\Requests\ImunisasiStoreRequest;
 use App\Http\Requests\ImunisasiUpdateRequest;
 use App\Models\Imunisasi;
 use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
+use App\Repositories\Interfaces\PuskesmasRepositoryInterface;;
 use Inertia\Inertia;
 
 class ImunisasiController extends Controller
 {
     protected $imunisasiRepository;
+    protected $puskesmasRepository;
 
-    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository)
+    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository, PuskesmasRepositoryInterface $puskesmasRepository)
     {
         $this->imunisasiRepository = $imunisasiRepository;
+        $this->puskesmasRepository = $puskesmasRepository;
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +34,9 @@ class ImunisasiController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Imunisasi/Tambah');
+        return Inertia::render('Admin/Functions/Imunisasi/Tambah', [
+            'puskesmas' => $this->puskesmasRepository->getAllPuskesmas()
+        ]);
     }
 
     /**

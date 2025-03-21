@@ -11,19 +11,4 @@ class HomeController extends Controller
     {
         return Inertia::render('Index');
     }
-
-    public function tantangan()
-    {
-        return Inertia::render('User/Tantangan');
-    }
-
-    public function tantanganDetail()
-    {
-        return Inertia::render('User/DetailTantangan');
-    }
-
-    public function artikel()
-    {
-        return Inertia::render('User/Artikel');
-    }
 }

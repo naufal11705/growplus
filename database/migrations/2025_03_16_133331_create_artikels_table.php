@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('artikel_id')->primary();
             $table->unsignedBigInteger('fase_id')->index();
             $table->string('title');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
 
             $table->foreign('fase_id')->references('fase_id')->on('fases');

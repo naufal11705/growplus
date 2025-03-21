@@ -1,12 +1,41 @@
+import { useState } from "react";
+import { usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
+import useCsrfToken from "@/Utils/csrfToken";
 import Layout from "@/Layouts/Admin";
 
+interface Puskesmas {
+    puskesmas_id: number;
+    nama: string;
+}
+
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
+
+interface PageProps extends InertiaPageProps {
+    puskesmas: Puskesmas[];
+}
+
 export default function Imunisasi() {
+    const { puskesmas } = usePage<PageProps>().props;
+    const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
+
+        const csrf_token = useCsrfToken();
+    
+        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+    
+            const formData = new FormData(e.currentTarget);
+            formData.append("_token", csrf_token);
+    
+            router.post('/admin/imunisasi', formData);
+        };
+
     return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Tambah Data Imunisasi</h2>
-                    <form action="#" method="POST">
+                    <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
 
                             {/* Nama Vaksin */}
@@ -24,9 +53,20 @@ export default function Imunisasi() {
                             {/* Puskesmas */}
                             <div>
                                 <label htmlFor="puskesmas_id" className="block mb-2 text-sm font-medium text-gray-900">Puskesmas</label>
-                                <select id="puskesmas_id" name="puskesmas_id" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select 
+                                    id="puskesmas_id" 
+                                    name="puskesmas_id" 
+                                    value={selectedPuskesmas} 
+                                    onChange={(e) => setSelectedPuskesmas(e.target.value)}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                                    required
+                                >
                                     <option value="">Pilih Puskesmas</option>
-                                    {/* Data puskesmas bisa diambil dari database dan di-loop di sini */}
+                                    {puskesmas?.map((item: Puskesmas) => (
+                                        <option key={item.puskesmas_id} value={item.puskesmas_id}>
+                                            {item.nama}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 

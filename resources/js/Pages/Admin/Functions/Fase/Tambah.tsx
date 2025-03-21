@@ -1,11 +1,23 @@
 import Layout from "@/Layouts/Admin";
+import useCsrfToken from "@/Utils/csrfToken";
+import { router } from "@inertiajs/react";
 export default function Fase() {
+    const csrf_token = useCsrfToken();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        formData.append("_token", csrf_token);
+
+        router.post('/admin/fase', formData);
+    };
     return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Buat Fase</h2>
-                    <form action="#" method="POST" encType="multipart/form-data">
+                    <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div className="sm:col-span-2">
                                 <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">Judul Fase</label>
@@ -27,7 +39,7 @@ export default function Fase() {
                             {/* Banner */}
                             <div className="sm:col-span-2">
                                 <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="file_input">Upload Banner</label>
-                                <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" />
+                                <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" name="banner" id="banner" type="file" />
                             </div>
 
                             {/* Progress */}

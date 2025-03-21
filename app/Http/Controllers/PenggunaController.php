@@ -63,29 +63,4 @@ class PenggunaController extends Controller
     {
         //
     }
-
-    public function dashboard()
-    {
-        return Inertia::render('User/Dashboard');
-    }
-
-    public function profile()
-    {
-        return Inertia::render('User/Profile');
-    }
-
-    public function login()
-    {
-        return Inertia::render('User/Login');
-    }
-
-    public function register()
-    {
-        return Inertia::render('User/Register');
-    }
-
-    public function registerStep()
-    {
-        return Inertia::render('User/RegisterStep');
-    }
 }

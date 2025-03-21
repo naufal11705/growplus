@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArtikelStoreRequest;
 use App\Http\Requests\ImunisasiUpdateRequest;
 use App\Repositories\Interfaces\ArtikelRepositoryInterface;
+use App\Repositories\Interfaces\FaseRepositoryInterface;
 use Inertia\Inertia;
 
 class ArtikelController extends Controller
 {
     protected $artikelRepository;
+    protected $faseRepository;
 
-    public function __construct(ArtikelRepositoryInterface $artikelRepository)
+    public function __construct(ArtikelRepositoryInterface $artikelRepository, FaseRepositoryInterface $faseRepository)
     {
         $this->artikelRepository = $artikelRepository;
+        $this->faseRepository = $faseRepository;
     }
     
     /**
@@ -29,7 +32,9 @@ class ArtikelController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Artikel/Tambah');
+        return Inertia::render('Admin/Functions/Artikel/Tambah', [
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**
@@ -58,8 +63,12 @@ class ArtikelController extends Controller
      */
     public function edit($id)
     {
-        $this->artikelRepository->getArtikelById($id);
-        return Inertia::render('Admin/Functions/Artikel/Edit');
+        $artikel = $this->artikelRepository->getArtikelById($id);
+
+        return Inertia::render('Admin/Functions/Artikel/Edit', [
+            'artikel' => $artikel,
+            'fase' => $this->faseRepository->getAllFase()
+        ]);
     }
 
     /**

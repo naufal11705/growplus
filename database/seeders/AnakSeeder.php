@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Anak;
 use Illuminate\Database\Seeder;
 
 class AnakSeeder extends Seeder
@@ -12,6 +12,6 @@ class AnakSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Anak::factory(50)->create();
     }
 }

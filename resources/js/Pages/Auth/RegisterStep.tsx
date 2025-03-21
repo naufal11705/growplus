@@ -1,6 +1,6 @@
 import Stepper from "@/Components/Widget/Stepper";
 import { useState } from "react";
-import Layout from "../../Layouts/Auth";
+import Layout from "@/Layouts/Auth";
 import DataAnak from "./Data/DataAnak";
 import DataKeluarga from "./Data/DataKeluarga";
 

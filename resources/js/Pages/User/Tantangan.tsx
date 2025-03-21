@@ -1,6 +1,6 @@
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
-import { challenges } from "../../Data/ChallengeCard";
-import Layout from "../../Layouts/Layout";
+import { challenges } from "@/Data/ChallengeCard";
+import Layout from "@/Layouts/Layout";
 import Tabs from "@/Components/Widget/Tabs/ChallengeTabs";
 
 export default function Forum() {

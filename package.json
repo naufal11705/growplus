@@ -31,6 +31,7 @@
         "laravel-echo": "^2.0.2",
         "pusher-js": "^8.4.0",
         "react-confetti": "^6.4.0",
+        "react-router-dom": "^7.4.0",
         "react-use": "^17.6.0",
         "swiper": "^11.2.5"
     }
