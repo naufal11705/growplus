@@ -1,18 +1,77 @@
 import { useState } from "react";
 import Layout from "@/Layouts/Layout";
+
 export default function PerhitunganStunting() {
     const [isGenderOpen, setIsGenderOpen] = useState(false);
     const [selectedGender, setSelectedGender] = useState<string>("Pilih");
     const [height, setHeight] = useState<number | string>("");
     const [usia, setUsia] = useState<number | string>("");
+    const [result, setResult] = useState<string | null>(null);
 
     const toggleGenderDropdown = () => {
         setIsGenderOpen(!isGenderOpen);
     };
+
     const handleGenderSelect = (genderOption: string) => {
         setSelectedGender(genderOption);
         setIsGenderOpen(false);
     };
+
+    // Definisikan tipe untuk referenceData
+    interface ReferenceData {
+        [key: number]: { median: number; sd: number };
+    }
+
+    // Fungsi untuk menghitung stunting
+    const calculateStunting = () => {
+        if (selectedGender === "Pilih" || !height || !usia) {
+            setResult("Harap lengkapi semua data terlebih dahulu.");
+            return;
+        }
+
+        const heightNum = Number(height);
+        const usiaNum = Number(usia);
+
+        // Data referensi WHO sederhana dengan tipe eksplisit
+        const referenceData: { "Laki-Laki": ReferenceData; "Perempuan": ReferenceData } = {
+            "Laki-Laki": {
+                12: { median: 75.7, sd: 3.3 },
+                24: { median: 87.1, sd: 3.5 },
+                36: { median: 96.1, sd: 3.7 },
+            },
+            "Perempuan": {
+                12: { median: 74.0, sd: 3.2 },
+                24: { median: 85.7, sd: 3.4 },
+                36: { median: 95.1, sd: 3.6 },
+            },
+        };
+
+        // Ambil data referensi berdasarkan jenis kelamin
+        const genderData = referenceData[selectedGender as "Laki-Laki" | "Perempuan"];
+        const validAges = [12, 24, 36] as const; // Tipe literal untuk kunci yang valid
+        const usiaRef = validAges.reduce((prev, curr) =>
+            Math.abs(curr - usiaNum) < Math.abs(prev - usiaNum) ? curr : prev
+        );
+
+        // Ambil median dan sd berdasarkan usia terdekat
+        const { median, sd } = genderData[usiaRef];
+
+        // Hitung Z-Score
+        const zScore = (heightNum - median) / sd;
+
+        // Tentukan status stunting
+        let status = "";
+        if (zScore < -3) {
+            status = "Stunting Berat";
+        } else if (zScore < -2) {
+            status = "Stunting";
+        } else {
+            status = "Normal";
+        }
+
+        setResult(`Z-Score: ${zScore.toFixed(2)} SD\nStatus: ${status}`);
+    };
+
     return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
@@ -45,17 +104,41 @@ export default function PerhitunganStunting() {
                             </div>
                             <div className="lg:mb-0 mb-5">
                                 <label className="block mb-2 text-sm font-bold text-gray-900">Berapa tinggi Anda? (cm)</label>
-                                <input type="text" value={height} onChange={(e) => setHeight(e.target.value)} className="text-gray-500 w-full bg-gray-100 border border-gray-100 flex justify-between items-center font-bold rounded-xl text-sm px-5 py-2.5" placeholder="Masukkan tinggi badan (cm)" />
+                                <input
+                                    type="number"
+                                    value={height}
+                                    onChange={(e) => setHeight(e.target.value)}
+                                    className="text-gray-500 w-full bg-gray-100 border border-gray-100 font-bold rounded-xl text-sm px-5 py-2.5"
+                                    placeholder="Masukkan tinggi badan (cm)"
+                                />
                             </div>
                             <div className="lg:mb-0 mb-5">
-                                <label className="block mb-2 text-sm font-bold text-gray-900">Berapa usia anak Anda?</label>
-                                <input type="text" value={usia} onChange={(e) => setUsia(e.target.value)} className="text-gray-500 w-full bg-gray-100 border border-gray-100 flex justify-between items-center font-bold rounded-xl text-sm px-5 py-2.5" placeholder="Masukkan berat badan (kg)" />
+                                <label className="block mb-2 text-sm font-bold text-gray-900">Berapa usia anak Anda? (bulan)</label>
+                                <input
+                                    type="number"
+                                    value={usia}
+                                    onChange={(e) => setUsia(e.target.value)}
+                                    className="text-gray-500 w-full bg-gray-100 border border-gray-100 font-bold rounded-xl text-sm px-5 py-2.5"
+                                    placeholder="Masukkan usia (bulan)"
+                                />
                             </div>
-                            <button type="button" className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
+                            <button
+                                type="button"
+                                onClick={calculateStunting}
+                                className="lg:px-0 px-5 py-2 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky"
+                            >
                                 Hitung Stunting
                             </button>
                         </div>
                     </div>
+
+                    {result && (
+                        <div className="block mt-8 p-6 bg-white border-2 border-pinky rounded-xl">
+                            <h3 className="text-lg font-bold text-gray-900 mb-2">Hasil Perhitungan</h3>
+                            <p className="text-gray-700 whitespace-pre-line">{result}</p>
+                        </div>
+                    )}
+
                     <div className="block mt-8 p-6 bg-white border border-gray-200 rounded-xl">
                         <div className="flex flex-row font-bold gap-2 text-gray-500 mb-3 text-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-auto text-yellow-500">
