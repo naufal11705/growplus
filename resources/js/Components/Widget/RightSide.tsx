@@ -19,18 +19,30 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apa itu Pregnancy Challenge?",
+            answer: "Pregnancy Challenge adalah tantangan harian yang dirancang untuk membantu ibu hamil menjaga kesehatan fisik dan mental melalui berbagai aktivitas seperti olahraga ringan, meditasi, serta edukasi kehamilan."
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apakah challenge ini aman untuk semua ibu hamil?",
+            answer: "Challenge ini dirancang untuk ibu hamil secara umum, tetapi setiap ibu memiliki kondisi kesehatan yang berbeda. Sebaiknya konsultasikan dengan dokter sebelum mengikuti tantangan, terutama jika memiliki kondisi medis tertentu."
         },
         {
-            question: "Lorem ipsum",
-            answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et odio sed est pellentesque scelerisque. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+            question: "Apa manfaat mengikuti Pregnancy Challenge?",
+            answer: "Manfaatnya meliputi peningkatan kesehatan fisik, mengurangi stres, meningkatkan energi, serta membangun kebiasaan sehat selama kehamilan."
+        },
+        {
+            question: "Bagaimana jika saya melewatkan satu tantangan?",
+            answer: "Tidak masalah! Anda bisa melanjutkan ke tantangan berikutnya atau mengulang yang terlewat kapan saja sesuai kenyamanan Anda."
+        },
+        {
+            question: "Apakah diperlukan peralatan khusus untuk mengikuti challenge ini?",
+            answer: "Sebagian besar tantangan tidak memerlukan peralatan khusus. Namun, beberapa tantangan seperti yoga atau olahraga ringan mungkin memerlukan matras atau dumbbell ringan."
+        },
+        {
+            question: "Apakah challenge ini termasuk pola makan sehat?",
+            answer: "Ya! Beberapa tantangan mencakup rekomendasi makanan sehat untuk ibu hamil agar mendapatkan nutrisi yang cukup untuk mendukung perkembangan bayi."
         }
-    ];
+    ];    
 
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 

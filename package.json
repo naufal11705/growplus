@@ -30,6 +30,7 @@
     "dependencies": {
         "flowbite": "^3.1.2",
         "react-confetti": "^6.4.0",
+        "react-router-dom": "^7.4.0",
         "react-use": "^17.6.0",
         "swiper": "^11.2.5"
     }

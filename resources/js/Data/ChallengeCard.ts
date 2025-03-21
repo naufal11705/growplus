@@ -19,7 +19,7 @@ export const challenges: Challenge[] = [
             "Edukasi Seputar Kehamilan ",
             "Membangun Kebiasaan Positif Sejak Dini",
         ],
-        progress: 0
+        progress: 10
     },
     {
         id: 2,
