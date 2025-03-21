@@ -41,19 +41,19 @@ export default function Imunisasi(){
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </th>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         Disini
                                     </td>
                                     <td className="px-6 py-4 text-right flex gap-2">
