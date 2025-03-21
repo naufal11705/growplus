@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProfileAI from "@/assets/images/AiProfile.png";
+import ProfileAI from "../../../assets/images/AiProfile.png";
 import Layout from "@/Layouts/Layout";
 
 export default function User() {
