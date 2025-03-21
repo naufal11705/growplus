@@ -100,5 +100,8 @@ Route::get('/artikel', function(){
 Route::get('/detail-artikel', function(){
     return Inertia::render('Page');
 });
+Route::get('/profil/edit', function(){
+    return Inertia::render('User/Functions/Profile/Edit_OrangTua');
+});
 
 require __DIR__ . '/auth.php';

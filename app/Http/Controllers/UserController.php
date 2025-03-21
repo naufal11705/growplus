@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function profil()
     {
-        return Inertia::render('User/Profil');
+        return Inertia::render('User/Profile');
     }
 
     public function tantangan()
