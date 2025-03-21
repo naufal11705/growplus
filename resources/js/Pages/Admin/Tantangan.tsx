@@ -63,11 +63,11 @@ export default function Tantangan(){
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.tantangan_id}
                                         </th>
-                                        <td className="px-6 py-4">{item.activity}</td>
-                                        <td className="px-6 py-4">{item.point}</td>
-                                        <td className="px-6 py-4">{item.fase_id}</td>
-                                        <td className="px-6 py-4">{item.status}</td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.activity}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.point}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.fase_id}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.status}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         <a href={`/admin/tantangan/${item.tantangan_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit
                                             </a>

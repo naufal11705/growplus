@@ -56,11 +56,11 @@ export default function Puskesmas() {
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.puskesmas_id}
                                         </th>
-                                        <td className="px-6 py-4">{item.nama}</td>
-                                        <td className="px-6 py-4">{item.alamat}</td>
-                                        <td className="px-6 py-4">{item.kecamatan}</td>
-                                        <td className="px-6 py-4">{item.kota}</td>
-                                        <td className="px-6 py-4">{item.kontak}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.alamat}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.kecamatan}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.kota}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.kontak}</td>
                                         <td className="px-6 py-4 text-right flex gap-2">
                                             <a href={`/admin/puskesmas/${item.puskesmas_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit

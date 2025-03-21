@@ -65,11 +65,11 @@ export default function Fase(){
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.fase_id}
                                         </th>
-                                        <td className="px-6 py-4">{item.title}</td>
-                                        <td className="px-6 py-4">{item.description}</td>
-                                        <td className="px-6 py-4">{item.benefits}</td>
-                                        <td className="px-6 py-4">{item.status}</td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.description}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.benefits}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.status}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <a href={`/admin/fase/${item.fase_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit
                                             </a>

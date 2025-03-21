@@ -1,0 +1,100 @@
+{"input": "Apa itu kehamilan?", "output": "Kehamilan adalah proses di mana seorang wanita mengandung janin di dalam rahimnya, yang dimulai dari pembuahan hingga kelahiran, biasanya berlangsung sekitar 9 bulan atau 40 minggu."}
+{"input": "Berapa lama kehamilan normal berlangsung?", "output": "Kehamilan normal berlangsung sekitar 40 minggu atau 9 bulan, dihitung dari hari pertama haid terakhir (HPHT)."}
+{"input": "Apa tanda-tanda awal kehamilan?", "output": "Tanda-tanda awal kehamilan meliputi telat haid, mual, muntah (morning sickness), payudara terasa nyeri, dan sering lelah."}
+{"input": "Apa itu morning sickness?", "output": "Morning sickness adalah mual dan muntah yang sering dialami ibu hamil, terutama di trimester pertama, biasanya terjadi di pagi hari meski bisa kapan saja."}
+{"input": "Bagaimana cara mengatasi mual saat hamil?", "output": "Untuk mengatasi mual, makanlah dalam porsi kecil tapi sering, hindari makanan berlemak atau pedas, dan coba konsumsi jahe atau permen mint."}
+{"input": "Apa itu trimester dalam kehamilan?", "output": "Trimester adalah pembagian waktu kehamilan menjadi tiga periode: trimester pertama (0-13 minggu), kedua (14-26 minggu), dan ketiga (27-40 minggu)."}
+{"input": "Apa yang terjadi pada trimester pertama?", "output": "Pada trimester pertama, janin mulai berkembang, organ utama terbentuk, dan ibu mungkin mengalami mual, lelah, serta perubahan hormon."}
+{"input": "Makanan apa yang baik untuk ibu hamil?", "output": "Makanan yang baik untuk ibu hamil adalah yang kaya zat besi (bayam), protein (telur, daging tanpa lemak), kalsium (susu, yogurt), dan asam folat (sayuran hijau)."}
+{"input": "Apa itu asam folat dan mengapa penting?", "output": "Asam folat adalah vitamin B9 yang penting untuk mencegah cacat tabung saraf pada janin, seperti spina bifida, dan harus dikonsumsi sejak awal kehamilan."}
+{"input": "Berapa banyak asam folat yang dibutuhkan ibu hamil?", "output": "Ibu hamil disarankan mengonsumsi 400-600 mikrogram asam folat per hari, baik dari makanan atau suplemen."}
+{"input": "Apa tanda bahaya pada trimester pertama?", "output": "Tanda bahaya termasuk pendarahan hebat, nyeri perut parah, atau muntah berlebihan (hiperemesis gravidarum); segera konsultasi dokter jika ini terjadi."}
+{"input": "Bolehkah ibu hamil minum kopi?", "output": "Boleh, tapi batasi kafein hingga 200 mg per hari (sekitar 1-2 cangkir kecil kopi) agar tidak memengaruhi janin."}
+{"input": "Apa yang harus dipersiapkan untuk persalinan?", "output": "Persiapkan tas persalinan berisi pakaian ibu dan bayi, dokumen medis (KIA), pembalut nifas, dan perlengkapan mandi."}
+{"input": "Kapan tas persalinan harus disiapkan?", "output": "Tas persalinan sebaiknya disiapkan mulai minggu ke-36 agar siap jika persalinan datang lebih awal."}
+{"input": "Apa itu kontraksi palsu?", "output": "Kontraksi palsu (Braxton Hicks) adalah kontraksi rahim yang tidak teratur dan tidak membuka serviks, biasanya terasa di trimester ketiga."}
+{"input": "Bagaimana membedakan kontraksi palsu dan asli?", "output": "Kontraksi asli teratur, semakin kuat, dan berdekatan waktunya, sedangkan kontraksi palsu tidak teratur dan hilang saat beristirahat."}
+{"input": "Apa itu persalinan normal?", "output": "Persalinan normal adalah proses melahirkan bayi melalui vagina tanpa bantuan operasi, biasanya didukung oleh kontraksi alami."}
+{"input": "Apa kelebihan persalinan normal?", "output": "Kelebihannya adalah pemulihan lebih cepat, risiko infeksi lebih rendah, dan bonding dengan bayi lebih awal."}
+{"input": "Apa itu operasi caesar?", "output": "Operasi caesar adalah prosedur melahirkan bayi melalui sayatan di perut dan rahim, biasanya dilakukan jika ada komplikasi."}
+{"input": "Kapan operasi caesar diperlukan?", "output": "Diperlukan jika bayi sungsang, plasenta previa, gawat janin, atau ibu memiliki kondisi medis tertentu."}
+{"input": "Bagaimana cara menjaga kesehatan mental saat hamil?", "output": "Lakukan relaksasi seperti meditasi, bicara dengan pasangan atau teman, dan konsultasi psikolog jika merasa cemas berlebihan."}
+{"input": "Apa itu edema pada ibu hamil?", "output": "Edema adalah pembengkakan, biasanya di kaki atau tangan, akibat penumpukan cairan; normal di akhir kehamilan tapi awasi tanda preeklampsia."}
+{"input": "Bagaimana cara mengatasi kaki bengkak saat hamil?", "output": "Angkat kaki saat duduk, gunakan kaus kaki kompresi, minum cukup air, dan kurangi garam."}
+{"input": "Apa itu preeklampsia?", "output": "Preeklampsia adalah kondisi serius dengan tekanan darah tinggi dan protein dalam urin setelah 20 minggu kehamilan; butuh perhatian medis segera."}
+{"input": "Apa tanda-tanda preeklampsia?", "output": "Tanda-tandanya adalah sakit kepala hebat, penglihatan buram, nyeri perut atas, dan bengkak tiba-tiba."}
+{"input": "Bolehkah ibu hamil olahraga?", "output": "Boleh, olahraga ringan seperti jalan kaki, yoga prenatal, atau berenang baik untuk kesehatan ibu dan janin."}
+{"input": "Apa manfaat yoga prenatal?", "output": "Yoga prenatal meningkatkan fleksibilitas, mengurangi stres, dan membantu persiapan persalinan."}
+{"input": "Apa itu USG kehamilan?", "output": "USG (ultrasonografi) adalah pemeriksaan menggunakan gelombang suara untuk melihat perkembangan janin di dalam rahim."}
+{"input": "Kapan USG pertama dilakukan?", "output": "USG pertama biasanya dilakukan pada usia kehamilan 6-12 minggu untuk memastikan kehamilan dan detak jantung janin."}
+{"input": "Apa itu plasenta previa?", "output": "Plasenta previa adalah kondisi di mana plasenta menutupi sebagian atau seluruh serviks, bisa menyebabkan pendarahan dan memerlukan caesar."}
+{"input": "Bagaimana cara tidur yang baik saat hamil?", "output": "Tidurlah miring ke kiri untuk meningkatkan aliran darah ke janin, gunakan bantal untuk dukungan perut dan punggung."}
+{"input": "Apa itu kolostrum?", "output": "Kolostrum adalah cairan pertama dari payudara ibu setelah melahirkan, kaya nutrisi dan antibodi untuk bayi."}
+{"input": "Kapan ibu hamil harus ke dokter?", "output": "Segera ke dokter jika ada pendarahan, nyeri hebat, kontraksi sebelum waktunya, atau janin tak bergerak."}
+{"input": "Apa itu anemia pada kehamilan?", "output": "Anemia adalah kekurangan sel darah merah, sering karena kurang zat besi, menyebabkan lelah dan pucat."}
+{"input": "Bagaimana mencegah anemia saat hamil?", "output": "Konsumsi makanan kaya zat besi seperti daging merah, bayam, dan suplemen zat besi jika diresepkan dokter."}
+{"input": "Apa itu stretch mark?", "output": "Stretch mark adalah garis-garis di kulit akibat peregangan selama kehamilan, biasanya di perut, payudara, atau paha."}
+{"input": "Bagaimana mengurangi stretch mark?", "output": "Gunakan pelembap seperti minyak kelapa atau krim khusus, dan jaga hidrasi kulit dengan minum banyak air."}
+{"input": "Apa itu air ketuban?", "output": "Air ketuban adalah cairan yang melindungi janin di dalam rahim, membantu pertumbuhan dan menjaga suhu."}
+{"input": "Apa tanda air ketuban pecah?", "output": "Tanda air ketuban pecah adalah keluarnya cairan bening atau sedikit kuning dari vagina, bisa tiba-tiba atau perlahan."}
+{"input": "Kapan janin mulai bergerak?", "output": "Janin biasanya mulai terasa bergerak (quickening) antara minggu 16-25, lebih awal pada kehamilan kedua."}
+{"input": "Apa yang harus dilakukan jika janin tak bergerak?", "output": "Minum air dingin atau makan, lalu hitung gerakan; jika masih tak ada dalam 2 jam, segera ke dokter."}
+{"input": "Apa itu kelas prenatal?", "output": "Kelas prenatal adalah kursus untuk ibu hamil yang mengajarkan teknik pernapasan, posisi melahirkan, dan perawatan bayi."}
+{"input": "Mengapa kelas prenatal penting?", "output": "Kelas prenatal membantu ibu dan pasangan memahami proses persalinan dan meningkatkan rasa percaya diri."}
+{"input": "Apa itu kehamilan ektopik?", "output": "Kehamilan ektopik adalah kehamilan di luar rahim, biasanya di tuba falopi, dan memerlukan penanganan medis segera."}
+{"input": "Apa tanda-tanda kehamilan ektopik?", "output": "Tanda-tandanya adalah nyeri perut sebelah, pendarahan vagina, dan rasa pusing; segera periksa ke dokter."}
+{"input": "Bagaimana cara menghitung HPL?", "output": "HPL (Hari Perkiraan Lahir) dihitung dengan menambah 280 hari dari hari pertama haid terakhir (HPHT)."}
+{"input": "Apa itu bayi sungsang?", "output": "Bayi sungsang adalah posisi bayi di rahim dengan kaki atau bokong di bawah, bukan kepala, menjelang persalinan."}
+{"input": "Bolehkah ibu hamil bepergian jauh?", "output": "Boleh, tapi hindari perjalanan jauh setelah 36 minggu atau jika ada komplikasi; konsultasi dokter sebelumnya."}
+{"input": "Apa itu diabetes gestasional?", "output": "Diabetes gestasional adalah kadar gula darah tinggi yang muncul saat kehamilan dan biasanya hilang setelah melahirkan."}
+{"input": "Bagaimana mencegah diabetes gestasional?", "output": "Jaga pola makan sehat, olahraga ringan, dan pantau berat badan selama kehamilan."}
+{"input": "Apa itu perkembangan janin pada minggu ke-8?", "output": "Pada minggu ke-8, janin sepanjang 1-2 cm, organ utama seperti jantung dan otak mulai terbentuk, serta tangan dan kaki mulai muncul."}
+{"input": "Kapan janin memiliki detak jantung?", "output": "Detak jantung janin biasanya terdeteksi melalui USG pada minggu ke-6 hingga ke-7 kehamilan."}
+{"input": "Apa itu tes TORCH?", "output": "Tes TORCH adalah pemeriksaan darah untuk mendeteksi infeksi seperti Toxoplasma, Rubella, Cytomegalovirus, dan Herpes yang bisa membahayakan janin."}
+{"input": "Mengapa tes TORCH penting?", "output": "Tes TORCH penting untuk mencegah komplikasi seperti cacat lahir atau keguguran akibat infeksi selama kehamilan."}
+{"input": "Bolehkah ibu hamil mewarnai rambut?", "output": "Boleh setelah trimester pertama, tapi gunakan pewarna bebas amonia dan lakukan di ruangan berventilasi baik."}
+{"input": "Apa itu nifas?", "output": "Nifas adalah masa pemulihan setelah melahirkan, biasanya 6 minggu, di mana tubuh ibu kembali ke kondisi sebelum hamil."}
+{"input": "Bagaimana cara merawat diri selama masa nifas?", "output": "Istirahat cukup, konsumsi makanan bergizi, jaga kebersihan area perineum, dan hindari aktivitas berat."}
+{"input": "Apa itu baby blues?", "output": "Baby blues adalah perasaan sedih, cemas, atau mudah marah yang dialami ibu setelah melahirkan, biasanya berlangsung 2 minggu."}
+{"input": "Bagaimana membedakan baby blues dan depresi pasca melahirkan?", "output": "Baby blues ringan dan sementara, sedangkan depresi pasca melahirkan lebih berat, berlangsung lama, dan bisa disertai pikiran menyakiti diri atau bayi."}
+{"input": "Apa itu ASI eksklusif?", "output": "ASI eksklusif adalah pemberian hanya air susu ibu tanpa tambahan makanan atau minuman lain selama 6 bulan pertama bayi."}
+{"input": "Mengapa ASI eksklusif penting?", "output": "ASI eksklusif mendukung pertumbuhan optimal, meningkatkan imunitas bayi, dan mengurangi risiko penyakit."}
+{"input": "Bagaimana cara meningkatkan produksi ASI?", "output": "Sering menyusui, minum banyak air, konsumsi makanan seperti daun katuk, dan hindari stres."}
+{"input": "Apa itu mastitis?", "output": "Mastitis adalah infeksi payudara yang menyebabkan nyeri, bengkak, dan demam, sering terjadi akibat saluran ASI tersumbat."}
+{"input": "Bagaimana cara mengatasi mastitis?", "output": "Tetap menyusui, kompres hangat payudara, dan konsultasi dokter untuk antibiotik jika perlu."}
+{"input": "Apa itu inisiasi menyusu dini?", "output": "Inisiasi menyusu dini adalah pemberian ASI dalam 1 jam pertama setelah kelahiran untuk bonding dan stimulasi produksi ASI."}
+{"input": "Apa itu posisi menyusui yang baik?", "output": "Posisi seperti cradle hold atau football hold, pastikan bayi menghadap payudara dan mulut menempel sempurna pada puting."}
+{"input": "Bolehkah ibu hamil mengangkat benda berat?", "output": "Hindari mengangkat benda lebih dari 10-15 kg, terutama di trimester ketiga, untuk mencegah tekanan pada rahim."}
+{"input": "Apa itu keguguran?", "output": "Keguguran adalah kehilangan janin sebelum usia kehamilan 20 minggu, sering ditandai dengan pendarahan dan kram."}
+{"input": "Apa penyebab keguguran?", "output": "Penyebabnya bisa kelainan kromosom, infeksi, gangguan hormon, atau trauma fisik."}
+{"input": "Bagaimana cara mencegah keguguran?", "output": "Jaga kesehatan dengan pola makan sehat, hindari rokok dan alkohol, serta konsultasi rutin ke dokter."}
+{"input": "Apa itu kehamilan kembar?", "output": "Kehamilan kembar adalah kondisi mengandung dua janin atau lebih, bisa identik (dari satu telur) atau fraternal (dari dua telur)."}
+{"input": "Apa risiko kehamilan kembar?", "output": "Risikonya termasuk kelahiran prematur, preeklampsia, dan diabetes gestasional yang lebih tinggi."}
+{"input": "Bagaimana cara mengetahui kehamilan kembar?", "output": "Bisa diketahui melalui USG, biasanya terdeteksi pada trimester pertama."}
+{"input": "Apa itu kelahiran prematur?", "output": "Kelahiran prematur adalah kelahiran sebelum usia kehamilan 37 minggu."}
+{"input": "Apa tanda-tanda kelahiran prematur?", "output": "Tandanya adalah kontraksi teratur sebelum waktunya, pecah ketuban dini, atau pendarahan."}
+{"input": "Bagaimana cara mencegah kelahiran prematur?", "output": "Hindari stres, periksa rutin ke dokter, dan kelola kondisi seperti hipertensi atau infeksi."}
+{"input": "Apa itu episiotomi?", "output": "Episiotomi adalah sayatan kecil di perineum saat persalinan untuk mempermudah keluarnya bayi."}
+{"input": "Apakah episiotomi selalu diperlukan?", "output": "Tidak, hanya dilakukan jika bayi besar, ada gawat janin, atau untuk mencegah robekan parah."}
+{"input": "Bagaimana merawat jahitan episiotomi?", "output": "Jaga kebersihan dengan air hangat, hindari duduk terlalu lama, dan gunakan bantal jika nyeri."}
+{"input": "Apa itu kontraksi setelah melahirkan?", "output": "Kontraksi pasca melahirkan (afterpains) adalah kram rahim saat kembali ke ukuran normal, terasa lebih kuat saat menyusui."}
+{"input": "Apa itu lochia?", "output": "Lochia adalah darah dan jaringan yang keluar dari rahim setelah melahirkan, berlangsung 4-6 minggu."}
+{"input": "Bagaimana membedakan lochia normal dan abnormal?", "output": "Lochia normal berubah dari merah ke kuning pucat; jika bau busuk atau pendarahan hebat, segera ke dokter."}
+{"input": "Apa itu hemoglobin ibu hamil?", "output": "Hemoglobin adalah protein dalam darah yang membawa oksigen; normalnya 11-13 g/dL saat hamil."}
+{"input": "Mengapa hemoglobin rendah berbahaya?", "output": "Hemoglobin rendah (anemia) menyebabkan lelah, pusing, dan risiko komplikasi saat persalinan."}
+{"input": "Apa itu suntik TT untuk ibu hamil?", "output": "Suntik TT (Tetanus Toxoid) adalah vaksin untuk mencegah tetanus pada ibu dan bayi baru lahir."}
+{"input": "Kapan suntik TT diberikan?", "output": "Diberikan dua dosis, pertama pada trimester kedua dan kedua sebulan kemudian."}
+{"input": "Apa itu tali pusat?", "output": "Tali pusat adalah struktur yang menghubungkan janin dan plasenta, mengangkut nutrisi dan oksigen."}
+{"input": "Kapan tali pusat dipotong?", "output": "Biasanya dipotong beberapa menit setelah kelahiran, idealnya setelah berhenti berdenyut untuk aliran darah optimal."}
+{"input": "Apa itu jaundice pada bayi baru lahir?", "output": "Jaundice adalah menguningnya kulit dan mata bayi akibat kadar bilirubin tinggi, sering terjadi dalam 2-3 hari pertama."}
+{"input": "Bagaimana cara mengatasi jaundice pada bayi?", "output": "Berikan ASI sering, paparkan pada sinar matahari pagi, atau gunakan fototerapi jika parah."}
+{"input": "Apa itu perineum?", "output": "Perineum adalah area antara vagina dan anus, yang meregang saat persalinan."}
+{"input": "Bagaimana mencegah robekan perineum?", "output": "Latih pernapasan, gunakan pijat perineum sebelum melahirkan, dan ikuti arahan bidan saat mengejan."}
+{"input": "Apa itu indeks massa tubuh (IMT) saat hamil?", "output": "IMT adalah ukuran berat badan terhadap tinggi untuk menentukan kenaikan berat ideal selama kehamilan."}
+{"input": "Berapa kenaikan berat badan ideal ibu hamil?", "output": "Tergantung IMT awal: 11-16 kg (normal), 12-18 kg (kurus), 7-11 kg (gemuk)."}
+{"input": "Apa itu gerakan janin aktif?", "output": "Gerakan janin aktif adalah tendangan atau putaran yang terasa lebih sering di trimester kedua dan ketiga."}
+{"input": "Apa itu metode kanguru?", "output": "Metode kanguru adalah kontak kulit ibu dan bayi untuk menjaga suhu dan bonding, terutama untuk bayi prematur."}
+{"input": "Bagaimana cara menjaga kebersihan saat hamil?", "output": "Cuci tangan rutin, mandi setiap hari, dan hindari kontak dengan hewan peliharaan yang tidak bersih."}
+{"input": "Apa itu konsultasi laktasi?", "output": "Konsultasi laktasi adalah bimbingan dari ahli untuk membantu ibu menyusui dengan teknik dan solusi masalah ASI."}
+{"input": "Mengapa ibu hamil sering buang air kecil?", "output": "Rahim yang membesar menekan kandung kemih, ditambah hormon meningkatkan produksi urin."}
+{"input": "Apa itu hiperemesis gravidarum?", "output": "Hiperemesis gravidarum adalah mual dan muntah berat saat hamil yang bisa menyebabkan dehidrasi dan penurunan berat badan."}

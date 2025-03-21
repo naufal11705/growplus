@@ -64,10 +64,10 @@ export default function Faskes(){
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.faskes_id}
                                         </th>
-                                        <td className="px-6 py-4">{item.orangtua_id}</td>
-                                        <td className="px-6 py-4">{item.puskesmas_id}</td>
-                                        <td className="px-6 py-4">{item.no_reg_kohort_ibu}</td>
-                                        <td className="px-6 py-4">{item.no_reg_kohort_anak}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.orangtua_id}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.puskesmas_id}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.no_reg_kohort_ibu}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.no_reg_kohort_anak}</td>
                                         <td className="px-6 py-4 text-right flex gap-2">
                                             <a href={`/admin/faskes/${item.faskes_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit

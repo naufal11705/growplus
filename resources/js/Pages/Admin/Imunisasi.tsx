@@ -67,11 +67,11 @@ export default function Imunisasi(){
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.imunisasi_id}
                                         </th>
-                                        <td className="px-6 py-4">{item.nama}</td>
-                                        <td className="px-6 py-4">{item.jenis}</td>
-                                        <td className="px-6 py-4">{item.usia_minimum}</td>
-                                        <td className="px-6 py-4">{item.usia_maksimum}</td>
-                                        <td className="px-6 py-4">{item.puskesmas_id}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.jenis}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.usia_minimum}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.usia_maksimum}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.puskesmas_id}</td>
                                         <td className="px-6 py-4 text-right flex gap-2">
                                             <a href={`/admin/imunisasi/${item.imunisasi_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit

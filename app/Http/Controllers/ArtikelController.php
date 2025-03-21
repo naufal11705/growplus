@@ -18,13 +18,33 @@ class ArtikelController extends Controller
         $this->artikelRepository = $artikelRepository;
         $this->faseRepository = $faseRepository;
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Admin/Artikel');
+        $articles = $this->artikelRepository->getAllArtikel();
+        return Inertia::render('Admin/Artikel', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function listArticles()
+    {
+        $articles = $this->artikelRepository->getAllArtikel();
+        return Inertia::render('Artikel', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function showArticle($slug)
+    {
+        $article = $this->artikelRepository->getArtikelBySlug($slug);
+        // dd($article);
+        return Inertia::render('Page', [
+            'article' => $article
+        ]);
     }
 
     /**
@@ -48,6 +68,7 @@ class ArtikelController extends Controller
 
         return Inertia::render('Admin/Artikel');
     }
+
 
     /**
      * Display the specified resource.

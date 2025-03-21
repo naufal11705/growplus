@@ -39,7 +39,7 @@ export default function TantanganCards({ challenges, gridCols = "xl:grid-cols-4"
                         </div>
                     </div>
                     <div className="flex flex-col flex-grow p-4">
-                        <a href="#">
+                        <a href="javascript:void(0)">
                             <h5 className="text-2xl font-bold tracking-tight text-gray-900">{challenge.title}</h5>
                             <p className="mb-2 text-gray-500">{challenge.subtitle}</p>
                         </a>
