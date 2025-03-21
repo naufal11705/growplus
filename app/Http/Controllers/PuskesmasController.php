@@ -39,7 +39,15 @@ class PuskesmasController extends Controller
      */
     public function store(PuskesmasStoreRequest $request)
     {
-        $request->validated();
+        // $request->validated();
+
+        $dummyData = [
+            'nama' => 'Imunisasi Campak',
+            'alamat' => 'begitulah',
+            'kecamatan' => 'singosari',
+            'kota' => 'Malang',
+            'kontak' => '09876543'
+        ];
 
         $this->puskesmasRepository->createPuskesmas($request->all());
 
