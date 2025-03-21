@@ -15,7 +15,7 @@ export default function Artikel() {
                     </a>
                     <span className="bg-wine bg-opacity-50 px-4 py-2 text-xs text-white rounded-full">Persiapan</span>
                     <h1 className="mb-8 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Persiapan Persalinan yang Harus Diketahui Agar Proses Melahirkan Lebih Lancar dan Nyaman</h1>
-                    <div className="flex flex-row gap-5">
+                    <div className="flex lg:flex-row flex-col gap-5">
                         <h1 className="inline-flex gap-3 items-center text-lg font-bold text-center text-black flex flex-row">
                             <img className="w-10 h-10 rounded-full" src="https://wridev.id/talents/riovaldo-alfiyan-fahmi-rahman.jpg" alt="Rounded avatar" />
                             John Doe
