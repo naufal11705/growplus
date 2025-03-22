@@ -22,7 +22,7 @@ export const challenges: Challenge[] = [
             "Edukasi Seputar Kehamilan ",
             "Membangun Kebiasaan Positif Sejak Dini",
         ],
-        progress: 10,
+        status: 1,
     },
     {
         id: 2,
@@ -38,7 +38,7 @@ export const challenges: Challenge[] = [
             "Berikan sayur dan buah setiap hari untuk memenuhi kebutuhan gizi.",
         ],
         benefit: ["Persiapan Mental dan Emosional"],
-        progress: 10,
+        status: 0,
     },
     {
         id: 3,
@@ -54,7 +54,7 @@ export const challenges: Challenge[] = [
             "Hindari memberikan makanan olahan dan cepat saji yang tinggi gula",
         ],
         benefit: ["Persiapan Mental dan Emosional"],
-        progress: 0,
+        status: 0,
     },
     {
         id: 4,
@@ -70,7 +70,7 @@ export const challenges: Challenge[] = [
             "Lakukan imunisasi lengkap untuk mendukung tumbuh kembang optimal.",
         ],
         benefit: ["Persiapan Mental dan Emosional"],
-        progress: 0,
+        status: 0,
     },
     {
         id: 5,
@@ -86,6 +86,6 @@ export const challenges: Challenge[] = [
             "Jangan lupa mencatat jadwal imunisasi berikutnya agar tidak terlewat.",
         ],
         benefit: ["Persiapan Mental dan Emosional"],
-        progress: 0,
+        status: 0,
     },
 ];

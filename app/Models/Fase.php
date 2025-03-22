@@ -14,11 +14,16 @@ class Fase extends Model
     protected $primaryKey = 'fase_id';
 
     protected $fillable = [
-        'title',
-        'description',
+        'judul',
+        'deskripsi',
         'benefits',
         'banner',
         'progress',
         'status'
     ];
+
+    public function tantangans()
+    {
+        return $this->hasMany(Tantangan::class, 'fase_id');
+    }
 }
