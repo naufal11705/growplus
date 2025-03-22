@@ -7,7 +7,7 @@ interface AnakItem {
     id: number;
 }
 
-export default function Anak() {
+export default function OrangTua() {
     const csrf_token = useCsrfToken();
     const [anakList, setAnakList] = useState<AnakItem[]>([{ id: 1 }]);
 
@@ -35,7 +35,7 @@ export default function Anak() {
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
-                    <h2 className="mb-4 text-2xl font-bold text-gray-900">Buat Data Anak</h2>
+                    <h2 className="mb-4 text-2xl font-bold text-gray-900">Update Data Anak</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div className="sm:col-span-2">
