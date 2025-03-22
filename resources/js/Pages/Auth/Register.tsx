@@ -19,13 +19,16 @@ export default function Register() {
         e.preventDefault();
         setIsLoading(true);
 
-        setTimeout(() => {
-            setIsLoading(false);
-            setShowToast(true);
-            reset();
-        }, 2000);
-
-        post(route("register"));
+        post(route("register"), {
+            onSuccess: () => {
+                setShowToast(true);
+                setIsLoading(false);
+                reset();
+            },
+            onError: () => {
+                setIsLoading(false);
+            }
+        });
     };
 
     return (
