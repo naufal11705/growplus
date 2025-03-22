@@ -97,7 +97,7 @@ export default function Sidebar() {
                             </button>
                             <ul className={`py-2 space-y-2 ${isOpenPengguna ? 'block' : 'hidden'}`}>
                                 <li>
-                                    <a href="/admin/orang-tua" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Orang Tua</a>
+                                    <a href="/admin/orangtua" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Orang Tua</a>
                                 </li>
                                 <li>
                                     <a href="/admin/anak" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Anak</a>
