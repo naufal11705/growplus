@@ -28,6 +28,7 @@ export default function Fase() {
     // State untuk form
     const [formData, setFormData] = useState<Fase>({ ...fase });
     const [banner, setBanner] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string>(fase.banner);
 
     // Handle perubahan input
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,23 +42,43 @@ export default function Fase() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setBanner(e.target.files[0]);
+
+            const imageUrl = URL.createObjectURL(e.target.files[0]);
+            setPreview(imageUrl);
         }
     };
 
     // Handle submit form
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        router.put(`/admin/fase/${formData.fase_id}`, {
-            _token: csrf_token,
-            judul: formData.judul,
-            deskripsi: formData.deskripsi,
-            benefits: formData.benefits,
-            banner: formData.banner,
-            progress: formData.progress,
-            status: selectedStatus,
-        });
-    };
+    
+        const data = new FormData();
+        data.append('_token', csrf_token);
+        data.append('_method', 'PUT'); // Trik agar Laravel menerima request sebagai PUT
+        data.append('judul', formData.judul);
+        data.append('deskripsi', formData.deskripsi);
+        data.append('benefits', formData.benefits);
+        data.append('progress', formData.progress.toString());
+        data.append('status', selectedStatus);
+    
+        if (banner) {
+            data.append('banner', banner); // Hanya tambahkan jika file baru diunggah
+        }
+    
+        try {
+            await router.post(`/admin/fase/${formData.fase_id}`, data, {
+                forceFormData: true, // Memastikan dikirim sebagai FormData
+                onSuccess: () => console.log("✅ Update berhasil!"),
+                onError: (errors) => {
+                    console.error("❌ Terjadi kesalahan saat update:", errors);
+                    alert("Gagal memperbarui fase. Periksa kembali data yang diinput.");
+                },
+            });
+        } catch (error) {
+            console.error("❌ Kesalahan tidak terduga:", error);
+            alert("Terjadi kesalahan. Coba lagi nanti.");
+        }
+    };    
 
     return (
         <Layout>
@@ -67,20 +88,26 @@ export default function Fase() {
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div className="sm:col-span-2">
-                                <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">Judul Fase</label>
-                                <input value={formData.judul} onChange={handleChange} type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul di sini..." required />
+                                <label htmlFor="judul" className="block mb-2 text-sm font-medium text-gray-900">Judul Fase</label>
+                                <input value={formData.judul} onChange={handleChange} type="text" name="judul" id="judul" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul di sini..." required />
                             </div>
 
                             {/* Deskripsi */}
                             <div className="sm:col-span-2">
-                                <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
-                                <textarea value={formData.deskripsi} onChange={handleChange} id="description" name="description" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis deskripsi di sini..." required></textarea>
+                                <label htmlFor="deskripsi" className="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
+                                <textarea value={formData.deskripsi} onChange={handleChange} id="deskripsi" name="deskripsi" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis deskripsi di sini..." required></textarea>
                             </div>
 
                             {/* Manfaat */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="benefits" className="block mb-2 text-sm font-medium text-gray-900">Manfaat</label>
                                 <textarea value={formData.benefits} onChange={handleChange} id="benefits" name="benefits" rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis manfaat fase di sini..." required></textarea>
+                            </div>
+
+                            {/* Banner Preview */}
+                            <div className="sm:col-span-2">
+                                <label className="block mb-2 text-sm font-medium text-gray-900">Banner Saat Ini</label>
+                                <img src={`${window.location.origin}/storage/${formData.banner}`} alt="Banner" className="w-full max-w-xs rounded-lg" />
                             </div>
 
                             {/* Banner */}

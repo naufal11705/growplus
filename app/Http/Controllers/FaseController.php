@@ -76,9 +76,14 @@ class FaseController extends Controller
      */
     public function update(FaseUpdateRequest $request, $id)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        $this->faseRepository->updateFase($id, $request->all());
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
+
+        $this->faseRepository->updateFase($id, $validatedData);
 
         return redirect()->route('fase.index');
     }

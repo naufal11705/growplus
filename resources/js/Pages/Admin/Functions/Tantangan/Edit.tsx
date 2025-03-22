@@ -15,7 +15,7 @@ interface Tantangan {
 
 interface Fase {
     fase_id: number;
-    title: string;
+    judul: string;
 }
 
 interface PageProps extends InertiaPageProps {
@@ -55,14 +55,6 @@ export default function Tantangan() {
     // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        console.log("Data yang dikirim:", {
-            _token: csrf_token,
-            fase_id: selectedFase,
-            activity: formData.activity,
-            point: formData.point,
-            status: selectedStatus,
-        });
 
         router.put(`/admin/tantangan/${formData.tantangan_id}`, {
             _token: csrf_token,
@@ -111,7 +103,7 @@ export default function Tantangan() {
                                     <option value="">Pilih Fase</option>
                                     {fase?.map((item: Fase) => (
                                         <option key={item.fase_id} value={item.fase_id}>
-                                            {item.title}
+                                            {item.judul}
                                         </option>
                                     ))}
                                 </select>
