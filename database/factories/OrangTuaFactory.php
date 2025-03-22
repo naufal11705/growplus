@@ -17,16 +17,18 @@ class OrangTuaFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('id_ID');
+
         return [
             'pengguna_id' => Pengguna::query()->exists() ? Pengguna::inRandomOrder()->first()->pengguna_id : Pengguna::factory()->create()->pengguna_id,
-            'nama' => $this->faker->name(),
+            'nama' => $faker->name(),
             'nik' => $this->faker->unique()->numerify('################'), // 16 digits
             'no_jkn' => $this->faker->unique()->numerify('#############'), // 13 digits
-            'tempat_lahir' => $this->faker->city(),
-            'tanggal_lahir' => $this->faker->date(),
+            'tempat_lahir' => $faker->city(),
+            'tanggal_lahir' => $faker->dateTimeBetween('-20 years', 'now')->format('Y-m-d'),
             'golongan_darah' => $this->faker->randomElement(['A', 'B', 'O', 'AB']),
-            'alamat' => $this->faker->address(),
-            'pekerjaan' => $this->faker->jobTitle(),
+            'alamat' => $faker->address(),
+            'pekerjaan' => $faker->jobTitle(),
             'penghasilan' => $this->faker->randomElement([3000000, 2000000, 5000000, 10000000]),
             'sumber_penghasilan' => $this->faker->randomElement(['Usaha', 'Gaji']),
             'jumlah_tanggungan' => $this->faker->randomDigit(),

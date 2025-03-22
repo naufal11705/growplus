@@ -18,11 +18,13 @@ class ArtikelFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('id_ID');
+
         return [
             // 'fase_id' => Fase::query()->exists() ? Fase::inRandomOrder()->first()->fase_id : Fase::factory()->create()->fase_id,
-            'title' => $title = $this->faker->bs(),
-            'author' => $this->faker->name(),
-            'content' => $this->faker->paragraph(),
+            'title' => $title = $faker->sentence(),
+            'author' => $faker->name(),
+            'content' => $faker->paragraph(),
             'slug' => Str::slug($title),
             'created_at' => now(),
             'updated_at' => now()
