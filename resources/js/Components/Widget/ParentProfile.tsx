@@ -5,7 +5,7 @@ export default function ParentProfile() {
             <h5 className="mb-2 text-xl font-semibold text-gray-900">John Doe</h5>
             <p className="text-sm text-gray-500 mb-3">johndoe@example.com</p>
             <p className="mb-4 text-gray-700 text-sm">A passionate software engineer who loves building web applications.</p>
-            <a href="javascript:void(0)" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
+            <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">
                 Edit Profile
                 <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

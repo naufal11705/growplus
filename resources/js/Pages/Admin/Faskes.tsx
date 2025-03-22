@@ -24,7 +24,7 @@ export default function Faskes(){
             onError: () => alert("Gagal menghapus data."),
         });
     };
-    
+
     return(
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">

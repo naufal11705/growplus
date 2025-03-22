@@ -2,10 +2,14 @@ import { useState } from "react";
 import { router } from "@inertiajs/react";
 
 export default function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenPuskesmas, setIsOpenPuskesmas] = useState(false);
+    const [isOpenPengguna, setIsOpenPengguna] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+    const puskesmasDropdown = () => {
+        setIsOpenPuskesmas(!isOpenPuskesmas);
+    };
+    const penggunaDropdown = () => {
+        setIsOpenPengguna(!isOpenPengguna);
     };
 
     const handleLogout = (e: any) => {
@@ -58,18 +62,18 @@ export default function Sidebar() {
                             </a>
                         </li>
                         <li>
-                            <button type="button" onClick={toggleDropdown} className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                            <button type="button" onClick={puskesmasDropdown} className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                                 <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 12c-.5523 0-1 .4477-1 1s.4477 1 1 1 1-.4477 1-1-.4477-1-1-1Z" />
                                     <path fill-rule="evenodd" d="M17 4c-.5523 0-1 .44772-1 1v4.97045l-4-4.92309-5.34889 6.58324c-.18989.2337-.47499.3694-.77612.3694H3v7c0 .5523.44772 1 1 1h16c.5523 0 1-.4477 1-1v-7h-2.875c-.0421 0-.0838-.0026-.125-.0078V9h3c.5523 0 1-.44772 1-1V5c0-.55228-.4477-1-1-1h-4Zm-8.00001 9c0-1.6568 1.34311-3 3.00001-3 1.6568 0 3 1.3432 3 3 0 1.6569-1.3432 3-3 3-1.6569 0-3.00001-1.3431-3.00001-3Z" clip-rule="evenodd" />
                                     <path d="M5.2 6.40001 2.5 10h2.89902l3.25-3.99999H6c-.31476 0-.61115.1482-.8.4Z" />
                                 </svg>
                                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Puskesmas</span>
-                                <svg className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <svg className={`w-3 h-3 transition-transform duration-300 ${isOpenPuskesmas ? "rotate-180" : "rotate-0"}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
                             </button>
-                            <ul className={`py-2 space-y-2 ${isOpen ? 'block' : 'hidden'}`}>
+                            <ul className={`py-2 space-y-2 ${isOpenPuskesmas ? 'block' : 'hidden'}`}>
                                 <li>
                                     <a href="/admin/puskesmas" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Puskesmas</a>
                                 </li>
@@ -78,6 +82,25 @@ export default function Sidebar() {
                                 </li>
                                 <li>
                                     <a href="/admin/faskes" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Faskes</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button type="button" onClick={penggunaDropdown} className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z" clip-rule="evenodd"/>
+                                </svg>
+                                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Pengguna</span>
+                                <svg className={`w-3 h-3 transition-transform duration-300 ${isOpenPengguna ? "rotate-180" : "rotate-0"}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <ul className={`py-2 space-y-2 ${isOpenPengguna ? 'block' : 'hidden'}`}>
+                                <li>
+                                    <a href="/admin/orang-tua" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Orang Tua</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/anak" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Anak</a>
                                 </li>
                             </ul>
                         </li>
