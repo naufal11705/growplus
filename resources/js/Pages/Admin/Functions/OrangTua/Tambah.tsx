@@ -1,7 +1,43 @@
-import Layout from "@/Layouts/Admin";
-import useCsrfToken from "@/Utils/csrfToken";
+import { useState } from "react";
+import { usePage } from "@inertiajs/react";
 import { router } from "@inertiajs/react";
+import useCsrfToken from "@/Utils/csrfToken";
+import Layout from "@/Layouts/Admin";
+
+interface OrangTua {
+    orangtua_id: number;
+    pengguna_id: number;
+    nama: string;
+    nik: string;
+    no_jkn: string;
+    tempat_lahir: string;
+    tanggal_lahir: string;
+    golongan_darah: string;
+    alamat: string;
+    pekerjaan: string;
+    penghasilan: number;
+    sumber_penghasilan: string;
+    jumlah_tanggungan: number;
+    status_rumah: string;
+    tanggungan_listrik: number;
+    tanggungan_air: number;
+}
+
+interface Pengguna {
+    pengguna_id: number;
+    nama: string;
+}
+
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
+
+interface PageProps extends InertiaPageProps {
+    orangtua: OrangTua[];
+    pengguna: Pengguna[];
+}
+
 export default function OrangTua() {
+    const { pengguna } = usePage<PageProps>().props;
+    const [selectedPengguna, setSelectedPengguna] = useState("");
     const csrf_token = useCsrfToken();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -10,7 +46,7 @@ export default function OrangTua() {
         const formData = new FormData(e.currentTarget);
         formData.append("_token", csrf_token);
 
-        router.post('/admin/orang-tua', formData);
+        router.post('/admin/orangtua', formData);
     };
     return (
         <Layout>
@@ -19,6 +55,28 @@ export default function OrangTua() {
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Buat Data Orang Tua</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+                            <div>
+                                <label htmlFor="pengguna_id" className="block mb-2 text-sm font-medium text-gray-900">Pengguna</label>
+                                <select
+                                    id="pengguna_id"
+                                    name="pengguna_id"
+                                    value={selectedPengguna}
+                                    onChange={(e) => setSelectedPengguna(e.target.value)}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                                    required
+                                >
+                                    <option value="">Pilih Pengguna</option>
+                                    {pengguna?.map((item: Pengguna) => (
+                                        <option key={item.pengguna_id} value={item.pengguna_id}>
+                                            {item.nama}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
+                                <input type="text" name="nama" id="nama" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                            </div>
                             <div>
                                 <label htmlFor="nik" className="block mb-2 text-sm font-medium text-gray-900">NIK</label>
                                 <input type="text" name="nik" id="nik" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
@@ -93,7 +151,7 @@ export default function OrangTua() {
                             <button type="submit" className="px-5 py-3 text-sm font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine">
                                 Buat Data Orang Tua
                             </button>
-                            <a href="/admin/orang-tua">
+                            <a href="/admin/orangtua">
                                 <button type="button" className="px-5 py-3 text-sm font-medium text-center text-gray-900 bg-white rounded-xl hover:bg-gray-100 border border-gray-200">
                                     Kembali
                                 </button>
