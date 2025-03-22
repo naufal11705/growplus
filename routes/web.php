@@ -116,5 +116,18 @@ Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])-
 Route::get('/profil/edit', function () {
     return Inertia::render('User/Functions/Profile/Edit_OrangTua');
 });
+Route::get('/admin/orang-tua', function () {
+    return Inertia::render('Admin/OrangTua');
+});
+Route::get('/admin/anak', function () {
+    return Inertia::render('Admin/Anak');
+});
+
+Route::get('/admin/orang-tua/create', function (){
+    return Inertia::render('Admin/Functions/OrangTua/Tambah');
+});
+Route::get('/admin/anak/create', function (){
+    return Inertia::render('Admin/Functions/Anak/Tambah');
+});
 
 require __DIR__ . '/auth.php';
