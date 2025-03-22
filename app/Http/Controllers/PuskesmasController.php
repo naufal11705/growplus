@@ -22,8 +22,9 @@ class PuskesmasController extends Controller
      */
     public function index()
     {
-        $this->puskesmasRepository->getAllPuskesmas();
-        return Inertia::render('Admin/Puskesmas');
+        return Inertia::render('Admin/Puskesmas',
+            ['puskesmas' => $this->puskesmasRepository->getAllPuskesmas()
+        ]);
     }
 
     /**
@@ -31,7 +32,9 @@ class PuskesmasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Puskesmas/Tambah');
+        return Inertia::render('Admin/Functions/Puskesmas/Tambah',
+            ['puskesmas' => $this->puskesmasRepository->getAllPuskesmas()
+        ]);
     }
 
     /**
@@ -39,19 +42,11 @@ class PuskesmasController extends Controller
      */
     public function store(PuskesmasStoreRequest $request)
     {
-        // $request->validated();
-
-        $dummyData = [
-            'nama' => 'Imunisasi Campak',
-            'alamat' => 'begitulah',
-            'kecamatan' => 'singosari',
-            'kota' => 'Malang',
-            'kontak' => '09876543'
-        ];
+        $request->validated();
 
         $this->puskesmasRepository->createPuskesmas($request->all());
 
-        return Inertia::render('Admin/Puskesmas');
+        return redirect()->route('puskesmas.index');
     }
 
     /**
@@ -68,8 +63,8 @@ class PuskesmasController extends Controller
      */
     public function edit($id)
     {
-        $this->puskesmasRepository->getPuskesmasById($id);
-        return Inertia::render('Admin/Puskesmas/Edit');
+        return Inertia::render('Admin/Functions/Puskesmas/Edit',
+            ['puskesmas' => $this->puskesmasRepository->getPuskesmasById($id)]);
     }
 
     /**
@@ -80,6 +75,8 @@ class PuskesmasController extends Controller
         $request->validated();
 
         $this->puskesmasRepository->updatePuskesmas($id, $request->all());
+
+        return redirect()->route('puskesmas.index');
     }
 
     /**
@@ -88,5 +85,6 @@ class PuskesmasController extends Controller
     public function destroy($id)
     {
         $this->puskesmasRepository->deletePuskesmas($id);
+        
     }
 }

@@ -17,6 +17,11 @@ class ArtikelRepository implements ArtikelRepositoryInterface
         return Artikel::find($id);
     }
 
+    public function getArtikelBySlug($slug)
+    {
+        return Artikel::where('slug', $slug)->first();
+    }
+
     public function createArtikel(array $data)
     {
         return Artikel::create($data);
