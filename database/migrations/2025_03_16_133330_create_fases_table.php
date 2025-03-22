@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('fases', function (Blueprint $table) {
             $table->id('fase_id')->primary();
-            $table->string('title');
-            $table->text('description');
+            $table->string('judul');
+            $table->text('deskripsi');
             $table->text('benefits');
             $table->string('banner');
-            $table->string('progress');
+            $table->integer('progress');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

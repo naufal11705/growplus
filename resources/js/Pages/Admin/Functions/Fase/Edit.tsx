@@ -7,8 +7,8 @@ import { useState } from "react";
 
 interface Fase {
     fase_id: number;
-    title: string;
-    description: string;
+    judul: string;
+    deskripsi: string;
     benefits: string;
     banner: string;
     progress: number;
@@ -42,7 +42,7 @@ export default function Fase() {
         if (e.target.files && e.target.files.length > 0) {
             setBanner(e.target.files[0]);
         }
-    };    
+    };
 
     // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,8 +50,8 @@ export default function Fase() {
 
         router.put(`/admin/fase/${formData.fase_id}`, {
             _token: csrf_token,
-            title: formData.title,
-            description: formData.description,
+            judul: formData.judul,
+            deskripsi: formData.deskripsi,
             benefits: formData.benefits,
             banner: formData.banner,
             progress: formData.progress,
@@ -68,13 +68,13 @@ export default function Fase() {
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div className="sm:col-span-2">
                                 <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">Judul Fase</label>
-                                <input value={formData.title} onChange={handleChange} type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul di sini..." required />
+                                <input value={formData.judul} onChange={handleChange} type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul di sini..." required />
                             </div>
 
                             {/* Deskripsi */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
-                                <textarea value={formData.description} onChange={handleChange} id="description" name="description" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis deskripsi di sini..." required></textarea>
+                                <textarea value={formData.deskripsi} onChange={handleChange} id="description" name="description" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis deskripsi di sini..." required></textarea>
                             </div>
 
                             {/* Manfaat */}

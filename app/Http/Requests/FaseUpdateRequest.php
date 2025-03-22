@@ -14,10 +14,10 @@ class FaseUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
+            'judul' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['required', 'string'],
             'benefits' => ['required', 'string'],
-            'banner' => ['required', 'string'],
+            'banner' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
             'progress' => ['required', 'string'],
             'status' => ['required', 'boolean'],
         ];

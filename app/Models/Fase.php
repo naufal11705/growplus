@@ -14,8 +14,8 @@ class Fase extends Model
     protected $primaryKey = 'fase_id';
 
     protected $fillable = [
-        'title',
-        'description',
+        'judul',
+        'deskripsi',
         'benefits',
         'banner',
         'progress',
