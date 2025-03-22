@@ -20,7 +20,7 @@ class Anak extends Model
         'no_jkn',
         'tempat_lahir',
         'tanggal_lahir',
-        'gologan_darah',
+        'golongan_darah',
         'berat_badan',
         'tinggi_badan'
     ];

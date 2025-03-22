@@ -34,13 +34,13 @@ class RegisteredUserController extends Controller
             'username' => 'required|string|max:255',
             'nama' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . Pengguna::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = Pengguna::create([
             'role_id' => 2,
             'username' => $request->username,
-            'nama' => $request->name,
+            'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -49,6 +49,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('register.step'));
+        return redirect(route('register.step.form'));
     }
 }

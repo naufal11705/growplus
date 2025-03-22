@@ -15,11 +15,12 @@ class OrangTua extends Model
 
     protected $fillable = [
         'pengguna_id',
+        'nama',
         'nik',
         'no_jkn',
         'tempat_lahir',
         'tanggal_lahir',
-        'gologan_darah',
+        'golongan_darah',
         'alamat',
         'pekerjaan',
         'penghasilan',

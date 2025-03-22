@@ -19,16 +19,16 @@ export default function Imunisasi() {
     const { puskesmas } = usePage<PageProps>().props;
     const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
 
-        const csrf_token = useCsrfToken();
-    
-        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-    
-            const formData = new FormData(e.currentTarget);
-            formData.append("_token", csrf_token);
-    
-            router.post('/admin/imunisasi', formData);
-        };
+    const csrf_token = useCsrfToken();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        formData.append("_token", csrf_token);
+
+        router.post('/admin/imunisasi', formData);
+    };
 
     return (
         <Layout>
@@ -53,10 +53,10 @@ export default function Imunisasi() {
                             {/* Puskesmas */}
                             <div>
                                 <label htmlFor="puskesmas_id" className="block mb-2 text-sm font-medium text-gray-900">Puskesmas</label>
-                                <select 
-                                    id="puskesmas_id" 
-                                    name="puskesmas_id" 
-                                    value={selectedPuskesmas} 
+                                <select
+                                    id="puskesmas_id"
+                                    name="puskesmas_id"
+                                    value={selectedPuskesmas}
                                     onChange={(e) => setSelectedPuskesmas(e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                     required

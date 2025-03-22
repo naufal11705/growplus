@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnakStoreRequest;
 use App\Models\Anak;
+use App\Repositories\Interfaces\AnakRepositoryInterface;
+use Dom\ChildNode;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AnakController extends Controller
 {
+    protected $anakRepository;
+
+    public function __construct(AnakRepositoryInterface $anakRepository)
+    {
+        $this->anakRepository = $anakRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,9 +37,33 @@ class AnakController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AnakStoreRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->anakRepository->createAnak($validatedData);
+
+        return redirect()->route('orang_tua.index');
+    }
+
+    public function store_multiple(Request $request)
+    {
+        $validatedData = $request->validate([
+            'children' => 'required|array',
+            'children.*.namaLengkap' => 'required|string',
+            'children.*.tanggalLahir' => 'required|date',
+            'children.*.jenisKelamin' => 'required|string',
+            'children.*.faseUsia' => 'required|string',
+            'children.*.beratBadan' => 'required|numeric',
+            'children.*.tinggiBadan' => 'required|numeric',
+            'children.*.polaMakan' => 'required|string',
+            'children.*.alergiMakanan' => 'nullable|string',
+            'children.*.riwayatKesehatan' => 'nullable|string',
+        ]);
+
+        foreach ($validatedData['children'] as $child) {
+            $this->anakRepository->createAnak($child);
+        }
     }
 
     /**

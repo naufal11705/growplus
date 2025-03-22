@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrangTuaStoreRequest;
+use App\Http\Requests\OrangTuaUpdateRequest;
 use App\Models\OrangTua;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use Illuminate\Http\Request;
 
 class OrangTuaController extends Controller
 {
+    protected $orangTuaRepository;
+
+    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository)
+    {
+        $this->orangTuaRepository = $orangTuaRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,9 +36,13 @@ class OrangTuaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OrangTuaStoreRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->orangTuaRepository->createOrangTua($validatedData);
+
+        return redirect()->route('orang_tua.index');
     }
 
     /**

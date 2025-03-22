@@ -46,7 +46,7 @@ export default function Imunisasi() {
 
     // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
         router.put(`/admin/imunisasi/${formData.imunisasi_id}`, {
             _token: csrf_token,
@@ -82,10 +82,10 @@ export default function Imunisasi() {
                             {/* Puskesmas */}
                             <div>
                                 <label htmlFor="puskesmas_id" className="block mb-2 text-sm font-medium text-gray-900">Puskesmas</label>
-                                <select 
-                                    id="puskesmas_id" 
-                                    name="puskesmas_id" 
-                                    value={selectedPuskesmas} 
+                                <select
+                                    id="puskesmas_id"
+                                    name="puskesmas_id"
+                                    value={selectedPuskesmas}
                                     onChange={(e) => setSelectedPuskesmas(e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                     required
