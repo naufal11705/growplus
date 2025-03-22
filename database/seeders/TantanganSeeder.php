@@ -165,6 +165,6 @@ class TantanganSeeder extends Seeder
             Tantangan::create($tantangan);
         }
 
-        Tantangan::factory(15)->create();
+        // Tantangan::factory(15)->create();
     }
 }

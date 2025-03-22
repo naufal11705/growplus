@@ -42,9 +42,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function tantanganDetail()
+    public function showTantangan($id)
     {
-        return Inertia::render('User/DetailTantangan');
+        $fase = $this->faseRepository->getFaseById($id)->load('tantangans');
+
+        return Inertia::render('User/DetailTantangan', [
+            'fase' => (new FaseResource($fase))->toArray(request())
+        ]);
     }
 
     public function artikel()

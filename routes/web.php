@@ -62,13 +62,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/register-step', [UserController::class, 'registerStep']);
         Route::get('/register-step', [UserController::class, 'registerStepForm'])->name('register.step.form');
 
-        Route::middleware([])->group(function () {
+        Route::middleware([RegisterOrangtuaMiddleware::class])->group(function () {
             Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
             Route::get('/chat-ai', [ChatController::class, 'index']);
             Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
             Route::get('/profil', [UserController::class, 'profil']);
             Route::get('/tantangan', [UserController::class, 'tantangan']);
-            Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+            Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
         });
     });
