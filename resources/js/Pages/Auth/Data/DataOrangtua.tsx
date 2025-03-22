@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface DataOrangtuaProps {
     onNext: (data: any) => void;
-    initialData?: any; // Tambahkan props untuk data awal
+    initialData?: any; 
 }
 
 interface FormData {
@@ -50,7 +50,7 @@ const dropdownOptions: Record<string, string[]> = {
 export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaProps) {
     const [formData, setFormData] = useState<FormData>(() => ({
         ...initialFormData,
-        ...initialData, // Gabungkan initialData dengan initialFormData
+        ...initialData,
     }));
     const [errors, setErrors] = useState<ValidationErrors>({});
     const [dropdowns, setDropdowns] = useState({

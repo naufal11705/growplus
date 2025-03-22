@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 interface DataAnakProps {
     onNext: (data: any) => void;
-    onBack?: () => void; // Tambahkan props onBack
+    onBack?: () => void;
     initialData?: any[];
 }
 

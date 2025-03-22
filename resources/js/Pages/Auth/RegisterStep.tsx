@@ -7,7 +7,7 @@ import { router } from "@inertiajs/react";
 
 export default function RegisterStep() {
     const [step, setStep] = useState(1);
-    const [dataOrangtua, setDataOrangtua] = useState<any>({}); // Pastikan tipe any untuk fleksibilitas
+    const [dataOrangtua, setDataOrangtua] = useState<any>({});
     const [dataAnak, setDataAnak] = useState<any[]>([]);
 
     const handleNextKeluarga = (data: any) => {
