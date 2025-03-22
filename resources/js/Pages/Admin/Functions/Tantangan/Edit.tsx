@@ -1,33 +1,85 @@
-import { useState } from "react";
-import { usePage } from "@inertiajs/react";
-import { router } from "@inertiajs/react";
-import useCsrfToken from "@/Utils/csrfToken";
 import Layout from "@/Layouts/Admin";
+import useCsrfToken from "@/Utils/csrfToken";
+import { router } from "@inertiajs/react";
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
+import { usePage } from "@inertiajs/react";
+import { useState } from "react";
+
+interface Tantangan {
+    tantangan_id: number;
+    activity: string;
+    fase_id: number;
+    point: number;
+    status: string;
+}
 
 interface Fase {
     fase_id: number;
     title: string;
 }
 
-import { PageProps as InertiaPageProps } from "@inertiajs/core";
-
 interface PageProps extends InertiaPageProps {
     fase: Fase[];
+    tantangan: Tantangan;
 }
 
 export default function Tantangan() {
-    const { fase } = usePage<PageProps>().props;
-    const [selectedFase, setSelectedFase] = useState("");
-
+    const { tantangan, fase } = usePage<PageProps>().props;
     const csrf_token = useCsrfToken();
 
+    const [selectedStatus, setSelectedStatus] = useState<string>(tantangan.status);
+
+    // State untuk form
+    const [selectedFase, setSelectedFase] = useState<string>(
+        tantangan.fase_id ? tantangan.fase_id.toString() : ""
+    );
+    const [formData, setFormData] = useState<Tantangan>({ ...tantangan });
+
+    console.log("Data yang dikirim:", {
+        _token: csrf_token,
+        fase_id: selectedFase,
+        activity: formData.activity,
+        point: formData.point,
+        status: selectedStatus,
+    });
+
+    // Handle perubahan input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        formData.append("_token", csrf_token);
+        console.log("Data yang dikirim:", {
+            _token: csrf_token,
+            fase_id: selectedFase,
+            activity: formData.activity,
+            point: formData.point,
+            status: selectedStatus,
+        });
 
-        router.post('/admin/tantangan', formData);
+        router.put(`/admin/tantangan/${formData.tantangan_id}`, {
+            _token: csrf_token,
+            activity: formData.activity,
+            fase_id: selectedFase,
+            point: formData.point,
+            status: selectedStatus,
+        }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log("Berhasil update tantangan");
+            },
+            onError: (errors) => {
+                console.error("Terjadi error:", errors);
+            }
+        });
+
     };
 
     return (
@@ -41,7 +93,7 @@ export default function Tantangan() {
                             {/* Nama Tantangan */}
                             <div className="">
                                 <label htmlFor="activity" className="block mb-2 text-sm font-medium text-gray-900">Judul Tantangan</label>
-                                <input type="text" name="activity" id="activity" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul tantangan di sini..." required />
+                                <input value={formData.activity} onChange={handleChange} type="text" name="activity" id="activity" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul tantangan di sini..." required />
                             </div>
 
                             {/* Fase */}
@@ -68,13 +120,13 @@ export default function Tantangan() {
                             {/* Poin Tantangan */}
                             <div>
                                 <label htmlFor="point" className="block mb-2 text-sm font-medium text-gray-900">Poin</label>
-                                <input type="number" name="point" id="point" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan jumlah poin" required min="1" />
+                                <input value={formData.point} onChange={handleChange} type="number" name="point" id="point" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan jumlah poin" required min="1" />
                             </div>
 
                             {/* Status Tantangan */}
                             <div>
                                 <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                                <select id="status" name="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} id="status" name="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                                     <option value="1">Aktif</option>
                                     <option value="0">Tidak Aktif</option>
                                 </select>

@@ -15,7 +15,7 @@ class FasKes extends Model
 
     protected $fillable = [
         'orangtua_id',
-        'puskesmas',
+        'puskesmas_id',
         'no_reg_kohort_ibu',
         'no_reg_kohort_anak'
     ];
@@ -23,5 +23,10 @@ class FasKes extends Model
     public function orangtua()
     {
         return $this->belongsTo(OrangTua::class, 'orangtua_id', 'orangtua_id');
+    }
+
+    public function puskesmas()
+    {
+        return $this->belongsTo(Puskesmas::class, 'puskesmas_id', 'puskesmas_id');
     }
 }

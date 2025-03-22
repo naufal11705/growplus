@@ -5,23 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FaskesStoreRequest;
 use App\Http\Requests\FaskesUpdateRequest;
 use App\Repositories\Interfaces\FasKesRepositoryInterface;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
+use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
 use Inertia\Inertia;
 
 class FasKesController extends Controller
 {
     protected $fasKesRepository;
+    protected $puskesmasRepository;
+    protected $orangTuaRepository;
 
-    public function __construct(FasKesRepositoryInterface $fasKesRepository)
+    public function __construct(FasKesRepositoryInterface $fasKesRepository, PuskesmasRepositoryInterface $puskesmasRepository, OrangTuaRepositoryInterface $orangTuaRepository)
     {
         $this->fasKesRepository = $fasKesRepository;
+        $this->puskesmasRepository = $puskesmasRepository;
+        $this->orangTuaRepository = $orangTuaRepository;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->fasKesRepository->getAllFasKes();
-        return Inertia::render('Admin/Faskes');
+        return Inertia::render('Admin/Faskes', [
+            'faskes' => $this->fasKesRepository->getAllFasKes()
+        ]);
     }
 
     /**
@@ -29,7 +36,10 @@ class FasKesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Functions/Faskes/Tambah');
+        return Inertia::render('Admin/Functions/Faskes/Tambah', [
+            'puskesmas' => $this->puskesmasRepository->getAllPuskesmas(),
+            'orangtua' => $this->orangTuaRepository->getAllOrangTuas()
+        ]);
     }
 
     /**
@@ -41,7 +51,7 @@ class FasKesController extends Controller
 
         $this->fasKesRepository->createFasKes($request->all());
 
-        return Inertia::render('Admin/Faskes');
+        return redirect()->route('faskes.index');
     }
 
     /**
@@ -58,8 +68,11 @@ class FasKesController extends Controller
      */
     public function edit($id)
     {
-        $this->fasKesRepository->getFasKesById($id);
-        return Inertia::render('Admin/Faskes/Edit');
+        return Inertia::render('Admin/Functions/Faskes/Edit', [
+            'puskesmas' => $this->puskesmasRepository->getAllPuskesmas(),
+            'orangtua' => $this->orangTuaRepository->getAllOrangTuas(),
+            'faskes' => $this->fasKesRepository->getFaskesById($id)
+        ]);
     }
 
     /**
@@ -70,6 +83,8 @@ class FasKesController extends Controller
         $request->validated();
 
         $this->fasKesRepository->updateFasKes($id, $request->all());
+
+        return redirect()->route('faskes.index');
     }
 
     /**

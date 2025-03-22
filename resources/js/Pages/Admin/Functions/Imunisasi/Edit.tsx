@@ -1,33 +1,62 @@
-import { useState } from "react";
-import { usePage } from "@inertiajs/react";
-import { router } from "@inertiajs/react";
-import useCsrfToken from "@/Utils/csrfToken";
 import Layout from "@/Layouts/Admin";
+import useCsrfToken from "@/Utils/csrfToken";
+import { router } from "@inertiajs/react";
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
+import { usePage } from "@inertiajs/react";
+import { useState } from "react";
+
+interface Imunisasi {
+    imunisasi_id: number;
+    nama: string;
+    jenis: string;
+    usia_minimum: number;
+    usia_maksimum: number;
+    puskesmas_id: number;
+    tanggal: string;
+}
 
 interface Puskesmas {
     puskesmas_id: number;
     nama: string;
 }
 
-import { PageProps as InertiaPageProps } from "@inertiajs/core";
-
 interface PageProps extends InertiaPageProps {
+    imunisasi: Imunisasi;
     puskesmas: Puskesmas[];
 }
 
 export default function Imunisasi() {
-    const { puskesmas } = usePage<PageProps>().props;
-    const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
-
+    const { imunisasi, puskesmas } = usePage<PageProps>().props;
     const csrf_token = useCsrfToken();
 
+    // State untuk form
+    const [selectedPuskesmas, setSelectedPuskesmas] = useState<string>(
+        imunisasi.puskesmas_id ? imunisasi.puskesmas_id.toString() : ""
+    );
+    const [formData, setFormData] = useState<Imunisasi>({ ...imunisasi });
+
+    // Handle perubahan input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    // Handle submit form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        formData.append("_token", csrf_token);
-
-        router.post('/admin/imunisasi', formData);
+        router.put(`/admin/imunisasi/${formData.imunisasi_id}`, {
+            _token: csrf_token,
+            nama: formData.nama,
+            jenis: formData.jenis,
+            usia_minimum: formData.usia_minimum,
+            usia_maksimum: formData.usia_maksimum,
+            puskesmas_id: selectedPuskesmas,
+            tanggal: formData.tanggal,
+        });
     };
 
     return (
@@ -41,13 +70,13 @@ export default function Imunisasi() {
                             {/* Nama Vaksin */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama Vaksin</label>
-                                <input type="text" name="nama" id="nama" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan nama vaksin..." required />
+                                <input value={formData.nama} onChange={handleChange} type="text" name="nama" id="nama" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan nama vaksin..." required />
                             </div>
 
                             {/* Jenis Vaksin */}
                             <div>
                                 <label htmlFor="jenis" className="block mb-2 text-sm font-medium text-gray-900">Jenis Vaksin</label>
-                                <input type="text" name="jenis" id="jenis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan jenis vaksin..." required />
+                                <input value={formData.jenis} onChange={handleChange} type="text" name="jenis" id="jenis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan jenis vaksin..." required />
                             </div>
 
                             {/* Puskesmas */}
@@ -73,19 +102,19 @@ export default function Imunisasi() {
                             {/* Usia Minimum */}
                             <div>
                                 <label htmlFor="usia_minimum" className="block mb-2 text-sm font-medium text-gray-900">Usia Minimum (bulan)</label>
-                                <input type="number" name="usia_minimum" id="usia_minimum" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Usia minimum dalam bulan" required min="0" />
+                                <input value={formData.usia_minimum} onChange={handleChange} type="number" name="usia_minimum" id="usia_minimum" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Usia minimum dalam bulan" required min="0" />
                             </div>
 
                             {/* Usia Maksimum */}
                             <div>
                                 <label htmlFor="usia_maksimum" className="block mb-2 text-sm font-medium text-gray-900">Usia Maksimum (bulan)</label>
-                                <input type="number" name="usia_maksimum" id="usia_maksimum" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Usia maksimum dalam bulan" required min="0" />
+                                <input value={formData.usia_maksimum} onChange={handleChange} type="number" name="usia_maksimum" id="usia_maksimum" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Usia maksimum dalam bulan" required min="0" />
                             </div>
 
                             {/* Tanggal Imunisasi */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="tanggal" className="block mb-2 text-sm font-medium text-gray-900">Tanggal Imunisasi</label>
-                                <input type="date" name="tanggal" id="tanggal" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <input value={formData.tanggal} onChange={handleChange} type="date" name="tanggal" id="tanggal" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
                             </div>
 
                         </div>

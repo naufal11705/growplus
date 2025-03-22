@@ -25,8 +25,9 @@ class ImunisasiController extends Controller
      */
     public function index()
     {
-        $this->imunisasiRepository->getAllImunisasis();
-        return Inertia::render('Admin/Imunisasi');
+        return Inertia::render('Admin/Imunisasi', [
+            'imunisasi' => $this->imunisasiRepository->getAllImunisasis()
+        ]);
     }
 
     /**
@@ -44,22 +45,13 @@ class ImunisasiController extends Controller
      */
     public function store(ImunisasiStoreRequest $request)
     {
-        // $request->validated();
-
-        $dummyData = [
-            'puskesmas_id' => 1,
-            'nama' => 'Imunisasi Campak',
-            'jenis' => 'Campak',
-            'usia_minimum' => 9,
-            'usia_maksimum' => 15,
-            'tanggal' => '2025-03-25',
-        ];
+        $request->validated();
 
         $imunisasi = $this->imunisasiRepository->createImunisasi($request->all());
 
         event(new ImunisasiNotification($imunisasi));
 
-        return Inertia::render('Admin/Imunisasi');
+        return redirect()->route('imunisasi.index');
     }
 
     /**
@@ -76,8 +68,10 @@ class ImunisasiController extends Controller
      */
     public function edit($id)
     {
-        $this->imunisasiRepository->getImunisasiById($id);
-        return Inertia::render('Admin/Functions/Imunisasi/Edit');
+        return Inertia::render('Admin/Functions/Imunisasi/Edit', [
+            'puskesmas' => $this->puskesmasRepository->getAllPuskesmas(),
+            'imunisasi' => $this->imunisasiRepository->getImunisasiById($id)
+        ]);
     }
 
     /**
@@ -88,6 +82,8 @@ class ImunisasiController extends Controller
         $request->validated();
 
         $this->imunisasiRepository->updateImunisasi($id, $request->all());
+
+        return redirect()->route('imunisasi.index');
     }
 
     /**
