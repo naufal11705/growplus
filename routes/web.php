@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('fase', FaseController::class);
         Route::resource('artikel', ArtikelController::class);
         Route::resource('tantangan', TantanganController::class);
+        Route::resource('orangtua', OrangTuaController::class);
+        Route::resource('anak', AnakController::class);
     });
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
@@ -89,21 +91,9 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-    Route::resource('puskesmas', PuskesmasController::class);
-    Route::resource('faskes', FasKesController::class);
-    Route::resource('imunisasi', ImunisasiController::class);
-    Route::resource('fase', FaseController::class);
-    Route::resource('artikel', ArtikelController::class);
-    Route::resource('tantangan', TantanganController::class);
-});
-
 Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
     Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
 });
-// });
 
 Route::get('/petugas/imunisasi', function () {
     return Inertia::render('Petugas/Imunisasi');
@@ -119,19 +109,6 @@ Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])-
 
 Route::get('/profil/edit', function () {
     return Inertia::render('User/Functions/Profile/Edit_OrangTua');
-});
-Route::get('/admin/orang-tua', function () {
-    return Inertia::render('Admin/OrangTua');
-});
-Route::get('/admin/anak', function () {
-    return Inertia::render('Admin/Anak');
-});
-
-Route::get('/admin/orang-tua/create', function () {
-    return Inertia::render('Admin/Functions/OrangTua/Tambah');
-});
-Route::get('/admin/anak/create', function () {
-    return Inertia::render('Admin/Functions/Anak/Tambah');
 });
 
 require __DIR__ . '/auth.php';

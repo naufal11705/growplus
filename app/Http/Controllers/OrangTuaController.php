@@ -6,15 +6,19 @@ use App\Http\Requests\OrangTuaStoreRequest;
 use App\Http\Requests\OrangTuaUpdateRequest;
 use App\Models\OrangTua;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
+use App\Repositories\Interfaces\PenggunaRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class OrangTuaController extends Controller
 {
     protected $orangTuaRepository;
+    protected $penggunaRepository;
 
-    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository)
+    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, PenggunaRepositoryInterface $penggunaRepository)
     {
         $this->orangTuaRepository = $orangTuaRepository;
+        $this->penggunaRepository = $penggunaRepository;
     }
 
     /**
@@ -22,7 +26,9 @@ class OrangTuaController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/OrangTua',
+        ['orangtua' => $this->orangTuaRepository->getAllOrangTua()
+    ]);
     }
 
     /**
@@ -30,7 +36,10 @@ class OrangTuaController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Functions/OrangTua/Tambah', [
+            'orangtua' => $this->orangTuaRepository->getAllOrangTua(),
+            'pengguna' => $this->penggunaRepository->getAllPenggunas()
+        ]);
     }
 
     /**
@@ -42,7 +51,7 @@ class OrangTuaController extends Controller
 
         $this->orangTuaRepository->createOrangTua($validatedData);
 
-        return redirect()->route('orang_tua.index');
+        return redirect()->route('orangtua.index');
     }
 
     /**
@@ -56,24 +65,31 @@ class OrangTuaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrangTua $orangTua)
+    public function edit($id)
     {
-        //
+        return Inertia::render('Admin/Functions/OrangTua/Edit', [
+            'orangtua' => $this->orangTuaRepository->getOrangTuaById($id),
+            'pengguna' => $this->penggunaRepository->getAllPenggunas()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrangTua $orangTua)
+    public function update(OrangTuaUpdateRequest $request, $id)
     {
-        //
+        $request->validated();
+
+        $this->orangTuaRepository->updateOrangTua($id, $request->all());
+
+        return redirect()->route('orangtua.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrangTua $orangTua)
+    public function destroy($id)
     {
-        //
+        $this->orangTuaRepository->deleteOrangTua($id);
     }
 }
