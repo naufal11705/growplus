@@ -18,7 +18,7 @@ export default function Index() {
                         <p className="lg:mb-10 mb-7 text-lg font-normal lg:px-56 text-gray-500 lg:text-xl">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
                         <div className="flex flex-row lg:justify-center">
                             <a href="#" className="inline-flex justify-center items-center lg:py-5 lg:px-9 lg:text-xl text-md py-3 px-7 font-medium text-center text-white rounded-full bg-wine hover:bg-dark-wine">
-                                Kerjakan Tantangans ⚔️
+                                Kerjakan Tantangans  ⚔️
                             </a>
                             <a href="#" className="inline-flex transition-transform duration-300 hover:rotate-[360deg] justify-center items-center lg:py-5 lg:px-6 lg:text-xl text-lg py-4 px-4 font-medium text-center text-white rounded-full bg-wine hover:bg-dark-wine">
                                 <svg className="w-5 h-5 -rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
