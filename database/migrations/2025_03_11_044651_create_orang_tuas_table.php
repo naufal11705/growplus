@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('penghasilan');
             $table->string('sumber_penghasilan');
             $table->integer('jumlah_tanggungan');
-            $table->enum('status_rumah', ['Milik Sendiri', 'Sewa', 'Kontrak', "Dinas"]);
+            $table->string('status_rumah');
             $table->integer('tanggungan_listrik');
             $table->integer('tanggungan_air');
             $table->timestamps();
