@@ -5,8 +5,8 @@ import Layout from "@/Layouts/Admin";
 
 interface Fase {
     fase_id: number;
-    title: string;
-    description: string;
+    judul: string;
+    deskripsi: string;
     benefits: string;
     banner: string;
     progress: number;
@@ -68,6 +68,7 @@ export default function Fase() {
                                     <th scope="col" className="px-6 py-3">Judul</th>
                                     <th scope="col" className="px-6 py-3">Deskripsi</th>
                                     <th scope="col" className="px-6 py-3">Benefits</th>
+                                    <th scope="col" className="px-6 py-3">Banner</th>
                                     <th scope="col" className="px-6 py-3">Status</th>
                                     <th scope="col" className="px-6 py-3">Aksi</th>
                                 </tr>
@@ -85,13 +86,16 @@ export default function Fase() {
                                             {item.fase_id}
                                         </th>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {item.title}
+                                            {item.judul}
                                         </td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {trimText(item.description)}
+                                            {trimText(item.deskripsi)}
                                         </td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {trimText(item.benefits)}
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            <img src={`${window.location.origin}/storage/${item.banner}`}  alt="Fase Banner" className="w-16 h-16 object-cover rounded-md" />
                                         </td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <span className={getStatusClass(item.status)}>

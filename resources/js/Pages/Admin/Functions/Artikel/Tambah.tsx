@@ -6,7 +6,7 @@ import Layout from "@/Layouts/Admin";
 
 interface Fase {
     fase_id: number;
-    title: string;
+    judul: string;
 }
 
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
@@ -54,7 +54,7 @@ export default function Artikel(){
                                 <option value="">Pilih Fase</option>
                                 {fase?.map((item: Fase) => (
                                     <option key={item.fase_id} value={item.fase_id}>
-                                        {item.title}
+                                        {item.judul}
                                     </option>
                                 ))}
                             </select>
