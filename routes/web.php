@@ -127,10 +127,10 @@ Route::get('/admin/anak', function () {
     return Inertia::render('Admin/Anak');
 });
 
-Route::get('/admin/orang-tua/create', function (){
+Route::get('/admin/orang-tua/create', function () {
     return Inertia::render('Admin/Functions/OrangTua/Tambah');
 });
-Route::get('/admin/anak/create', function (){
+Route::get('/admin/anak/create', function () {
     return Inertia::render('Admin/Functions/Anak/Tambah');
 });
 

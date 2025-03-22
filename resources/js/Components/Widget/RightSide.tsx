@@ -19,9 +19,19 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
     const [completed, setCompleted] = useState<{ [key: number]: boolean }>({});
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
+        // {
+        //     question: "Apa yang akan ibu alami?",
+        //     answer: "Selama masa kehamilan 9 bulan, Ibu akan naik berat badannya sebanyak 5 - 18 kg sesuai dengan status gizi ibu sebelum hamil."
+        // },
         {
-            question: "Apa yang akan ibu alami?",
-            answer: "Selama masa kehamilan 9 bulan, Ibu akan naik berat badannya sebanyak 5 - 18 kg sesuai dengan status gizi ibu sebelum hamil."
+            question: "⚠️ Tanda Bahaya ⚠️",
+            list: [
+                "Demam Tinggi",
+                "Nyeri perut hebat",
+                "Mual dan muntah hebat",
+                "Perdarahan",
+                "Sakit saat kencing atau keluar keputihan atau gatal di daerah kemaluan",
+            ]
         },
         {
             question: "Apakah ada layanan kesehatan yang gratis selama kehamilan?",
