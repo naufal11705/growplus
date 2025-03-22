@@ -23,7 +23,9 @@ class AnakController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Anak', [
+            'anak' => $this->anakRepository->getAllAnaks()
+        ]);
     }
 
     /**
@@ -31,7 +33,9 @@ class AnakController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Functions/Anak/Tambah', [
+            'orangtua' => $this->anakRepository->getAllAnaks()
+        ]);
     }
 
     /**
@@ -93,9 +97,9 @@ class AnakController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Anak $anak)
+    public function destroy($id)
     {
-        //
+        $this->anakRepository->deleteAnak($id);
     }
 
     public function perhitunganStunting()
