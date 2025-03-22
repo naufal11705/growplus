@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fase;
 use Inertia\Inertia;
 use App\Models\Artikel;
 use Illuminate\Http\Request;
@@ -33,7 +34,20 @@ class UserController extends Controller
 
     public function tantangan()
     {
-        $challenges = $this->tantanganRepository->getAllTantangan();
+        $challenges = Fase::with('tantangans')->get()->map(function ($fase) {
+            return [
+                'id' => $fase->fase_id,
+                'title' => $fase->title,
+                'subtitle' => $fase->description ? substr($fase->description, 0, 50) . '...' : 'Tantangan fase ' . $fase->judul,
+                'deskripsi' => $fase->description ?? 'Ikuti tantangan ini untuk tumbuh sehat!',
+                'image' => $fase->banner ?? '/images/default-challenge.jpg',
+                'tasks' => $fase->tantangans->map(fn($task) => $task->activity)->toArray(),
+                'benefit' => $fase->benefits ? explode(',', $fase->benefits) : $fase->tantangans->map(fn($task) => "+{$task->point} Poin")->toArray(),
+                'status' => (int) $fase->status,
+                'progress' => (int) $fase->progress,
+            ];
+        })->toArray();
+
         return Inertia::render('User/Tantangan', [
             'challenges' => $challenges
         ]);

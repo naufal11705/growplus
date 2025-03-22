@@ -21,4 +21,9 @@ class Fase extends Model
         'progress',
         'status'
     ];
+
+    public function tantangans()
+    {
+        return $this->hasMany(Tantangan::class, 'fase_id');
+    }
 }

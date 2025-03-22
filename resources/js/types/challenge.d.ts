@@ -7,4 +7,5 @@ export interface Challenge {
     tasks: string[];
     benefit: string[];
     progress: number;
+    status: number;
 }

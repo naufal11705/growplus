@@ -9,8 +9,10 @@ interface TantanganCardsProps {
 }
 
 const Forum: React.FC<TantanganCardsProps> = ({ challenges }) => {
-    const challengesWithProgress = challenges.filter(challenge => challenge.progress > 0);
-    const challengesWithoutProgress = challenges.filter(challenge => challenge.progress === 0);
+    const challengesActive = challenges.filter(challenge => challenge.status === 1);
+    const challengesNonActive = challenges.filter(challenge => challenge.status === 0);
+    console.log(challengesActive);
+    console.log(challengesNonActive);
 
     return (
         <Layout>
@@ -23,13 +25,13 @@ const Forum: React.FC<TantanganCardsProps> = ({ challenges }) => {
                         </p>
                     </div>
                     <Tabs />
-                    {challengesWithProgress.length > 0 && (
-                        <TantanganCards challenges={challengesWithProgress} />
+                    {challengesActive.length > 0 && (
+                        <TantanganCards challenges={challengesActive} />
                     )}
                     <hr className="h-px my-8 bg-gray-200 border-0" />
                     <h2 className="text-4xl font-bold text-gray-900 mb-8">Challenge Selanjutnya</h2>
-                    {challengesWithoutProgress.length > 0 && (
-                        <TantanganCards challenges={challengesWithoutProgress} />
+                    {challengesNonActive.length > 0 && (
+                        <TantanganCards challenges={challengesNonActive} />
                     )}
                 </div>
             </div>
