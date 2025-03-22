@@ -1,12 +1,12 @@
-import { challenges } from "@/Data/ChallengeCard";
-import { Challenge } from "@/types/challenge";
+import { fases as defaultFases } from "@/Data/FaseCard";
+import { Fase } from "@/types/fase";
 import { useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 import BottomBar from "./BottomBar";
 
 interface TantanganCardsProps {
-    challenges?: Challenge[];
+    fase?: Fase[];
 }
 type FAQItem = {
     question: string;
@@ -14,8 +14,8 @@ type FAQItem = {
     list?: string[];
 };
 
-export default function RightSide({ challenges: propChallenges }: TantanganCardsProps) {
-    const dataTantangan = (propChallenges ?? challenges).filter((challenge) => challenge.id === 1);
+export default function RightSide({ fase: propFases }: TantanganCardsProps) {
+    const dataFase = (propFases ?? defaultFases).filter((fase) => fase.fase_id === 1);
     const [completed, setCompleted] = useState<{ [key: number]: boolean }>({});
     const { width, height } = useWindowSize();
     const faqs: FAQItem[] = [
@@ -75,35 +75,35 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-    const handleComplete = (challengeId: number) => {
-        setCompleted((prev) => ({ ...prev, [challengeId]: true }));
+    const handleComplete = (faseId: number) => {
+        setCompleted((prev) => ({ ...prev, [faseId]: true }));
         setTimeout(() => {
-            setCompleted((prev) => ({ ...prev, [challengeId]: false }));
+            setCompleted((prev) => ({ ...prev, [faseId]: false }));
         }, 10000);
     };
 
     return (
         <>
-            {dataTantangan.map((challenge: Challenge) => (
-                <div key={challenge.id} id="card2" className="justify-end space-y-4 mb-36">
+            {dataFase.map((fase: Fase) => (
+                <div key={fase.fase_id} id="card2" className="justify-end space-y-4 mb-36">
                     <div className="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md lg:block hidden">
                         {/* <div className="flex items-center justify-end mb-3">
                             <LoveButton />
                         </div> */}
-                        {completed[challenge.id] && <Confetti width={width} height={height} />}
+                        {completed[fase.fase_id] && <Confetti width={width} height={height} />}
                         <button
-                            onClick={challenge.progress === 100 ? () => handleComplete(challenge.id) : undefined}
-                            className={`w-full font-medium text-sm py-2 rounded-lg ${challenge.progress === 0
+                            onClick={fase.progress === 100 ? () => handleComplete(fase.fase_id) : undefined}
+                            className={`w-full font-medium text-sm py-2 rounded-lg ${fase.progress === 0
                                 ? "bg-wine text-white hover:bg-dark-wine"
-                                : challenge.progress === 100
+                                : fase.progress === 100
                                     ? "bg-wine text-white"
                                     : "bg-white border border-gray-200 text-gray-400 cursor-not-allowed"
                                 }`}
                         >
-                            {challenge.progress === 0
+                            {fase.progress === 0
                                 ? "Mulai Challenge"
-                                : challenge.progress === 100
-                                    ? completed
+                                : fase.progress === 100
+                                    ? completed[fase.fase_id]
                                         ? "Challenge Selesai"
                                         : "Mark Challenge as Completed"
                                     : "Challenge Sedang Berjalan"}
@@ -143,10 +143,10 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                         <h3 className="text-lg font-semibold text-gray-800">Progress Anda</h3>
                         <div className="mt-2">
                             <p className="text-gray-600 text-sm justify-between flex">
-                                Progress <span className="font-semibold text-black">{challenge.progress ?? 0}%</span>
+                                Progress <span className="font-semibold text-black">{fase.progress ?? 0}%</span>
                             </p>
                             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                                <div className="bg-pinky h-2.5 rounded-full" style={{ width: `${challenge.progress ?? 0}%` }}></div>
+                                <div className="bg-pinky h-2.5 rounded-full" style={{ width: `${fase.progress ?? 0}%` }}></div>
                             </div>
                             <div className="flex flex-row mt-3">
                                 <div className="text-wine bg-[#FBD3E3] font-semibold rounded-full text-sm px-3 py-1 me-2 mb-2">
@@ -177,22 +177,24 @@ export default function RightSide({ challenges: propChallenges }: TantanganCards
                                         </svg>
                                     </div>
                                     {openIndex === index && (
-                                        faq.list ? (
-                                            faq.list.map((list, i) => (
+                                        <div className="mt-2">
+                                            {faq.answer && (
+                                                <p className="text-gray-600 text-sm">{faq.answer}</p>
+                                            )}
+                                            {faq.list && (
                                                 <ul className="list-disc px-4 text-gray-600">
-                                                    <li key={i}>{list}</li>
+                                                    {faq.list.map((item, i) => (
+                                                        <li key={i} className="text-sm">{item}</li>
+                                                    ))}
                                                 </ul>
-                                            ))
-                                        ) : (
-                                            faq.answer ??
-                                            <p className="mt-2 text-gray-600 text-sm">{faq.answer}</p>
-                                        )
+                                            )}
+                                        </div>
                                     )}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <BottomBar />
+                    <BottomBar fase={dataFase} />
                 </div>
             ))}
         </>

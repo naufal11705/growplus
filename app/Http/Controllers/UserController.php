@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FaseResource;
 use App\Models\Fase;
 use Inertia\Inertia;
 use App\Models\Artikel;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
-use App\Repositories\Interfaces\TantanganRepositoryInterface;
+use App\Repositories\Interfaces\FaseRepositoryInterface;
 
 class UserController extends Controller
 {
 
-    protected $orangTuaRepository, $anakRepository, $tantanganRepository;
+    protected $orangTuaRepository, $anakRepository, $faseRepository;
 
-    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository, TantanganRepositoryInterface $tantanganRepository)
+    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository, FaseRepositoryInterface $faseRepository)
     {
         $this->orangTuaRepository = $orangTuaRepository;
         $this->anakRepository = $anakRepository;
-        $this->tantanganRepository = $tantanganRepository;
+        $this->faseRepository = $faseRepository;
     }
 
     public function dashboard()
@@ -34,22 +35,10 @@ class UserController extends Controller
 
     public function tantangan()
     {
-        $challenges = Fase::with('tantangans')->get()->map(function ($fase) {
-            return [
-                'id' => $fase->fase_id,
-                'title' => $fase->title,
-                'subtitle' => $fase->description ? substr($fase->description, 0, 50) . '...' : 'Tantangan fase ' . $fase->judul,
-                'deskripsi' => $fase->description ?? 'Ikuti tantangan ini untuk tumbuh sehat!',
-                'image' => $fase->banner ?? '/images/default-challenge.jpg',
-                'tasks' => $fase->tantangans->map(fn($task) => $task->activity)->toArray(),
-                'benefit' => $fase->benefits ? explode(',', $fase->benefits) : $fase->tantangans->map(fn($task) => "+{$task->point} Poin")->toArray(),
-                'status' => (int) $fase->status,
-                'progress' => (int) $fase->progress,
-            ];
-        })->toArray();
+        $fases = $this->faseRepository->getAllFase()->load('tantangans');
 
         return Inertia::render('User/Tantangan', [
-            'challenges' => $challenges
+            'fases' => FaseResource::collection($fases)->toArray(request())
         ]);
     }
 

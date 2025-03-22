@@ -19,7 +19,7 @@ class ImunisasiFactory extends Factory
     {
         return [
             'puskesmas_id' => Puskesmas::query()->exists() ? Puskesmas::inRandomOrder()->first()->puskesmas_id : Puskesmas::factory()->create()->puskesmas_id,
-            'nama' => $this->faker->name(),
+            'nama' => $this->faker->randomElement(['Imunisasi Polio', 'Imunisasi BCG', 'Imunisasi Hepatitis B']),
             'jenis' => $this->faker->randomElement(['Polio', 'BCG', 'Hepatitis B']),
             'usia_minimum' => $this->faker->randomNumber(2),
             'usia_maksimum' => $this->faker->randomNumber(2),
