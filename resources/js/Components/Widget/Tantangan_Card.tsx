@@ -1,11 +1,12 @@
 import { Challenge } from "@/types/challenge";
+import React from "react";
 
 interface TantanganCardsProps {
     challenges: Challenge[];
     gridCols?: string;
 }
 
-export default function TantanganCards({ challenges, gridCols = "xl:grid-cols-4" }: TantanganCardsProps) {
+const TantanganCards: React.FC<TantanganCardsProps> = ({ challenges, gridCols = "xl:grid-cols-4" }) => {
     return (
         <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-2 ${gridCols} w-full`}>
             {challenges.map((challenge) => (
@@ -90,3 +91,5 @@ export default function TantanganCards({ challenges, gridCols = "xl:grid-cols-4"
         </div>
     );
 }
+
+export default TantanganCards;

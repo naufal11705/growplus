@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Artikel;
+use Illuminate\Http\Request;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Repositories\Interfaces\TantanganRepositoryInterface;
 
 class UserController extends Controller
 {
 
-    protected $orangTuaRepository, $anakRepository;
+    protected $orangTuaRepository, $anakRepository, $tantanganRepository;
 
-    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository)
+    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository, TantanganRepositoryInterface $tantanganRepository)
     {
         $this->orangTuaRepository = $orangTuaRepository;
         $this->anakRepository = $anakRepository;
+        $this->tantanganRepository = $tantanganRepository;
     }
 
     public function dashboard()
@@ -31,7 +33,10 @@ class UserController extends Controller
 
     public function tantangan()
     {
-        return Inertia::render('User/Tantangan');
+        $challenges = $this->tantanganRepository->getAllTantangan();
+        return Inertia::render('User/Tantangan', [
+            'challenges' => $challenges
+        ]);
     }
 
     public function tantanganDetail()
