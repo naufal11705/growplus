@@ -64,6 +64,9 @@ export default function OrangTua(){
                                         Tempat Lahir
                                     </th>
                                     <th scope="col" className="px-6 py-3">
+                                        Tanggal Lahir
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
                                         Gol. Darah
                                     </th>
                                     <th scope="col" className="px-6 py-3">
@@ -105,6 +108,7 @@ export default function OrangTua(){
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.nik}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.no_jkn}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.tempat_lahir}</td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.tanggal_lahir}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.golongan_darah}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.alamat}</td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.pekerjaan}</td>
