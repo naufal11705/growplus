@@ -96,6 +96,7 @@ export default function DataOrangtua({ onNext }: DataOrangtuaProps) {
                                 placeholder="NIK (Min. 16 karakter)"
                                 required
                                 minLength={16}
+                                maxLength={16}
                             />
                         </div>
 
@@ -111,6 +112,7 @@ export default function DataOrangtua({ onNext }: DataOrangtuaProps) {
                                 placeholder="Nomor JKN (Min. 13 karakter)"
                                 required
                                 minLength={13}
+                                maxLength={13}
                             />
                         </div>
 

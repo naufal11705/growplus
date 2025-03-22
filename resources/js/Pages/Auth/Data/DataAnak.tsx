@@ -190,6 +190,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
                             placeholder="NIK (Min. 16 karakter)"
                             minLength={16}
+                            maxLength={16}
                             required
                         />
                     </div>
@@ -204,6 +205,7 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
                             placeholder="Nomor JKN (Min. 13 karakter)"
                             minLength={13}
+                            maxLength={13}
                             required
                         />
                     </div>
