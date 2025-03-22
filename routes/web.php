@@ -59,15 +59,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
-        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/chat-ai', [ChatController::class, 'index']);
-        Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-        Route::get('/profil', [UserController::class, 'profil']);
-        Route::get('/tantangan', [UserController::class, 'tantangan']);
-        Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
-        Route::get('/artikel', [UserController::class, 'artikel']);
-    });
+    // Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/chat-ai', [ChatController::class, 'index']);
+    Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
+    Route::get('/profil', [UserController::class, 'profil']);
+    Route::get('/tantangan', [UserController::class, 'tantangan']);
+    Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+    Route::get('/artikel', [UserController::class, 'artikel']);
+    // });
 
     Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
