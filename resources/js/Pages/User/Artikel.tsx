@@ -11,7 +11,7 @@ export default function Artikel() {
                         <button type="button" className="flex items-center justify-between w-full py-3 font-medium rtl:text-right border-wine border-t-2 !text-wine !bg-transparent gap-3" data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1">
                             <span className="text-left">Daftar layanan kesehatan gratis selama kehamilan</span>
                             <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
                             </svg>
                         </button>
                     </h2>
@@ -59,7 +59,7 @@ export default function Artikel() {
                         <button type="button" className="flex items-center justify-between w-full py-3 font-medium rtl:text-right border-wine border-t-2 !text-wine !bg-transparent gap-3" data-accordion-target="#accordion-collapse-body-2" aria-expanded="false" aria-controls="accordion-collapse-body-2">
                             <span className="text-left">Hal-hal yang tidak boleh dilakukan selama kehamilan</span>
                             <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
                             </svg>
                         </button>
                     </h2>
@@ -68,19 +68,19 @@ export default function Artikel() {
                             <ul>
                                 <li className="flex items-center justify-start gap-2 text-gray-600">
                                     <svg className="w-6 h-6 text-red-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                     </svg>
                                     Minum obat tanpa resep dokter
                                 </li>
                                 <li className="flex items-center justify-start gap-2 text-gray-600">
                                     <svg className="w-6 h-6 text-red-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                     </svg>
                                     Merokok atau terpapar asap rokok
                                 </li>
                                 <li className="flex items-center justify-start gap-2 text-gray-600">
                                     <svg className="w-6 h-6 text-red-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                     </svg>
                                     Stress berlebihan
                                 </li>
@@ -91,7 +91,7 @@ export default function Artikel() {
                         <button type="button" className="flex items-center justify-between w-full py-3 font-medium rtl:text-right border-wine border-t-2 !text-wine !bg-transparent gap-3" data-accordion-target="#accordion-collapse-body-3" aria-expanded="false" aria-controls="accordion-collapse-body-3">
                             <span className="text-left">Hal-hal yang tidak boleh dilakukan selama kehamilan</span>
                             <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5 5 1 1 5" />
                             </svg>
                         </button>
                     </h2>
