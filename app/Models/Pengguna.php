@@ -44,4 +44,9 @@ class Pengguna extends Authenticatable
     {
         return $this->hasMany(OrangTua::class, 'pengguna_id', 'pengguna_id');
     }
+
+    public function penggunaTantangans()
+    {
+        return $this->hasMany(PenggunaTantangan::class, 'pengguna_id');
+    }
 }

@@ -24,4 +24,9 @@ class Tantangan extends Model
     {
         return $this->belongsTo(Fase::class, 'fase_id', 'fase_id');
     }
+
+    public function penggunaTantangans()
+    {
+        return $this->hasMany(PenggunaTantangan::class, 'tantangan_id');
+    }
 }
