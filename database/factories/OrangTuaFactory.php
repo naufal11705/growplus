@@ -19,6 +19,7 @@ class OrangTuaFactory extends Factory
     {
         return [
             'pengguna_id' => Pengguna::query()->exists() ? Pengguna::inRandomOrder()->first()->pengguna_id : Pengguna::factory()->create()->pengguna_id,
+            'nama' => $this->faker->name(),
             'nik' => $this->faker->unique()->numerify('################'), // 16 digits
             'no_jkn' => $this->faker->unique()->numerify('#############'), // 13 digits
             'tempat_lahir' => $this->faker->city(),
@@ -29,7 +30,7 @@ class OrangTuaFactory extends Factory
             'penghasilan' => $this->faker->randomElement([3000000, 2000000, 5000000, 10000000]),
             'sumber_penghasilan' => $this->faker->randomElement(['Usaha', 'Gaji']),
             'jumlah_tanggungan' => $this->faker->randomDigit(),
-            'status_rumah' => $this->faker->randomElement(['sendiri', 'sewa', 'kontrak']),
+            'status_rumah' => $this->faker->randomElement(['Milik Sendiri', 'Sewa', 'Kontrak', 'Dinas']),
             'tanggungan_listrik' => $this->faker->randomElement([300000, 200000, 500000, 1000000]),
             'tanggungan_air' => $this->faker->randomElement([300000, 200000, 500000, 1000000]),
             'created_at' => now(),

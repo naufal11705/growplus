@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orang_tuas', function (Blueprint $table) {
             $table->id('orangtua_id')->primary();
             $table->unsignedBigInteger('pengguna_id')->index();
+            $table->string('nama');
             $table->string('nik');
             $table->string('no_jkn');
             $table->string('tempat_lahir');
@@ -23,8 +24,8 @@ return new class extends Migration
             $table->string('pekerjaan');
             $table->integer('penghasilan');
             $table->string('sumber_penghasilan');
-            $table->string('jumlah_tanggungan');
-            $table->enum('status_rumah', ['sendiri', 'sewa', 'kontrak']);
+            $table->integer('jumlah_tanggungan');
+            $table->enum('status_rumah', ['Milik Sendiri', 'Sewa', 'Kontrak', "Dinas"]);
             $table->integer('tanggungan_listrik');
             $table->integer('tanggungan_air');
             $table->timestamps();

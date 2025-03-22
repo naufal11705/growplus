@@ -17,7 +17,7 @@ export default function Login() {
         <Layout>
             <section>
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen min-h-screen lg:py-0">
-                    <a href="javascript:void(0)" className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
                         Grow+
                     </a>
                     <div className="w-full bg-white rounded-2xl shadow border border-gray-200 md:mt-0 sm:max-w-md xl:p-0">
@@ -36,9 +36,8 @@ export default function Login() {
                                         id="email"
                                         value={data.email}
                                         onChange={(e) => setData("email", e.target.value)}
-                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${
-                                            errors.email ? "border-red-500" : "border-gray-300"
-                                        }`}
+                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${errors.email ? "border-red-500" : "border-gray-300"
+                                            }`}
                                         placeholder="name@company.com"
                                         required
                                     />
@@ -54,9 +53,8 @@ export default function Login() {
                                         id="password"
                                         value={data.password}
                                         onChange={(e) => setData("password", e.target.value)}
-                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${
-                                            errors.password ? "border-red-500" : "border-gray-300"
-                                        }`}
+                                        className={`bg-gray-50 border text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5 ${errors.password ? "border-red-500" : "border-gray-300"
+                                            }`}
                                         placeholder="••••••••"
                                         required
                                     />

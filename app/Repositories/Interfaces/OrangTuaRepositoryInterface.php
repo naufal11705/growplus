@@ -6,7 +6,7 @@ use App\Models\OrangTua;
 
 interface OrangTuaRepositoryInterface
 {
-    public function getAllOrangTuas();
+    public function getAllOrangTua();
     public function getOrangTuaById($id);
     public function createOrangTua(array $data);
     public function updateOrangTua($id, array $data);

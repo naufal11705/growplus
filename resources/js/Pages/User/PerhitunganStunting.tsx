@@ -92,7 +92,7 @@ export default function PerhitunganStunting() {
                                         <ul className="py-2 text-gray-700 font-medium">
                                             {["Laki-Laki", "Perempuan"].map(option => (
                                                 <li key={option}>
-                                                    <a href="javascript:void(0)" onClick={() => handleGenderSelect(option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
+                                                    <a href="#" onClick={() => handleGenderSelect(option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
                                                         <img className="w-6 h-6 me-2 rounded-full" src={option === "Laki-Laki" ? "https://cdn-icons-png.flaticon.com/512/3048/3048127.png" : "https://cdn-icons-png.flaticon.com/512/3749/3749780.png"} alt={option} />
                                                         {option}
                                                     </a>

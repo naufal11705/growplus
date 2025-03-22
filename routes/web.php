@@ -18,6 +18,7 @@ use App\Http\Controllers\PuskesmasController;
 use App\Http\Controllers\FasKesController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
+use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RegisterOrangtuaMiddleware;
@@ -52,20 +53,23 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/register-step', [UserController::class, 'registerStepForm'])->name('register.step');
-    Route::post('/register-step', [UserController::class, 'registerStep']);
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware([RoleMiddleware::class . ':User', RegisterOrangtuaMiddleware::class])->group(function () {
-        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-        Route::get('/chat-ai', [ChatController::class, 'index']);
-        Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-        Route::get('/profil', [UserController::class, 'profil']);
-        Route::get('/tantangan', [UserController::class, 'tantangan']);
-        Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
-        Route::get('/artikel', [UserController::class, 'artikel']);
+    Route::middleware([RoleMiddleware::class . ':User'])->group(function () {
+        Route::post('/register-step', [UserController::class, 'registerStep']);
+        Route::get('/register-step', [UserController::class, 'registerStepForm'])->name('register.step.form');
+
+        Route::middleware([RegisterOrangtuaMiddleware::class])->group(function () {
+            Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+            Route::get('/chat-ai', [ChatController::class, 'index']);
+            Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
+            Route::get('/profil', [UserController::class, 'profil']);
+            Route::get('/tantangan', [UserController::class, 'tantangan']);
+            Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+            Route::get('/artikel', [UserController::class, 'artikel']);
+        });
     });
 
     Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
@@ -77,7 +81,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('fase', FaseController::class);
         Route::resource('artikel', ArtikelController::class);
         Route::resource('tantangan', TantanganController::class);
-
     });
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
@@ -94,10 +97,10 @@ Route::get('/petugas/imunisasi/tambah', function () {
 
 Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
 
-Route::get('/artikel', function(){
+Route::get('/artikel', function () {
     return Inertia::render('Artikel');
 });
-Route::get('/detail-artikel', function(){
+Route::get('/detail-artikel', function () {
     return Inertia::render('Page');
 });
 

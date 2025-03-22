@@ -1,6 +1,6 @@
 import Layout from "@/Layouts/Admin";
-export default function Tantangan(){
-    return(
+export default function Tantangan() {
+    return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
@@ -51,9 +51,9 @@ export default function Tantangan(){
                                         Disini
                                     </td>
                                     <td className="px-6 py-4 text-right flex gap-2">
-                                        <a href="javascript:void(0)" className="font-medium text-wine hover:underline">Edit</a>
+                                        <a href="#" className="font-medium text-wine hover:underline">Edit</a>
                                         │
-                                        <a href="javascript:void(0)" className="font-medium text-red-500 hover:underline">Delete</a>
+                                        <a href="#" className="font-medium text-red-500 hover:underline">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -19,16 +19,16 @@ export default function Tantangan() {
     const { fase } = usePage<PageProps>().props;
     const [selectedFase, setSelectedFase] = useState("");
 
-        const csrf_token = useCsrfToken();
-    
-        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-    
-            const formData = new FormData(e.currentTarget);
-            formData.append("_token", csrf_token);
-    
-            router.post('/admin/tantangan', formData);
-        };
+    const csrf_token = useCsrfToken();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        formData.append("_token", csrf_token);
+
+        router.post('/admin/tantangan', formData);
+    };
 
     return (
         <Layout>
@@ -37,7 +37,7 @@ export default function Tantangan() {
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Update Tantangan</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-                            
+
                             {/* Nama Tantangan */}
                             <div className="">
                                 <label htmlFor="activity" className="block mb-2 text-sm font-medium text-gray-900">Judul Tantangan</label>
@@ -48,10 +48,10 @@ export default function Tantangan() {
 
                             <div>
                                 <label htmlFor="fase_id" className="block mb-2 text-sm font-medium text-gray-900">Fase</label>
-                                <select 
-                                    id="fase_id" 
-                                    name="fase_id" 
-                                    value={selectedFase} 
+                                <select
+                                    id="fase_id"
+                                    name="fase_id"
+                                    value={selectedFase}
                                     onChange={(e) => setSelectedFase(e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                     required

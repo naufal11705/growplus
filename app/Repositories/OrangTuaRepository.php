@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 
 class OrangTuaRepository implements OrangTuaRepositoryInterface
 {
-    public function getAllOrangTuas()
+    public function getAllOrangTua()
     {
         return OrangTua::all();
     }
