@@ -5,49 +5,39 @@ interface DataAnakProps {
 }
 
 interface ChildData {
-    namaLengkap: string;
-    tanggalLahir: string;
-    jenisKelamin: string;
-    faseUsia: string;
-    beratBadan: string;
-    tinggiBadan: string;
-    polaMakan: string;
-    alergiMakanan: string;
-    riwayatKesehatan: string;
+    nama: string;
+    nik: string;
+    no_jkn: string;
+    tempat_lahir: string;
+    tanggal_lahir: string;
+    golongan_darah: string;
+    berat_badan: number;
+    tinggi_badan: number;
 }
 
 export default function DataAnak({ onNext }: DataAnakProps) {
     const [childrenCount, setChildrenCount] = useState(1);
     const [formData, setFormData] = useState<{ [key: string]: ChildData }>({
         '1': {
-            namaLengkap: '',
-            tanggalLahir: '',
-            jenisKelamin: 'Pilih',
-            faseUsia: 'Pilih',
-            beratBadan: '',
-            tinggiBadan: '',
-            polaMakan: 'Pilih',
-            alergiMakanan: '',
-            riwayatKesehatan: ''
+            nama: '',
+            nik: '',
+            no_jkn: '',
+            tempat_lahir: '',
+            tanggal_lahir: '',
+            golongan_darah: 'Pilih',
+            berat_badan: 0,
+            tinggi_badan: 0
         }
     });
     const [dropdownStates, setDropdownStates] = useState<{
         [key: string]: {
-            isGenderOpen: boolean;
-            isAgeOpen: boolean;
-            isFoodOpen: boolean;
-            selectedGender: string;
-            selectedAge: string;
-            selectedFood: string;
+            isBloodTypeOpen: boolean;
+            selectedBloodType: string;
         }
     }>({
         '1': {
-            isGenderOpen: false,
-            isAgeOpen: false,
-            isFoodOpen: false,
-            selectedGender: "Pilih",
-            selectedAge: "Pilih",
-            selectedFood: "Pilih"
+            isBloodTypeOpen: false,
+            selectedBloodType: "Pilih"
         }
     });
 
@@ -56,11 +46,13 @@ export default function DataAnak({ onNext }: DataAnakProps) {
             ...prev,
             [childId]: {
                 ...prev[childId],
-                isGenderOpen: dropdown === "gender" ? !prev[childId].isGenderOpen : false,
-                isAgeOpen: dropdown === "age" ? !prev[childId].isAgeOpen : false,
-                isFoodOpen: dropdown === "food" ? !prev[childId].isFoodOpen : false
+                isBloodTypeOpen: dropdown === "bloodType" ? !prev[childId].isBloodTypeOpen : false
             }
         }));
+    };
+
+    const dropdownOptions: Record<string, string[]> = {
+        golongan_darah: ["AB", "A", "B", "O"],
     };
 
     const handleSelect = (childId: string, dropdown: string, option: string) => {
@@ -68,18 +60,14 @@ export default function DataAnak({ onNext }: DataAnakProps) {
             ...prev,
             [childId]: {
                 ...prev[childId],
-                ...(dropdown === "gender" && { selectedGender: option, isGenderOpen: false }),
-                ...(dropdown === "age" && { selectedAge: option, isAgeOpen: false }),
-                ...(dropdown === "food" && { selectedFood: option, isFoodOpen: false })
+                ...(dropdown === "bloodType" && { selectedBloodType: option, isBloodTypeOpen: false })
             }
         }));
         setFormData(prev => ({
             ...prev,
             [childId]: {
                 ...prev[childId],
-                ...(dropdown === "gender" && { jenisKelamin: option }),
-                ...(dropdown === "age" && { faseUsia: option }),
-                ...(dropdown === "food" && { polaMakan: option })
+                ...(dropdown === "bloodType" && { golongan_darah: option })
             }
         }));
     };
@@ -100,33 +88,28 @@ export default function DataAnak({ onNext }: DataAnakProps) {
         setDropdownStates(prev => ({
             ...prev,
             [newCount.toString()]: {
-                isGenderOpen: false,
-                isAgeOpen: false,
-                isFoodOpen: false,
-                selectedGender: "Pilih",
-                selectedAge: "Pilih",
-                selectedFood: "Pilih"
+                isBloodTypeOpen: false,
+                selectedBloodType: "Pilih"
             }
         }));
         setFormData(prev => ({
             ...prev,
             [newCount.toString()]: {
-                namaLengkap: '',
-                tanggalLahir: '',
-                jenisKelamin: 'Pilih',
-                faseUsia: 'Pilih',
-                beratBadan: '',
-                tinggiBadan: '',
-                polaMakan: 'Pilih',
-                alergiMakanan: '',
-                riwayatKesehatan: ''
+                nama: '',
+                nik: '',
+                no_jkn: '',
+                tempat_lahir: '',
+                tanggal_lahir: '',
+                golongan_darah: 'Pilih',
+                berat_badan: 0,
+                tinggi_badan: 0
             }
         }));
     };
 
     const removeChild = (childId: string) => {
         if (childrenCount <= 1 || childId === "1") return;
-        
+
         setChildrenCount(prev => prev - 1);
         setDropdownStates(prev => {
             const newStates = { ...prev };
@@ -141,23 +124,22 @@ export default function DataAnak({ onNext }: DataAnakProps) {
     };
 
     const isFormComplete = () => {
-        return Object.values(formData).every(data => 
-            data.namaLengkap.trim() !== '' &&
-            data.tanggalLahir.trim() !== '' &&
-            data.jenisKelamin !== 'Pilih' &&
-            data.faseUsia !== 'Pilih' &&
-            data.beratBadan.trim() !== '' &&
-            data.tinggiBadan.trim() !== '' &&
-            data.polaMakan !== 'Pilih' &&
-            data.alergiMakanan.trim() !== '' &&
-            data.riwayatKesehatan.trim() !== ''
+        return Object.values(formData).every(data =>
+            data.nama.trim() !== '' &&
+            data.nik.trim() !== '' && data.nik.length >= 16 &&
+            data.no_jkn.trim() !== '' && data.no_jkn.length >= 13 &&
+            data.tempat_lahir.trim() !== '' &&
+            data.tanggal_lahir.trim() !== '' &&
+            data.golongan_darah !== 'Pilih' &&
+            data.berat_badan !== null &&
+            data.tinggi_badan !== null
         );
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isFormComplete()) {
-            onNext(formData);
+            onNext(Object.values(formData));
         }
     };
 
@@ -185,44 +167,89 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                 </div>
                 <div className="lg:grid lg:grid-cols-2 grid grid-cols-1 gap-5 mt-4">
                     <div>
-                        <label htmlFor={`nama-lengkap-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap Anak</label>
-                        <input 
-                            type="text" 
-                            name={`nama-lengkap-${childId}`} 
-                            id={`nama-lengkap-${childId}`} 
-                            value={data.namaLengkap}
-                            onChange={(e) => handleInputChange(childId, 'namaLengkap', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                            placeholder="Nama Lengkap" 
-                            required 
+                        <label htmlFor={`nama-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap Anak</label>
+                        <input
+                            type="text"
+                            name={`nama-${childId}`}
+                            id={`nama-${childId}`}
+                            value={data.nama}
+                            onChange={(e) => handleInputChange(childId, 'nama', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="Nama Lengkap"
+                            required
                         />
                     </div>
                     <div>
-                        <label htmlFor={`tanggal-lahir-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir Anak</label>
-                        <input 
-                            type="date" 
-                            name={`tanggal-lahir-${childId}`} 
-                            id={`tanggal-lahir-${childId}`} 
-                            value={data.tanggalLahir}
-                            onChange={(e) => handleInputChange(childId, 'tanggalLahir', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                            required 
+                        <label htmlFor={`nik-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">NIK</label>
+                        <input
+                            type="text"
+                            name={`nik-${childId}`}
+                            id={`nik-${childId}`}
+                            value={data.nik}
+                            onChange={(e) => handleInputChange(childId, 'nik', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="NIK (Min. 16 karakter)"
+                            minLength={16}
+                            required
                         />
                     </div>
                     <div>
-                        <label className="block mb-2 text-sm font-bold text-gray-900">Jenis Kelamin Anak</label>
-                        <button onClick={() => toggleDropdown(childId, "gender")} type="button" className="text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5">
-                            {state.selectedGender}
-                            <svg className={`w-2.5 h-2.5 ml-3 transform ${state.isGenderOpen ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <label htmlFor={`no_jkn-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">No. JKN</label>
+                        <input
+                            type="text"
+                            name={`no_jkn-${childId}`}
+                            id={`no_jkn-${childId}`}
+                            value={data.no_jkn}
+                            onChange={(e) => handleInputChange(childId, 'no_jkn', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="Nomor JKN (Min. 13 karakter)"
+                            minLength={13}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor={`tempat_lahir-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Tempat Lahir</label>
+                        <input
+                            type="text"
+                            name={`tempat_lahir-${childId}`}
+                            id={`tempat_lahir-${childId}`}
+                            value={data.tempat_lahir}
+                            onChange={(e) => handleInputChange(childId, 'tempat_lahir', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="Tempat Lahir"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor={`tanggal_lahir-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
+                        <input
+                            type="date"
+                            name={`tanggal_lahir-${childId}`}
+                            id={`tanggal_lahir-${childId}`}
+                            value={data.tanggal_lahir}
+                            onChange={(e) => handleInputChange(childId, 'tanggal_lahir', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-bold text-gray-900">Golongan Darah</label>
+                        <button
+                            onClick={() => toggleDropdown(childId, "bloodType")}
+                            type="button"
+                            className="text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5"
+                        >
+                            {state.selectedBloodType}
+                            <svg className={`w-2.5 h-2.5 ml-3 transform ${state.isBloodTypeOpen ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
-                        {state.isGenderOpen && (
+                        {state.isBloodTypeOpen && (
                             <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
                                 <ul className="py-2 text-gray-700 font-medium">
-                                    {["Laki-Laki", "Perempuan"].map(option => (
+                                    {dropdownOptions.golongan_darah.map(option => (
                                         <li key={option}>
-                                            <a href="javascript:void(0)" onClick={() => handleSelect(childId, "gender", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
+                                            <a href="#" onClick={() => handleSelect(childId, "bloodType", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
                                                 {option}
                                             </a>
                                         </li>
@@ -231,102 +258,34 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                             </div>
                         )}
                     </div>
+                </div>
+                <div className="lg:grid lg:grid-cols-2 grid grid-cols-1 gap-5 mt-4">
                     <div>
-                        <label className="block mb-2 text-sm font-bold text-gray-900">Fase Usia Anak</label>
-                        <button onClick={() => toggleDropdown(childId, "age")} type="button" className="text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5">
-                            {state.selectedAge}
-                            <svg className={`w-2.5 h-2.5 ml-3 transform ${state.isAgeOpen ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                            </svg>
-                        </button>
-                        {state.isAgeOpen && (
-                            <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
-                                <ul className="py-2 text-gray-700 font-medium">
-                                    {["Bayi (0-12 bulan)", "Balita (1-5 Tahun)", "Pra-Sekolah(5-7 Tahun)"].map(option => (
-                                        <li key={option}>
-                                            <a href="javascript:void(0)" onClick={() => handleSelect(childId, "age", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
-                                                {option}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        <label htmlFor={`berat_badan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Berat Badan (kg)</label>
+                        <input
+                            type="number"
+                            name={`berat_badan-${childId}`}
+                            id={`berat_badan-${childId}`}
+                            value={data.berat_badan}
+                            onChange={(e) => handleInputChange(childId, 'berat_badan', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="Berat Badan"
+                            required
+                        />
                     </div>
-                </div>
-                <div className="mt-4">
-                    <label htmlFor={`berat-badan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Berat Badan Anak</label>
-                    <input 
-                        type="text" 
-                        name={`berat-badan-${childId}`} 
-                        id={`berat-badan-${childId}`} 
-                        value={data.beratBadan}
-                        onChange={(e) => handleInputChange(childId, 'beratBadan', e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                        placeholder="Berat Badan" 
-                        required 
-                    />
-                </div>
-                <div className="mt-4">
-                    <label htmlFor={`tinggi-badan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Tinggi Badan Anak</label>
-                    <input 
-                        type="text" 
-                        name={`tinggi-badan-${childId}`} 
-                        id={`tinggi-badan-${childId}`} 
-                        value={data.tinggiBadan}
-                        onChange={(e) => handleInputChange(childId, 'tinggiBadan', e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                        placeholder="Tinggi Badan" 
-                        required 
-                    />
-                </div>
-                <div className="mt-4">
-                    <label className="block mb-2 text-sm font-bold text-gray-900">Pola Makan Anak</label>
-                    <button onClick={() => toggleDropdown(childId, "food")} type="button" className="text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5">
-                        {state.selectedFood}
-                        <svg className={`w-2.5 h-2.5 ml-3 transform ${state.isFoodOpen ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    {state.isFoodOpen && (
-                        <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
-                            <ul className="py-2 text-gray-700 font-medium">
-                                {["Asi", "MPASI", "Makanan Padat"].map(option => (
-                                    <li key={option}>
-                                        <a href="javascript:void(0)" onClick={() => handleSelect(childId, "food", option)} className="flex items-center px-4 py-2 hover:bg-gray-200">
-                                            {option}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </div>
-                <div className="mt-4">
-                    <label htmlFor={`alergi-makanan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Alergi Makanan Anak</label>
-                    <input 
-                        type="text" 
-                        name={`alergi-makanan-${childId}`} 
-                        id={`alergi-makanan-${childId}`} 
-                        value={data.alergiMakanan}
-                        onChange={(e) => handleInputChange(childId, 'alergiMakanan', e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                        placeholder="Alergi Makanan" 
-                        required 
-                    />
-                </div>
-                <div className="mt-4">
-                    <label htmlFor={`riwayat-kesehatan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Riwayat Kesehatan Anak</label>
-                    <input 
-                        type="text" 
-                        name={`riwayat-kesehatan-${childId}`} 
-                        id={`riwayat-kesehatan-${childId}`} 
-                        value={data.riwayatKesehatan}
-                        onChange={(e) => handleInputChange(childId, 'riwayatKesehatan', e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5" 
-                        placeholder="Riwayat Kesehatan" 
-                        required 
-                    />
+                    <div>
+                        <label htmlFor={`tinggi_badan-${childId}`} className="block mb-2 text-sm font-medium text-gray-900">Tinggi Badan (cm)</label>
+                        <input
+                            type="number"
+                            name={`tinggi_badan-${childId}`}
+                            id={`tinggi_badan-${childId}`}
+                            value={data.tinggi_badan}
+                            onChange={(e) => handleInputChange(childId, 'tinggi_badan', e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5"
+                            placeholder="Tinggi Badan"
+                            required
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -341,24 +300,23 @@ export default function DataAnak({ onNext }: DataAnakProps) {
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                     {Array.from({ length: childrenCount }, (_, i) => renderChildForm(i + 1))}
                     <div className="space-y-2 flex flex-col mt-6">
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             disabled={!isFormComplete()}
-                            className={`w-full text-white font-medium rounded-xl text-md px-5 py-3 text-center ${
-                                isFormComplete() 
-                                    ? 'bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky' 
-                                    : 'bg-gray-400 cursor-not-allowed'
-                            }`}
+                            className={`w-full text-white font-medium rounded-xl text-md px-5 py-3 text-center ${isFormComplete()
+                                ? 'bg-wine hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky'
+                                : 'bg-gray-400 cursor-not-allowed'
+                                }`}
                         >
                             Selanjutnya
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={addChild}
                             className="w-full gap-2 flex justify-center items-center text-black bg-white hover:bg-gray-100 border border-dashed focus:ring-4 focus:outline-none focus:ring-dark-wine font-medium rounded-xl text-md px-5 py-3 text-center"
                         >
                             <svg className="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5" />
                             </svg>
                             Tambah Data Anak
                         </button>

@@ -1,24 +1,24 @@
 import Layout from "@/Layouts/Admin";
 export default function Index() {
-    return(
+    return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
-                <div className="lg:p-8 p-4">    
+                <div className="lg:p-8 p-4">
                     <div className="grid grid-cols-3 space-x-3">
                         <div>
-                            <a href="javascript:void(0)" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
+                            <a href="#" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
                                 <h5 className="mb-2 text-md font-medium tracking-tight text-gray-800">Jumlah Puskesmas</h5>
                                 <p className="text-3xl font-bold  text-gray-900">1000</p>
                             </a>
                         </div>
                         <div>
-                            <a href="javascript:void(0)" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
+                            <a href="#" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
                                 <h5 className="mb-2 text-md font-medium tracking-tight text-gray-800">Jumlah Orang Tua</h5>
                                 <p className="text-3xl font-bold  text-gray-900">1000</p>
                             </a>
                         </div>
                         <div>
-                            <a href="javascript:void(0)" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
+                            <a href="#" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
                                 <h5 className="mb-2 text-md font-medium tracking-tight text-gray-800">Jumlah Tantangan</h5>
                                 <p className="text-3xl font-bold  text-gray-900">1000</p>
                             </a>
@@ -62,9 +62,9 @@ export default function Index() {
                                         Disini
                                     </td>
                                     <td className="px-6 py-4 text-right flex gap-2">
-                                        <a href="javascript:void(0)" className="font-medium text-wine hover:underline">Edit</a>
+                                        <a href="#" className="font-medium text-wine hover:underline">Edit</a>
                                         │
-                                        <a href="javascript:void(0)" className="font-medium text-red-500 hover:underline">Delete</a>
+                                        <a href="#" className="font-medium text-red-500 hover:underline">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -72,7 +72,7 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-            
+
         </Layout>
     );
 }

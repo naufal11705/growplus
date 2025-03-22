@@ -49,6 +49,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('register.step'));
+        return redirect(route('register.step.form'));
     }
 }

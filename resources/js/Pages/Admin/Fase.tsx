@@ -28,7 +28,7 @@ export default function Fase() {
     };
 
     const trimText = (text: string): string => {
-        if (!text) return "";        
+        if (!text) return "";
         const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
         if (sentences.length <= 1) {
             return text;
@@ -43,8 +43,8 @@ export default function Fase() {
 
     const getStatusClass = (status: string | number): string => {
         const statusNum = Number(status);
-        return statusNum === 1 
-            ? "bg-green-100 text-green-800 px-2 py-1 rounded-md" 
+        return statusNum === 1
+            ? "bg-green-100 text-green-800 px-2 py-1 rounded-md"
             : "bg-red-100 text-red-800 px-2 py-1 rounded-md";
     };
 
@@ -53,8 +53,8 @@ export default function Fase() {
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
                     <a href="/admin/fase/create">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className="px-5 py-3 text-base font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine"
                         >
                             Tambah Fase
@@ -74,12 +74,12 @@ export default function Fase() {
                             </thead>
                             <tbody>
                                 {fase.map((item) => (
-                                    <tr 
-                                        key={item.fase_id} 
+                                    <tr
+                                        key={item.fase_id}
                                         className="bg-white border-b border-gray-200 hover:bg-gray-50"
                                     >
-                                        <th 
-                                            scope="row" 
+                                        <th
+                                            scope="row"
                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                         >
                                             {item.fase_id}
@@ -99,8 +99,8 @@ export default function Fase() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            <a 
-                                                href={`/admin/fase/${item.fase_id}/edit`} 
+                                            <a
+                                                href={`/admin/fase/${item.fase_id}/edit`}
                                                 className="font-medium text-wine hover:underline"
                                             >
                                                 Edit
