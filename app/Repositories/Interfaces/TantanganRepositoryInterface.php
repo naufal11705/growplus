@@ -11,4 +11,6 @@ interface TantanganRepositoryInterface
     public function createTantangan(array $data);
     public function updateTantangan($id, array $data);
     public function deleteTantangan($id);
+
+    public function countTantangan();
 }

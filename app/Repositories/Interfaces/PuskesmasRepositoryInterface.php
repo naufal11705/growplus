@@ -11,4 +11,5 @@ interface PuskesmasRepositoryInterface
     public function createPuskesmas(array $data);
     public function updatePuskesmas($id, array $data);
     public function deletePuskesmas($id);
+    public function countPuskesmas();
 }

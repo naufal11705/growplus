@@ -36,4 +36,9 @@ class OrangTuaRepository implements OrangTuaRepositoryInterface
     {
         return OrangTua::destroy($id);
     }
+
+    public function countOrangTua()
+    {
+        return OrangTua::count();
+    }
 }
