@@ -62,9 +62,14 @@ class ArtikelController extends Controller
      */
     public function store(ArtikelStoreRequest $request)
     {
-        $data = $request->validated();
+        $validatedData = $request->validated();
 
-        $this->artikelRepository->createArtikel($data);
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
+
+        $this->artikelRepository->createArtikel($validatedData);
 
         return redirect()->route('artikel.index');
     }
@@ -97,9 +102,14 @@ class ArtikelController extends Controller
      */
     public function update(ArtikelUpdateRequest $request, $id)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        $this->artikelRepository->updateArtikel($id, $request->all());
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
+
+        $this->artikelRepository->updateArtikel($id, $validatedData);
 
         return redirect()->route('artikel.index');
     }
