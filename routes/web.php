@@ -114,14 +114,8 @@ Route::get('/profil/edit', function () {
     return Inertia::render('User/Functions/Profile/Edit_OrangTua');
 });
 
-Route::get('/404', function () {
-    return Inertia::render('Error/404');
-});
-Route::get('/403', function () {
-    return Inertia::render('Error/403');
-});
-Route::get('/500', function () {
-    return Inertia::render('Error/500');
+Route::fallback(function () {
+    return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
 });
 
 require __DIR__ . '/auth.php';
