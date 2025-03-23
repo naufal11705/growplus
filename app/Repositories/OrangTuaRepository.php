@@ -17,6 +17,11 @@ class OrangTuaRepository implements OrangTuaRepositoryInterface
         return OrangTua::find($id);
     }
 
+    public function getOrangTuaByPenggunaId($id)
+    {
+        return auth()->user()->orangTua;
+    }
+
     public function createOrangTua(array $data)
     {
         return OrangTua::create($data);
