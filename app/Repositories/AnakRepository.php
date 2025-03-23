@@ -17,6 +17,11 @@ class AnakRepository implements AnakRepositoryInterface
         return Anak::find($id);
     }
 
+    public function getAnakByOrangTuaId($id)
+    {
+        return auth()->user()->orangtua->anak;
+    }
+
     public function createAnak(array $data)
     {
         return Anak::create($data);
