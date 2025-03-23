@@ -17,7 +17,7 @@ export default function Promotion() {
                                         <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
                                     </svg>
                                 </div>
-                                <input type="text" id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pinky focus:border-pinky block w-full ps-10 p-2.5" placeholder="name@flowbite.com" />
+                                <input type="text" id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pinky focus:border-pinky block w-full ps-10 p-2.5" placeholder="name@growplus.com" />
                             </div>
                             <button type="button" className="px-6 py-2.5 mt-5 text-base font-medium text-center text-white bg-wine rounded-lg hover:bg-dark-wine focus:ring-4 focus:outline-none focus:ring-light-pinky">Berlangganan</button>
                         </form>
