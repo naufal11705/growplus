@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\FaseResource;
 use Inertia\Inertia;
+use App\Models\Tantangan;
 use Illuminate\Http\Request;
+use App\Models\PenggunaTantangan;
+use App\Http\Resources\FaseResource;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
-use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
 
 class UserController extends Controller
@@ -29,7 +31,27 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        return Inertia::render('User/Dashboard');
+        $pengguna_id = auth()->user()->pengguna_id;
+        $fases = $this->faseRepository->getAllFase()->load('tantangans');
+
+        $activeFase = $fases->firstWhere('status', 1);
+        $nonActiveFases = $fases->where('status', 0);
+        $nonActiveFaseData = FaseResource::collection($nonActiveFases)->resolve();
+
+        $totalProgress = 0;
+        if ($activeFase) {
+            $faseResource = new FaseResource($activeFase);
+            $totalProgress = $faseResource->calculateProgress();
+        }
+        $totalPoints = $this->penggunaTantanganRepository->countTotalPoints($pengguna_id);
+        $streak = $this->penggunaTantanganRepository->getPenggunaTantangansByPenggunaId($pengguna_id)->count();
+
+        return Inertia::render('User/Dashboard', [
+            'totalPoints' => $totalPoints,
+            'totalProgress' => $totalProgress,
+            'streak' => $streak,
+            'fases' => $nonActiveFaseData,
+        ]);
     }
 
     public function profil()
@@ -115,4 +137,23 @@ class UserController extends Controller
 
         return redirect()->route('user.dashboard');
     }
+
+    // public static function calculateProgress($fase)
+    // {
+    //     if (!auth()->check()) {
+    //         return 0;
+    //     }
+
+    //     $penggunaId = auth()->user()->pengguna_id;
+    //     $totalTantangans = $fase->tantangans->count();
+    //     if ($totalTantangans == 0) {
+    //         return 0;
+    //     }
+
+    //     $completedTantangans = PenggunaTantangan::where('pengguna_id', $penggunaId)
+    //         ->whereIn('tantangan_id', $fase->tantangans->pluck('id'))
+    //         ->count();
+
+    //     return (int)(($completedTantangans / $totalTantangans) * 100);
+    // }
 }

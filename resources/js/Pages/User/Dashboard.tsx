@@ -1,11 +1,17 @@
-import Layout from "@/Layouts/Layout"
-import TableStunting from "@/Components/UI/Source/StuntingTable";
-import ParentProfile from "@/Components/Widget/ParentProfile";
-import ProgressStatus from "@/Components/Widget/ProgressStatus";
 import ComingUpNext from "@/Components/Widget/ComingUpNext";
-import { Stast } from "@/Data/Stats"
-export default function User(){
-    return(
+import ProgressStatus from "@/Components/Widget/ProgressStatus";
+import Layout from "@/Layouts/Layout";
+import { Fase } from "@/types/fase";
+
+interface StatisticProps {
+    'fases': Fase[]
+    'totalPoints': number;
+    'totalProgress': number;
+    'streak': number;
+}
+
+export default function User({ totalPoints, totalProgress, streak, fases }: StatisticProps) {
+    return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
@@ -20,8 +26,8 @@ export default function User(){
                     <hr className="h-px my-8 bg-gray-200 border-0"></hr> */}
                     <div className="lg:flex lg:flex-row gap-5 w-full space-x-1 space-y-5 lg:space-x-0 lg:space-y-0">
                         {/* <TableStunting /> */}
-                        <ProgressStatus />
-                        <ComingUpNext />
+                        <ProgressStatus totalPoints={totalPoints} totalProgress={totalProgress} streak={streak} />
+                        <ComingUpNext fases={fases} />
                     </div>
                 </div>
             </div>

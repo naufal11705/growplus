@@ -1,4 +1,3 @@
-import Tabs from "@/Components/Widget/Tabs/ChallengeTabs";
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
 import Layout from "@/Layouts/Layout";
 import { Fase } from "@/types/fase";
@@ -22,7 +21,7 @@ const Forum: React.FC<FaseCardsProps> = ({ fases }) => {
                             Kerjakan challenge di bawah ini untuk tumbuh kembang anak yang optimal.
                         </p>
                     </div>
-                    <Tabs />
+                    {/* <Tabs /> */}
                     {activeFases.length > 0 && (
                         <TantanganCards fases={activeFases} />
                     )}

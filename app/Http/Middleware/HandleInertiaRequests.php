@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,7 +36,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'geminiApiKey' => env('GEMINI_API_KEY'),
+            'errors' => Session::get('errors')
+                ? Session::get('errors')->getBag('default')->messages()
+                : (object) [], // Mengirimkan error ke frontend
         ];
-        
     }
 }
