@@ -11,4 +11,5 @@ interface OrangTuaRepositoryInterface
     public function createOrangTua(array $data);
     public function updateOrangTua($id, array $data);
     public function deleteOrangTua($id);
+    public function countOrangTua();
 }

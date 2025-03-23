@@ -31,4 +31,9 @@ class TantanganRepository implements TantanganRepositoryInterface
     {
         return Tantangan::destroy($id);
     }
+
+    public function countTantangan()
+    {
+        return Tantangan::count();
+    }
 }
