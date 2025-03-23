@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { usePage } from "@inertiajs/react";
+import { useState, useEffect } from "react";
 import { router } from "@inertiajs/react";
 import useCsrfToken from "@/Utils/csrfToken";
 import Layout from "@/Layouts/Admin";
 
-interface Fase {
-    fase_id: number;
-    judul: string;
-}
-
-import { PageProps as InertiaPageProps } from "@inertiajs/core";
-
-interface PageProps extends InertiaPageProps {
-    fase: Fase[];
-}
-
 export default function Artikel(){
-    const { fase } = usePage<PageProps>().props;
-    const [selectedFase, setSelectedFase] = useState("");
+    const csrf_token = useCsrfToken();
+    const [title, setTitle] = useState("");
+    const [slug, setSlug] = useState("");
 
-        const csrf_token = useCsrfToken();
-    
-        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-    
-            const formData = new FormData(e.currentTarget);
+    const slugify = (text: string) => {
+        return text
+            ? text.toLowerCase().trim().replace(/[\s\W-]+/g, '-')
+            : '';
+    };
+
+    useEffect(() => {
+        setSlug(slugify(title));
+    }, [title]);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        if (csrf_token) {
             formData.append("_token", csrf_token);
-    
-            router.post('/admin/artikel', formData);
-        };
+        }
+        formData.append("slug", slug);
+
+        router.post('/admin/artikel', formData);
+    };
 
     return(
         <Layout>
@@ -39,32 +39,28 @@ export default function Artikel(){
                     <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                         <div className="">
                             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">Judul Artikel</label>
-                            <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis judul disini..." required />
+                            <input 
+                                type="text" 
+                                name="title" 
+                                id="title" 
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                placeholder="Tulis judul disini..." 
+                                required 
+                                value={title} 
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
                         </div>
-                        <div>
-                            <label htmlFor="fase_id" className="block mb-2 text-sm font-medium text-gray-900">Fase</label>
-                            <select 
-                                id="fase_id" 
-                                name="fase_id" 
-                                value={selectedFase} 
-                                onChange={(e) => setSelectedFase(e.target.value)}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                                required
-                            >
-                                <option value="">Pilih Fase</option>
-                                {fase?.map((item: Fase) => (
-                                    <option key={item.fase_id} value={item.fase_id}>
-                                        {item.judul}
-                                    </option>
-                                ))}
-                            </select>
+                        <div className="">
+                            <label htmlFor="author" className="block mb-2 text-sm font-medium text-gray-900">Penulis</label>
+                            <input type="text" name="author" id="author" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tulis author disini..." required />
                         </div>
                         <div className="sm:col-span-2">
-                            <label htmlFor="content" className="block mb-2 text-sm font-medium text-gray-900">Deskripsis</label>
+                            <label htmlFor="content" className="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
                             <textarea name="content" id="content" rows={8} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Tulis Deksripsi Disini...">
                             </textarea>
                         </div>
                     </div>
+                    <input type="hidden" name="slug" value={slug} />
                     <div className="flex items-center space-x-2">
                         <button type="submit" className="px-5 py-3 text-sm font-medium text-center text-white bg-wine rounded-xl hover:bg-dark-wine">
                             Buat Artikel

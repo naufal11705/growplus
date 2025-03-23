@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArtikelStoreRequest;
-use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Http\Requests\ArtikelUpdateRequest;
 use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use Inertia\Inertia;
@@ -62,11 +62,11 @@ class ArtikelController extends Controller
      */
     public function store(ArtikelStoreRequest $request)
     {
-        $request->validated();
+        $data = $request->validated();
 
-        $this->artikelRepository->createArtikel($request->all());
+        $this->artikelRepository->createArtikel($data);
 
-        return Inertia::render('Admin/Artikel');
+        return redirect()->route('artikel.index');
     }
 
 
@@ -95,11 +95,13 @@ class ArtikelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ImunisasiUpdateRequest $request, $id)
+    public function update(ArtikelUpdateRequest $request, $id)
     {
         $request->validated();
 
         $this->artikelRepository->updateArtikel($id, $request->all());
+
+        return redirect()->route('artikel.index');
     }
 
     /**
