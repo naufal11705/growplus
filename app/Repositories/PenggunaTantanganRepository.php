@@ -36,4 +36,11 @@ class PenggunaTantanganRepository implements PenggunaTantanganRepositoryInterfac
     {
         return PenggunaTantangan::destroy($id);
     }
+    
+    public function countTotalPoints($id)
+    {
+        return $points = PenggunaTantangan::where('pengguna_id', $id)
+            ->join('tantangans', 'pengguna_tantangans.tantangan_id', '=', 'tantangans.tantangan_id')
+            ->sum('tantangans.point') ?? 0;
+    }
 }
