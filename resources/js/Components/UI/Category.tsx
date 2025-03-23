@@ -1,16 +1,19 @@
 import React from "react";
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
-import { challenges } from "@/Data/ChallengeCard";
+import { Fase } from "@/types/fase";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 
-export default function Category() {
-    const challengesNoProgress = challenges.map(challenge => ({
-        ...challenge,
-        progress: 0
+interface FaseCardsProps {
+    fases: Fase[];
+}
+
+export default function Category({ fases }: FaseCardsProps) {
+    const fasesNoProgress = fases.map(fase => ({
+        ...fase,
     }));
 
     return (
@@ -24,7 +27,7 @@ export default function Category() {
                 </p>
 
                 <Swiper
-                    spaceBetween={20} 
+                    spaceBetween={20}
                     slidesPerView={1}
                     freeMode={true}
                     grabCursor={true}
@@ -37,16 +40,16 @@ export default function Category() {
                     }}
                     className="w-full !flex !justify-center text-left"
                 >
-                    {challengesNoProgress.map((challenge, index) => (
+                    {fasesNoProgress.map((fase, index) => (
                         <SwiperSlide key={index}>
-                            <TantanganCards challenges={[challenge]} gridCols="xl:grid-cols-1" />
+                            <TantanganCards fases={[fase]} gridCols="xl:grid-cols-1" />
                         </SwiperSlide>
                     ))}
                     <SwiperSlide>
                         <div className="bg-white rounded-2xl border-2 border-gray-100 flex flex-col h-[572px] items-center justify-center">
                             <button type="button" className="bg-gray-100 text-gray-300 hover:text-gray-400 transition-transform duration-300 hover:rotate-[360deg] hover:bg-gray-200 font-medium rounded-full text-sm p-6 text-center inline-flex items-center me-2 w-26">
                                 <svg className="w-10 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                 </svg>
                                 <span className="sr-only">Icon description</span>
                             </button>

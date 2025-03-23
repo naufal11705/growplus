@@ -61,6 +61,6 @@ class FaseSeeder extends Seeder
             Fase::create($fase);
         }
 
-        Fase::factory(8)->create();
+        // Fase::factory(5)->create();
     }
 }

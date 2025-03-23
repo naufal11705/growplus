@@ -41,6 +41,6 @@ class PenggunaSeeder extends Seeder
             Pengguna::create($user);
         }
 
-        Pengguna::factory(10)->create();
+        // Pengguna::factory(10)->create();
     }
 }

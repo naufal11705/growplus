@@ -17,13 +17,15 @@ class AnakFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('id_ID');
+
         return [
-            'orangtua_id' => OrangTua::query()->exists() ? OrangTua::inRandomOrder()->first()->orangtua_id : OrangTua::factory()->create()->orangtua_id,
-            'nama' => $this->faker->name(),
+            'orangtua_id' => 1,
+            'nama' => $faker->name(),
             'nik' => $this->faker->unique()->numerify('################'), // 16 digits
             'no_jkn' => $this->faker->unique()->numerify('#############'), // 13 digits
-            'tempat_lahir' => $this->faker->city(),
-            'tanggal_lahir' => $this->faker->date(),
+            'tempat_lahir' => $faker->city(),
+            'tanggal_lahir' => $faker->dateTimeBetween('-6 years', 'now')->format('Y-m-d'),
             'golongan_darah' => $this->faker->randomElement(['A', 'B', 'O', 'AB']),
             'berat_badan' => $this->faker->numberBetween(40, 80),
             'tinggi_badan' => $this->faker->numberBetween(120, 180),

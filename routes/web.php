@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
             Route::get('/profil', [UserController::class, 'profil']);
             Route::get('/tantangan', [UserController::class, 'tantangan']);
-            Route::get('/tantanganDetail', [UserController::class, 'tantanganDetail']);
+            Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
         });
     });

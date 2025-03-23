@@ -12,6 +12,6 @@ class AnakSeeder extends Seeder
      */
     public function run(): void
     {
-        Anak::factory(50)->create();
+        Anak::factory(1)->create();
     }
 }

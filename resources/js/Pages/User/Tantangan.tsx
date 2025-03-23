@@ -1,18 +1,16 @@
 import Tabs from "@/Components/Widget/Tabs/ChallengeTabs";
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
 import Layout from "@/Layouts/Layout";
-import { Challenge } from "@/types/challenge";
+import { Fase } from "@/types/fase";
 import React from "react";
 
-interface TantanganCardsProps {
-    challenges: Challenge[];
+interface FaseCardsProps {
+    fases: Fase[];
 }
 
-const Forum: React.FC<TantanganCardsProps> = ({ challenges }) => {
-    const challengesActive = challenges.filter(challenge => challenge.status === 1);
-    const challengesNonActive = challenges.filter(challenge => challenge.status === 0);
-    console.log(challengesActive);
-    console.log(challengesNonActive);
+const Forum: React.FC<FaseCardsProps> = ({ fases }) => {
+    const activeFases = fases.filter(fase => fase.status === 1);
+    const inactiveFases = fases.filter(fase => fase.status === 0);
 
     return (
         <Layout>
@@ -25,13 +23,13 @@ const Forum: React.FC<TantanganCardsProps> = ({ challenges }) => {
                         </p>
                     </div>
                     <Tabs />
-                    {challengesActive.length > 0 && (
-                        <TantanganCards challenges={challengesActive} />
+                    {activeFases.length > 0 && (
+                        <TantanganCards fases={activeFases} />
                     )}
                     <hr className="h-px my-8 bg-gray-200 border-0" />
                     <h2 className="text-4xl font-bold text-gray-900 mb-8">Challenge Selanjutnya</h2>
-                    {challengesNonActive.length > 0 && (
-                        <TantanganCards challenges={challengesNonActive} />
+                    {inactiveFases.length > 0 && (
+                        <TantanganCards fases={inactiveFases} />
                     )}
                 </div>
             </div>

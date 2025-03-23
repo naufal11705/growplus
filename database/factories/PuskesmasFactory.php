@@ -16,12 +16,14 @@ class PuskesmasFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('id_ID');
+
         return [
-            'nama' => $this->faker->city(),
-            'alamat' => $this->faker->address(),
-            'kecamatan' => $this->faker->state(),
-            'kota' => $this->faker->city(),
-            'kontak' => $this->faker->phoneNumber(),
+            'nama' => $nama = $faker->city(),
+            'alamat' => $faker->address(),
+            'kecamatan' => $faker->state(),
+            'kota' => $nama,
+            'kontak' => $faker->phoneNumber(),
             'created_at' => now(),
             'updated_at' => now()
         ];
