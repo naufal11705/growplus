@@ -21,7 +21,7 @@ export default function Index({ fases: propFases }: FaseCardsProps) {
                 <section className="lg:mt-24 mt-20">
                     <div className="py-8 px-4 mx-auto max-w-screen-xl lg:text-center lg:py-16">
                         <h1 className="lg:mb-6 mb-5 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">
-                            Bersama <span className="underline decoration-wavy decoration-wine">Grow+</span>, cegah stunting sejak dini <br />
+                            Bersama <span className="underline decoration-wavy decoration-wine">Grow+</span>, cegah stunting <br /> sejak dini 👶🏽 <br />
 
                         </h1>
                         <p className="lg:mb-10 mb-7 text-lg font-normal lg:px-56 text-gray-500 lg:text-xl">Grow+ hadir sebagai pendamping ibu hamil dan anak usia dini menuju kesehatan optimal, karena setiap langkah kecil hari ini adalah investasi besar untuk masa depan generasi Indonesia!</p>
