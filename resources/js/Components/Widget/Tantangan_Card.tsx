@@ -8,11 +8,11 @@ interface TantanganCardsProps {
 
 export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4" }: TantanganCardsProps) {
   return (
-    <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-2 ${gridCols} w-full`}>
+    <div className="grid lg:grid-cols-4 md:grid-cols-1 w-full sm:grid-cols-2 gap-2">
       {fases.map((fase) => (
         <div
           key={fase.fase_id}
-          className="bg-white rounded-2xl border-2 border-gray-100 flex flex-col w-full md:max-w-sm overflow-hidden h-[500px]"
+          className="bg-white rounded-2xl border-2 border-gray-100 flex flex-col w-full overflow-hidden h-[500px]"
         >
           <div className="relative">
             <img className="rounded-t-2xl w-full h-32 object-cover" src={fase.banner} alt={fase.judul} />
@@ -52,8 +52,8 @@ export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4" }: T
               <h5 className="text-2xl font-bold tracking-tight text-gray-900">{fase.judul}</h5>
               <p className="mb-2 text-gray-500">{fase.subjudul}</p>
             </a>
-            <div className="overflow-y-auto max-h-[150px] mb-4"> {/* Adjusted max-height */}
-              <ul className="grid gap-2 text-sm max-w-md space-y-1 text-gray-900 list-disc list-inside">
+            <div className="overflow-y-auto md:max-h-[180px] lg:max-h-[150px] max-h-[160px] mb-4">
+              <ul className="grid gap-2 text-sm w-full space-y-1 text-gray-900 list-disc list-inside">
                 {fase.tantangans.map((tantangan, index) => (
                   <li key={index} className="flex items-center gap-2 overflow-hidden list-none border-2 border-gray-100 rounded-xl p-2">
                     <div className="bg-wine w-fit h-fit p-1 rounded-full">

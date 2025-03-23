@@ -15,3 +15,17 @@ Grow+ adalah website application Stunting Nutrition Planner (SNP) yang dirancang
 3. Haikal Muhammad Rafli
 4. Lavina
 5. Riovaldo Alfiyan Fahmi Rahman
+
+### Informasi Login 🔐
+
+Untuk mencoba aplikasi Grow+, Anda dapat menggunakan kredensial berikut:
+
+Sebagai User
+
+-   Username: testuser@gmail.com
+-   Password: 12345678
+
+Sebagai Admin
+
+-   Username: testadmin@gmail.com
+-   Password: 12345678
