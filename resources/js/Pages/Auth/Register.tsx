@@ -36,9 +36,33 @@ export default function Register() {
             {showToast && <Alert message="Pendaftaran Berhasil!" onClose={() => setShowToast(false)} />}
             <section>
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen min-h-screen lg:py-0">
-                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-                        Grow+
-                    </a>
+                    <div className="w-full max-w-md mb-5 flex items-center justify-center relative">
+                        <a href="/" className="absolute left-0">
+                            <button type="button" className="px-5 py-3 text-base font-medium text-center inline-flex items-center text-black border border-gray-200 bg-white rounded-xl hover:bg-gray-50">
+                                <svg 
+                                    className="w-6 h-6 text-black me-2" 
+                                    aria-hidden="true" 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    width="24" 
+                                    height="24" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path 
+                                        stroke="currentColor" 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        strokeWidth="2" 
+                                        d="M5 12h14M5 12l4-4m-4 4 4 4"
+                                    />
+                                </svg>
+                                Kembali
+                            </button>
+                        </a>
+                        <a href="#" className="flex items-center text-center justify-center text-2xl font-semibold text-gray-900">
+                            Grow+
+                        </a>
+                    </div>
                     <div className="w-full bg-white rounded-2xl shadow border border-gray-200 sm:max-w-md xl:p-0">
                         <div className="p-6 space-y-4 sm:p-8">
                             <h1 className="text-2xl font-bold text-gray-900">Daftarkan Akun Anda!</h1>
