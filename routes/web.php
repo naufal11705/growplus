@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+        Route::resource('pengguna', PenggunaController::class);
         Route::resource('puskesmas', PuskesmasController::class);
         Route::resource('faskes', FasKesController::class);
         Route::resource('imunisasi', ImunisasiController::class);
