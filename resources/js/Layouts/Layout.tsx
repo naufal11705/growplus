@@ -17,7 +17,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="bg-white min-h-screen">
                 <Header isOpen={isOpen} toggleSidebar={toggleSidebar} />
                 <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-                <main>{children}</main>
+                <main className="mt-16 md:mt-0">{children}</main>
             </div>
         </>
     );
