@@ -14,8 +14,10 @@ class ArtikelUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fase_id' => ['required', 'integer', 'exists:fases,fase_id'],
             'title' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
+            'banner' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
             'content' => ['required', 'string'],
         ];
     }

@@ -26,6 +26,7 @@ class ArtikelFactory extends Factory
             'author' => $faker->name(),
             'content' => $faker->paragraph(),
             'slug' => Str::slug($title),
+            'banner' => asset('images/Sample.png'),
             'created_at' => now(),
             'updated_at' => now()
         ];

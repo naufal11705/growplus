@@ -4,4 +4,6 @@ export interface Article {
     author: string;
     content: string;
     slug: string;
+    banner: string;
+    created_at: Date;
 }

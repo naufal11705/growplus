@@ -31,5 +31,5 @@ export default function Profile({ orangtua, pengguna, anak }: { orangtua: OrangT
                 </div>
             </div>
         </Layout>
-    )
-};
+    );
+}

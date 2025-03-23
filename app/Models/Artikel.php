@@ -18,6 +18,7 @@ class Artikel extends Model
         'title',
         'author',
         'content',
+        'banner',
         'slug'
     ];
 

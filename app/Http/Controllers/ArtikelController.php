@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArtikelStoreRequest;
-use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Http\Requests\ArtikelUpdateRequest;
 use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use Inertia\Inertia;
@@ -62,11 +62,16 @@ class ArtikelController extends Controller
      */
     public function store(ArtikelStoreRequest $request)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        $this->artikelRepository->createArtikel($request->all());
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
 
-        return Inertia::render('Admin/Artikel');
+        $this->artikelRepository->createArtikel($validatedData);
+
+        return redirect()->route('artikel.index');
     }
 
 
@@ -95,11 +100,18 @@ class ArtikelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ImunisasiUpdateRequest $request, $id)
+    public function update(ArtikelUpdateRequest $request, $id)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        $this->artikelRepository->updateArtikel($id, $request->all());
+        if ($request->hasFile('banner')) {
+            $path = $request->file('banner')->store('banners', 'public'); 
+            $validatedData['banner'] = $path;
+        }
+
+        $this->artikelRepository->updateArtikel($id, $validatedData);
+
+        return redirect()->route('artikel.index');
     }
 
     /**
