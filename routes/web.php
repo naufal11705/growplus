@@ -92,28 +92,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
         Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
+        Route::get('/imunisasi', [PetugasController::class, 'imunisasi']);
+        Route::get('/imunisasi/tambah', [PetugasController::class, 'tambahImunisasi']);
     });
 });
-
-Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
-    Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
-});
-
-Route::get('/petugas/imunisasi', function () {
-    return Inertia::render('Petugas/Imunisasi');
-});
-Route::get('/petugas/imunisasi/tambah', function () {
-    return Inertia::render('Petugas/Functions/Petugas/Tambah');
-});
-
-Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
-
-Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
-Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])->name('artikel.showArticle');
 
 Route::get('/profil/edit', function () {
     return Inertia::render('User/Functions/Profile/Edit_OrangTua');
 });
+
+Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
+Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])->name('artikel.showArticle');
 
 Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);

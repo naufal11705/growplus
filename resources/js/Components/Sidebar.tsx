@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, to
                         <span className="ms-3">Tutup</span>
                     </button>
 
-                    <ul className="space-y-2 font-bold mt-14">
+                    <ul className="space-y-2 font-bold mt-5 md:mt-14">
                         <li>
                             <a
                                 href="/dashboard"
