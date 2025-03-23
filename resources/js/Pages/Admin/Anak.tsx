@@ -90,12 +90,12 @@ export default function Anak(){
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.tinggi_badan}</td>
 
                                         <td className="px-6 py-4 text-right flex gap-2">
-                                            <a href={`/admin/anak/${item.orangtua_id}/edit`} className="font-medium text-wine hover:underline">
+                                            <a href={`/admin/anak/${item.anak_id}/edit`} className="font-medium text-wine hover:underline">
                                                 Edit
                                             </a>
                                             │
                                             <button
-                                                onClick={() => handleDelete(item.orangtua_id)} className="font-medium text-red-500 hover:underline">
+                                                onClick={() => handleDelete(item.anak_id)} className="font-medium text-red-500 hover:underline">
                                                 Delete
                                             </button>
                                         </td>

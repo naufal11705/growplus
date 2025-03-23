@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnakStoreRequest;
+use App\Http\Requests\AnakUpdateRequest;
 use App\Models\Anak;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
+use App\Repositories\OrangTuaRepository;
 use Dom\ChildNode;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,10 +15,12 @@ use Inertia\Inertia;
 class AnakController extends Controller
 {
     protected $anakRepository;
+    protected $orangTuaRepository;
 
-    public function __construct(AnakRepositoryInterface $anakRepository)
+    public function __construct(AnakRepositoryInterface $anakRepository, OrangTuaRepositoryInterface $orangTuaRepository)
     {
         $this->anakRepository = $anakRepository;
+        $this->orangTuaRepository = $orangTuaRepository;
     }
 
     /**
@@ -34,7 +39,7 @@ class AnakController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Functions/Anak/Tambah', [
-            'orangtua' => $this->anakRepository->getAllAnaks()
+            'orangtua' => $this->orangTuaRepository->getAllOrangTua()
         ]);
     }
 
@@ -47,27 +52,31 @@ class AnakController extends Controller
 
         $this->anakRepository->createAnak($validatedData);
 
-        return redirect()->route('orang_tua.index');
+        return redirect()->route('anak.index');
     }
 
     public function store_multiple(Request $request)
     {
         $validatedData = $request->validate([
-            'children' => 'required|array',
-            'children.*.namaLengkap' => 'required|string',
-            'children.*.tanggalLahir' => 'required|date',
-            'children.*.jenisKelamin' => 'required|string',
-            'children.*.faseUsia' => 'required|string',
-            'children.*.beratBadan' => 'required|numeric',
-            'children.*.tinggiBadan' => 'required|numeric',
-            'children.*.polaMakan' => 'required|string',
-            'children.*.alergiMakanan' => 'nullable|string',
-            'children.*.riwayatKesehatan' => 'nullable|string',
+            'orangtua_id' => ['required', 'integer', 'exists:orang_tuas,orangtua_id'],
+            'children' => ['required', 'array'],
+            'children.*.nama' => ['required', 'string', 'max:255'],
+            'children.*.nik' => ['required', 'string', 'min:16'],
+            'children.*.no_jkn' => ['required', 'string', 'min:13'],
+            'children.*.tempat_lahir' => ['required', 'string', 'max:255'],
+            'children.*.tanggal_lahir' => ['required', 'date'],
+            'children.*.golongan_darah' => ['required', 'string', 'max:3'],
+            'children.*.berat_badan' => ['required', 'integer'],
+            'children.*.tinggi_badan' => ['required', 'integer'],
         ]);
-
+    
         foreach ($validatedData['children'] as $child) {
-            $this->anakRepository->createAnak($child);
+            $this->anakRepository->createAnak(array_merge($child, [
+                'orangtua_id' => $validatedData['orangtua_id'],
+            ]));
         }
+    
+        return redirect()->route('anak.index');
     }
 
     /**
@@ -81,17 +90,24 @@ class AnakController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Anak $anak)
+    public function edit($id)
     {
-        //
+        return Inertia::render('Admin/Functions/Anak/Edit', [
+            'orangtua' => $this->orangTuaRepository->getAllOrangTua(),
+            'anak' => $this->anakRepository->getAnakById($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Anak $anak)
+    public function update(AnakUpdateRequest $request, $id)
     {
-        //
+        $request->validated();
+
+        $this->anakRepository->updateAnak($id, $request->all());
+
+        return redirect()->route('anak.index');
     }
 
     /**

@@ -1,15 +1,29 @@
 import Layout from "@/Layouts/Admin";
+import { usePage } from "@inertiajs/react";
 import useCsrfToken from "@/Utils/csrfToken";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
+import OrangTua from "./Edit";
+import { PageProps as InertiaPageProps } from "@inertiajs/core";
 
-interface AnakItem {
+interface Anak {
     id: number;
 }
 
+interface OrangTua {
+    orangtua_id: number;
+    nama: string;
+}
+
+interface PageProps extends InertiaPageProps {
+    orangtua: OrangTua[];
+}
+
 export default function Anak() {
+    const { orangtua } = usePage<PageProps>().props;
+    const [selectedOrangTua, setSelectedOrangTua] = useState("");
     const csrf_token = useCsrfToken();
-    const [anakList, setAnakList] = useState<AnakItem[]>([{ id: 1 }]);
+    const [anakList, setAnakList] = useState<Anak[]>([{ id: 1 }]);
 
     const tambahDataAnak = () => {
         const newId = Math.max(...anakList.map(item => item.id)) + 1;
@@ -24,11 +38,23 @@ export default function Anak() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
+    
+        const formData = new FormData();
         formData.append("_token", csrf_token);
-
-        router.post('/admin/anak', formData);
+        formData.append("orangtua_id", selectedOrangTua);
+    
+        anakList.forEach((item, index) => {
+            formData.append(`children[${index}][nama]`, e.currentTarget[`nama_${item.id}`].value);
+            formData.append(`children[${index}][nik]`, e.currentTarget[`nik_${item.id}`].value);
+            formData.append(`children[${index}][no_jkn]`, e.currentTarget[`no_jkn_${item.id}`].value);
+            formData.append(`children[${index}][tempat_lahir]`, e.currentTarget[`tempat_lahir_${item.id}`].value);
+            formData.append(`children[${index}][tanggal_lahir]`, e.currentTarget[`tanggal_lahir_${item.id}`].value);
+            formData.append(`children[${index}][golongan_darah]`, e.currentTarget[`golongan_darah_${item.id}`].value);
+            formData.append(`children[${index}][berat_badan]`, e.currentTarget[`berat_badan_${item.id}`].value);
+            formData.append(`children[${index}][tinggi_badan]`, e.currentTarget[`tinggi_badan_${item.id}`].value);
+        });
+    
+        router.post('/admin/anak/store_multiple', formData);
     };
 
     return (
@@ -39,12 +65,23 @@ export default function Anak() {
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                             <div className="sm:col-span-2">
-                                <label htmlFor="status_rumah" className="block mb-2 text-sm font-medium text-gray-900">Orang Tua</label>
-                                <select name="status_rumah" id="status_rumah" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
-                                    <option value="data">data</option>
-                                    <option value="data">data</option>
-                                    <option value="data">data</option>
+                                <label htmlFor="orangtua_id" className="block mb-2 text-sm font-medium text-gray-900">Orang Tua</label>
+                                <select
+                                    id="orangtua_id"
+                                    name="orangtua_id"
+                                    value={selectedOrangTua}
+                                    onChange={(e) => setSelectedOrangTua(e.target.value)}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                                    required
+                                >
+                                    <option value="">Pilih Orang Tua</option>
+                                    {orangtua?.map((item: OrangTua) => (
+                                        <option key={item.orangtua_id} value={item.orangtua_id}>
+                                            {item.nama}
+                                        </option>
+                                    ))}
                                 </select>
+
                             </div>
                             {anakList.map((item, index) => (
                                 <div key={item.id} className="sm:col-span-3 relative">
