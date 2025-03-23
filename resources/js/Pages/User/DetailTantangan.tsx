@@ -84,15 +84,14 @@ export default function DetailTantangan({ fase }: TantanganCardsProps) {
 
                                         {/* Progress bar */}
                                         <div className="mt-4">
-                                            <h2 className="text-lg font-semibold text-gray-900">* Contoh Logika Progrees gus *</h2>
                                             <h2 className="text-lg font-semibold text-gray-900">Progress Tantangan</h2>
                                             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
                                                 <div
                                                     className="bg-pinky h-4 rounded-full transition-all duration-300"
-                                                    style={{ width: `${progress}%` }}
+                                                    style={{ width: `${fase.progress}%` }}
                                                 ></div>
                                             </div>
-                                            <p className="text-gray-600 text-sm mt-1">{progress}% selesai</p>
+                                            <p className="text-gray-600 text-sm mt-1">{fase.progress}% selesai</p>
                                         </div>
                                     </div>
                                 )}

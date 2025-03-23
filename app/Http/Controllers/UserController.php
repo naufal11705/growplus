@@ -3,24 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FaseResource;
-use App\Models\Fase;
 use Inertia\Inertia;
-use App\Models\Artikel;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
+use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
 
 class UserController extends Controller
 {
 
-    protected $orangTuaRepository, $anakRepository, $faseRepository;
+    protected $orangTuaRepository, $anakRepository, $faseRepository, $penggunaTantanganRepository;
 
-    public function __construct(OrangTuaRepositoryInterface $orangTuaRepository, AnakRepositoryInterface $anakRepository, FaseRepositoryInterface $faseRepository)
-    {
+    public function __construct(
+        OrangTuaRepositoryInterface $orangTuaRepository,
+        AnakRepositoryInterface $anakRepository,
+        FaseRepositoryInterface $faseRepository,
+        PenggunaTantanganRepositoryInterface $penggunaTantanganRepository
+    ) {
         $this->orangTuaRepository = $orangTuaRepository;
         $this->anakRepository = $anakRepository;
         $this->faseRepository = $faseRepository;
+        $this->penggunaTantanganRepository = $penggunaTantanganRepository;
     }
 
     public function dashboard()
@@ -52,9 +56,11 @@ class UserController extends Controller
     public function showTantangan($id)
     {
         $fase = $this->faseRepository->getFaseById($id)->load('tantangans');
+        $tantangansDone = $this->penggunaTantanganRepository->getPenggunaTantangansByPenggunaId(auth()->user()->pengguna_id);
 
         return Inertia::render('User/DetailTantangan', [
-            'fase' => (new FaseResource($fase))->toArray(request())
+            'fase' => (new FaseResource($fase))->toArray(request()),
+            'tantangansDone' => $tantangansDone
         ]);
     }
 

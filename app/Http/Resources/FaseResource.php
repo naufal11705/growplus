@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,8 +23,33 @@ class FaseResource extends JsonResource
             'banner' => $this->banner ?? '/images/default-challenge.jpg',
             'tantangans' => $this->tantangans->map(fn($tantangan) => $tantangan->activity)->toArray(),
             'benefits' => $this->benefits ? explode(',', $this->benefits) : $this->tantangans->map(fn($tantangan) => "+{$tantangan->point} Poin")->toArray(),
-            'status' => (int) $this->status,
-            'progress' => (int) $this->progress,
+            'status' => $this->status,
+            'progress' => $this->calculateProgress(), // this
         ];
+    }
+
+    protected function countCompletedTantangans($id)
+    {
+        $penggunaTantanganRepository = app(PenggunaTantanganRepositoryInterface::class);
+
+        $completedTantangans = $penggunaTantanganRepository
+            ->getPenggunaTantangansByPenggunaId($id)
+            ->whereIn('tantangan_id', $this->tantangans->pluck('tantangan_id')->toArray())
+            ->count();
+
+        return $completedTantangans;
+    }
+
+    protected function calculateProgress()
+    {
+        if (!auth()->check()) {
+            return 0;
+        }
+
+        $penggunaId = auth()->user()->pengguna_id;
+        $totalTantangans = $this->tantangans->count();
+        if ($totalTantangans == 0) return 0;
+
+        return (int)(($this->countCompletedTantangans($penggunaId) / $totalTantangans) * 100);
     }
 }
