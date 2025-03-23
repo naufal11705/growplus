@@ -29,7 +29,7 @@ export default function Header({ isOpen, toggleSidebar }: { isOpen: boolean, tog
                         </button>
                         <a href="/" className="flex ms-2 md:me-24">
                             <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">
-                                wow+
+                                Grow+
                             </span>
                         </a>
                     </div>
