@@ -19,6 +19,7 @@ use App\Http\Controllers\FasKesController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\OrangTuaController;
+use App\Http\Controllers\PenggunaTantanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RegisterOrangtuaMiddleware;
@@ -70,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/tantangan', [UserController::class, 'tantangan']);
             Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
+            Route::post('/pengguna-tantangan', [PenggunaTantanganController::class, 'store']);
+            Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'delete']);
         });
     });
 
@@ -85,34 +88,21 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('tantangan', TantanganController::class);
         Route::resource('orangtua', OrangTuaController::class);
         Route::resource('anak', AnakController::class);
-        Route::post('/anak/store_multiple', [AnakController::class, 'store_multiple'])->name('anak.store_multiple');
-
     });
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
         Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
+        Route::get('/imunisasi', [PetugasController::class, 'imunisasi']);
+        Route::get('/imunisasi/tambah', [PetugasController::class, 'tambahImunisasi']);
     });
 });
-
-Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
-    Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
-});
-
-Route::get('/petugas/imunisasi', function () {
-    return Inertia::render('Petugas/Imunisasi');
-});
-Route::get('/petugas/imunisasi/tambah', function () {
-    return Inertia::render('Petugas/Functions/Petugas/Tambah');
-});
-
-Route::get('/admin/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
-
-Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
-Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])->name('artikel.showArticle');
 
 Route::get('/profil/edit', function () {
     return Inertia::render('User/Functions/Profile/Edit_OrangTua');
 });
+
+Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
+Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])->name('artikel.showArticle');
 
 Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
