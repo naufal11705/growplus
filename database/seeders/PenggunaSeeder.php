@@ -17,21 +17,21 @@ class PenggunaSeeder extends Seeder
             [
                 'role_id' => 1,
                 'username' => 'testadmin',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12345678'),
                 'nama' => 'Test Admin',
                 'email' => 'testadmin@gmail.com'
             ],
             [
                 'role_id' => 2,
                 'username' => 'testuser',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12345678'),
                 'nama' => 'Test User',
                 'email' => 'testuser@gmail.com'
             ],
             [
                 'role_id' => 3,
                 'username' => 'testpetugas',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12345678'),
                 'nama' => 'Test Petugas',
                 'email' => 'testpetugas@gmail.com'
             ],
