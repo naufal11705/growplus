@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('artikels', function (Blueprint $table) {
             $table->id('artikel_id')->primary();
-            // $table->unsignedBigInteger('fase_id')->index();
             $table->string('title');
             $table->string('author');
             $table->text('content');
             $table->string('slug')->unique();
+            $table->string('banner');
             $table->timestamps();
-
-            // $table->foreign('fase_id')->references('fase_id')->on('fases');
         });
     }
 

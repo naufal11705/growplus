@@ -50,7 +50,11 @@ const Page: React.FC<ArtikelProps> = ({ article }) => {
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
                             </svg>
-                            <span>2025-11-15</span>
+                            <span>{new Date(article?.created_at || "").toLocaleDateString("id-ID", {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric"
+                            })}</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 font-medium">
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +63,7 @@ const Page: React.FC<ArtikelProps> = ({ article }) => {
                             <span>7 min read</span>
                         </div>
                     </div>
-                    <img src="https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2022/12/22043146/Ini-X-Kegiatan-Ibu-di-Kelas-Parenting-Kehamilan.jpg.webp" alt="" className="w-full h-96 mt-7 rounded-xl object-cover" />
+                    <img src={`${window.location.origin}/storage/${article.banner}`} alt="" className="w-full h-96 mt-7 rounded-xl object-cover" />
 
                     <div className="mt-10 text-gray-700 text-lg leading-relaxed">
                         <p>{article.content}</p>

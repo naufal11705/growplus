@@ -17,6 +17,7 @@ class ArtikelUpdateRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'author' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255'],
+            'banner' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
             'content' => ['required', 'string'],
         ];
     }
