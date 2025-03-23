@@ -9,6 +9,7 @@ type ArtikelType = {
     author?: string;
     content?: string;
     slug?: string;
+    banner?: string;
     id?: number;
 };
 
@@ -19,6 +20,8 @@ type PageProps = {
 
 export default function Artikel() {
     const { artikel = {} as ArtikelType } = usePage<PageProps>().props;
+    const [banner, setBanner] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(artikel.banner || null);
     const csrf_token = useCsrfToken();
 
     const slugify = (text: string) => 
@@ -38,36 +41,50 @@ export default function Artikel() {
         setFormData((prev) => ({ ...prev, slug: slugify(prev.title || "") }));
     }, [formData.title]);
 
+    // Update preview jika artikel sudah memiliki banner sebelumnya
+    useEffect(() => {
+        if (artikel.banner) {
+            setPreview(`${window.location.origin}/storage/${artikel.banner}`);
+        }
+    }, [artikel.banner]);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setBanner(file);
+
+            // Membuat URL object sementara untuk preview
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(imageUrl);
+        }
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const data = new FormData();
-        
-        Object.entries(formData).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) {
-                data.append(key, value.toString());
-            }
-        });
     
+        // Menambahkan data artikel ke FormData
         data.append("_token", csrf_token);
-        router.put(`/admin/artikel/${artikel.artikel_id}`, {
-            _token: csrf_token,
-            title: formData.title,
-            author: formData.author,
-            content: formData.content,
-            slug: formData.slug,
-        }, {
-            preserveScroll: true,
-            onSuccess: () => {
-                console.log("Berhasil update artikel");
-            },
-            onError: (errors) => {
-                console.error("Terjadi error:", errors);
-            }
+        data.append("_method", "PUT");
+        data.append("title", formData.title || "");
+        data.append("author", formData.author || "");
+        data.append("content", formData.content || "");
+        data.append("slug", formData.slug || "");
+    
+        // Jika ada banner baru, tambahkan ke FormData
+        if (banner) {
+            data.append("banner", banner);
+        }
+    
+        // Kirim data dengan router.post agar FormData dapat diterima
+        router.post(`/admin/artikel/${artikel.artikel_id}`, data, {
+            forceFormData: true, // Memastikan FormData dikirim sebagai multipart/form-data
+            onSuccess: () => console.log("✅ Artikel berhasil diperbarui!"),
+            onError: (errors) => console.error("❌ Terjadi kesalahan:", errors),
         });
-        
     };
 
     return (
@@ -114,6 +131,24 @@ export default function Artikel() {
                                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" 
                                     placeholder="Tulis Deksripsi Disini..." 
                                     required
+                                />
+                            </div>
+
+                            <div className="sm:col-span-2">
+                                <label className="block mb-2 text-sm font-medium text-gray-900">Banner Saat Ini</label>
+                                <img src={`${preview}`} alt="Banner" className="w-full max-w-xs rounded-lg" />
+                            </div>
+
+                            {/* Input File untuk Banner */}
+                            <div className="sm:col-span-2">
+                                <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="file_input">Upload Banner</label>
+                                <input 
+                                    onChange={handleFileChange} 
+                                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" 
+                                    name="banner" 
+                                    id="banner" 
+                                    type="file" 
+                                    accept="image/*"
                                 />
                             </div>
                         </div>
