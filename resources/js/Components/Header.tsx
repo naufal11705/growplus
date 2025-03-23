@@ -63,7 +63,7 @@ export default function Header({ isOpen, toggleSidebar }: { isOpen: boolean, tog
                                         className="text-sm font-medium text-gray-900 truncate"
                                         role="none"
                                     >
-                                        neil.sims@flowbite.com
+                                        neil.sims@growplus.com
                                     </p>
                                 </div>
                                 <ul className="py-1" role="none">
