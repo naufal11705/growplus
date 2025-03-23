@@ -14,8 +14,9 @@ class ArtikelStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fase_id' => ['required', 'integer', 'exists:fases,fase_id'],
             'title' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
         ];
     }
