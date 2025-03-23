@@ -4,6 +4,8 @@ import { router } from "@inertiajs/react";
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
 import { usePage } from "@inertiajs/react";
 import { useState } from "react";
+import AdminAlert from "@/Components/Widget/Alert/AdminAlert"; 
+
 
 interface Puskesmas {
     puskesmas_id: number;
@@ -25,6 +27,21 @@ export default function Puskesmas() {
     // State untuk form
     const [formData, setFormData] = useState<Puskesmas>({ ...puskesmas });
 
+    // State untuk alert
+    const [alert, setAlert] = useState<{ type: "success" | "error" | "warning"; message: string; visible: boolean }>({
+        type: "success",
+        message: "",
+        visible: false,
+    });
+
+    // Fungsi untuk menampilkan alert
+    const setSuccess = (message: string) => setAlert({ type: "success", message, visible: true });
+    const setError = (message: string) => setAlert({ type: "error", message, visible: true });
+    const setWarning = (message: string) => setAlert({ type: "warning", message, visible: true });
+
+    // Fungsi untuk menutup alert
+    const closeAlert = () => setAlert({ ...alert, visible: false });
+
     // Handle perubahan input
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -38,14 +55,27 @@ export default function Puskesmas() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        router.put(`/admin/puskesmas/${formData.puskesmas_id}`, {
-            _token: csrf_token,
-            nama: formData.nama,
-            alamat: formData.alamat,
-            kecamatan: formData.kecamatan,
-            kota: formData.kota,
-            kontak: formData.kontak,
-        });
+        router.put(
+            `/admin/puskesmas/${formData.puskesmas_id}`,
+            {
+                _token: csrf_token,
+                nama: formData.nama,
+                alamat: formData.alamat,
+                kecamatan: formData.kecamatan,
+                kota: formData.kota,
+                kontak: formData.kontak,
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setSuccess("Data puskesmas berhasil diperbarui!");
+                },
+                onError: (errors) => {
+                    setError("Gagal memperbarui data puskesmas. Periksa kembali data yang diinput.");
+                    console.error("Terjadi error:", errors);
+                },
+            }
+        );
     };
 
     return (
@@ -55,7 +85,6 @@ export default function Puskesmas() {
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Update Data Puskesmas</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-
                             {/* Nama Puskesmas */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama Puskesmas</label>
@@ -145,6 +174,11 @@ export default function Puskesmas() {
                     </form>
                 </div>
             </div>
+
+            {/* Tampilkan AdminAlert jika visible true */}
+            {alert.visible && (
+                <AdminAlert type={alert.type} message={alert.message} onClose={closeAlert} />
+            )}
         </Layout>
     );
 }
