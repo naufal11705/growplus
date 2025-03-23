@@ -28,6 +28,9 @@ class PetugasController extends Controller
 
     public function profile()
     {
-        return Inertia::render('Petugas/Profile');
+        $petugas = auth()->user();
+        return Inertia::render('Petugas/Profile', [
+            'petugas' => $petugas,
+        ]);
     }
 }

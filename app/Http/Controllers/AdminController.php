@@ -18,7 +18,7 @@ class AdminController extends Controller
         $this->penggunaRepository = $penggunaRepository;
         $this->puskesmasRepository = $puskesmasRepository;
         $this->orangTuaRepository = $orangTuaRepository;
-        $this->tantanganRepository = $tantanganRepository; 
+        $this->tantanganRepository = $tantanganRepository;
     }
 
     public function dashboard()
@@ -33,6 +33,9 @@ class AdminController extends Controller
 
     public function profile()
     {
-        return Inertia::render('Admin/Profile');
+        $admin = auth()->user();
+        return Inertia::render('Admin/Profile', [
+            'admin' => $admin,
+        ]);
     }
 }

@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('admin')->middleware(RoleMiddleware::class . ':Admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
 
         Route::resource('pengguna', PenggunaController::class);
         Route::resource('puskesmas', PuskesmasController::class);
@@ -94,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
         Route::get('/imunisasi', [PetugasController::class, 'imunisasi']);
         Route::get('/imunisasi/tambah', [PetugasController::class, 'tambahImunisasi']);
+        Route::get('/profile', [PetugasController::class, 'profile'])->name('petugas.profile');
     });
 });
 
@@ -106,13 +108,6 @@ Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])-
 
 Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
-});
-
-Route::get('/admin/profile', function () {
-    return Inertia::render('Admin/Profile');
-});
-Route::get('/petugas/profile', function () {
-    return Inertia::render('Petugas/Profile');
 });
 
 require __DIR__ . '/auth.php';
