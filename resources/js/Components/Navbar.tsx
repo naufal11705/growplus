@@ -47,69 +47,92 @@ export default function Navbar() {
                     <span className="self-center text-2xl font-extrabold whitespace-nowrap">Grow+</span>
                 </a>
                 <div className="flex flex-row md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                {isLoggedIn ? (
-                    <div className="relative items-center justify-center flex">
-                        <button 
-                            type="button" 
-                            className="flex rounded-full md:me-0 focus:ring-4 focus:ring-gray-300" 
-                            id="user-menu-button" 
-                            onClick={toggleDropdown} 
-                            aria-expanded={isDropdownOpen}
-                        >
-                            <span className="sr-only">Open user menu</span>
-                            <img 
-                                className="w-8 h-8 rounded-full" 
-                                src={auth.user.profile_photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
-                                alt="user photo" 
-                            />
-                        </button>
-                        <div 
-                            className={`z-50 ${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-52 border border-gray-200 w-48 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm`} 
-                            id="user-dropdown"
-                        >
-                            <div className="px-4 py-3">
-                                <span className="block text-sm text-gray-900">{auth.user.name}</span>
-                                <span className="block text-sm text-gray-500 truncate">{auth.user.email}</span>
+                    {isLoggedIn ? (
+                        <div className="relative items-center justify-center flex">
+                            <button 
+                                type="button" 
+                                className="flex rounded-full md:me-0 focus:ring-4 focus:ring-gray-300" 
+                                id="user-menu-button" 
+                                onClick={toggleDropdown} 
+                                aria-expanded={isDropdownOpen}
+                            >
+                                <span className="sr-only">Open user menu</span>
+                                <img 
+                                    className="w-8 h-8 rounded-full" 
+                                    src={auth.user.profile_photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                                    alt="user photo" 
+                                />
+                            </button>
+                            <div 
+                                className={`z-50 ${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-52 border border-gray-200 w-48 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm`} 
+                                id="user-dropdown"
+                            >
+                                <div className="px-4 py-3">
+                                    <span className="block text-sm text-gray-900">{auth.user.name}</span>
+                                    <span className="block text-sm text-gray-500 truncate">{auth.user.email}</span>
+                                </div>
+                                <ul className="py-2" aria-labelledby="user-menu-button">
+                                    {(() => {
+                                        if (auth.user.role_id === 1) {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/admin/dashboard" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        } else if (auth.user.role_id === 3) {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/admin/petugas" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        } else {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/dashboard" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        }
+                                    })()}
+                                    <li>
+                                        <a 
+                                            href="#" 
+                                            onClick={(e) => { handleLogout(e); closeDropdown(); }} 
+                                            className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100"
+                                        >
+                                            Keluar
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul className="py-2" aria-labelledby="user-menu-button">
-                                <li>
-                                    {/* Logika if-else untuk menentukan href berdasarkan role */}
-                                    <a 
-                                        href={
-                                            auth.user.role === "admin" 
-                                                ? "/admin/dashboard" 
-                                                : auth.user.role === "petugas" 
-                                                ? "/admin/petugas" 
-                                                : "/dashboard"
-                                        } 
-                                        onClick={closeDropdown} 
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        Dashboard
-                                    </a>
-                                </li>
-                                <li>
-                                    <a 
-                                        href="#" 
-                                        onClick={(e) => { handleLogout(e); closeDropdown(); }} 
-                                        className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100"
-                                    >
-                                        Keluar
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
-                    </div>
-                ) : (
-                    <a href="/login">
-                        <button 
-                            type="button" 
-                            className="lg:block hidden text-white bg-wine hover:bg-dark-wine font-medium rounded-xl text-md px-6 py-2 text-center"
-                        >
-                            Login
-                        </button>
-                    </a>
-                )}
+                    ) : (
+                        <a href="/login">
+                            <button 
+                                type="button" 
+                                className="lg:block hidden text-white bg-wine hover:bg-dark-wine font-medium rounded-xl text-md px-6 py-2 text-center"
+                            >
+                                Login
+                            </button>
+                        </a>
+                    )}
                     <button 
                         type="button" 
                         className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" 
