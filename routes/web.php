@@ -84,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('tantangan', TantanganController::class);
         Route::resource('orangtua', OrangTuaController::class);
         Route::resource('anak', AnakController::class);
+        Route::post('/anak/store_multiple', [AnakController::class, 'store_multiple'])->name('anak.store_multiple');
+
     });
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
