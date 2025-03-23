@@ -70,7 +70,7 @@ export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4" }: T
                       </svg>
                     </div>
                     <div className="grid w-full">
-                      {tantangan}
+                      {tantangan.activity}
                       <span className="text-xs font-semibold text-pinky">+10 Poin</span>
                     </div>
                   </li>

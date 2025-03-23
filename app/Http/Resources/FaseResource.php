@@ -21,10 +21,13 @@ class FaseResource extends JsonResource
             'subjudul' => $this->deskripsi ? substr($this->deskripsi, 0, 50) . '...' : 'Tantangan fase ' . $this->judul,
             'deskripsi' => $this->deskripsi ?? 'Ikuti tantangan ini untuk tumbuh sehat!',
             'banner' => $this->banner ?? '/images/default-challenge.jpg',
-            'tantangans' => $this->tantangans->map(fn($tantangan) => $tantangan->activity)->toArray(),
+            'tantangans' => $this->tantangans->map(fn($tantangan) => [
+                'tantangan_id' => $tantangan->tantangan_id,
+                'activity' => $tantangan->activity,
+            ])->toArray(),
             'benefits' => $this->benefits ? explode(',', $this->benefits) : $this->tantangans->map(fn($tantangan) => "+{$tantangan->point} Poin")->toArray(),
             'status' => $this->status,
-            'progress' => $this->calculateProgress(), // this
+            'progress' => $this->calculateProgress(),
         ];
     }
 

@@ -15,7 +15,7 @@ interface PageProps extends InertiaPageProps {
     pengguna: Pengguna[];
     puskesmas: number;
     orangtua: number;
-    tantangan: number;  
+    tantangan: number;
 }
 
 const handleDelete = (id: number) => {
@@ -47,7 +47,7 @@ export default function Index() {
                         <div>
                             <a href="#" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
                                 <h5 className="mb-2 text-md font-medium tracking-tight text-gray-800">Jumlah Tantangan</h5>
-                                <p className="text-3xl font-bold  text-gray-900">{tantangan}</p>
+                                <p className="text-3xl font-bold  text-gray-900">{tantangan.activity}</p>
                             </a>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ export default function Index() {
                                 </tr>
                             </thead>
                             <tbody>
-                            {pengguna.map((item) => (
+                                {pengguna.map((item) => (
                                     <tr key={item.pengguna_id} className="bg-white border-b border-gray-200 hover:bg-gray-50">
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {item.pengguna_id}

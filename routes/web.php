@@ -19,6 +19,7 @@ use App\Http\Controllers\FasKesController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\OrangTuaController;
+use App\Http\Controllers\PenggunaTantanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RegisterOrangtuaMiddleware;
@@ -70,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/tantangan', [UserController::class, 'tantangan']);
             Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
+            Route::post('/pengguna-tantangan', [PenggunaTantanganController::class, 'store']);
+            Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'delete']);
         });
     });
 
@@ -85,8 +88,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('tantangan', TantanganController::class);
         Route::resource('orangtua', OrangTuaController::class);
         Route::resource('anak', AnakController::class);
-        Route::post('/anak/store_multiple', [AnakController::class, 'store_multiple'])->name('anak.store_multiple');
-
     });
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
