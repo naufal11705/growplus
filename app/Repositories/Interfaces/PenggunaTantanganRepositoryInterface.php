@@ -10,4 +10,6 @@ interface PenggunaTantanganRepositoryInterface
     public function createPenggunaTantangans(array $data);
     public function updatePenggunaTantangans($id, array $data);
     public function deletePenggunaTantangans($id);
+    public function countTotalPoints($id);
+    public function countTotalProgress($id, $fases);
 }

@@ -1,4 +1,11 @@
-export default function ProgressStatus() {
+interface StatisticProps {
+    'totalPoints': number;
+    'totalProgress': number;
+    'streak': number;
+}
+
+export default function ProgressStatus({ totalPoints, totalProgress, streak }: StatisticProps) {
+    console.log(totalProgress);
     return (
         <div className="relative overflow-x-auto w-full">
             <div className="w-full text-sm text-left text-gray-500">
@@ -7,11 +14,11 @@ export default function ProgressStatus() {
                     <div className="flex justify-between" id="informationProgress">
                         <div id="streak">
                             <h2 className="text-lg font-extrabold text-gray-500">Streak</h2>
-                            <h2 className="text-3xl font-extrabold text-gray-900">7 Hari</h2>
+                            <h2 className="text-3xl font-extrabold text-gray-900">{streak} 🔥</h2>
                         </div>
                         <div id="streak">
                             <h2 className="text-lg font-extrabold text-gray-500">Total Points</h2>
-                            <h2 className="text-3xl font-extrabold text-gray-900">1,250</h2>
+                            <h2 className="text-3xl font-extrabold text-gray-900">{totalPoints}</h2>
                         </div>
                         <div id="streak">
                             <h2 className="text-lg font-extrabold text-gray-500">Level</h2>
@@ -21,10 +28,10 @@ export default function ProgressStatus() {
                     <div id="levelBar" className="mt-5">
                         <div className="text-gray-900 text-md justify-between flex">
                             <h2 className="text-lg font-extrabold text-gray-900">Level Progress</h2>
-                            <span className="font-bold text-gray-400">1250/2000</span>
+                            <span className="font-bold text-gray-400">{totalProgress}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                            <div className="bg-pinky h-2.5 rounded-full" style={{ width: `62%` }}></div>
+                            <div className="bg-pinky h-2.5 rounded-full" style={{ width: `${totalProgress}%` }}></div>
                         </div>
                     </div>
                     <div id="yourBadge" className="mt-5">
