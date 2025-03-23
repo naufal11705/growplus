@@ -20,7 +20,7 @@ class OrangTuaFactory extends Factory
         $faker = \Faker\Factory::create('id_ID');
 
         return [
-            'pengguna_id' => Pengguna::query()->exists() ? Pengguna::inRandomOrder()->first()->pengguna_id : Pengguna::factory()->create()->pengguna_id,
+            'pengguna_id' => 2,
             'nama' => $faker->name(),
             'nik' => $this->faker->unique()->numerify('################'), // 16 digits
             'no_jkn' => $this->faker->unique()->numerify('#############'), // 13 digits

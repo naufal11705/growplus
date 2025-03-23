@@ -9,11 +9,11 @@ import { Fase } from "@/types/fase";
 import { fases as defaultFases } from "@/Data/FaseCard";
 
 interface FaseCardsProps {
-    fases: Fase[];
+    fases?: Fase[];
 }
 
 export default function Index({ fases: propFases }: FaseCardsProps) {
-    const dataFase = (propFases ?? defaultFases).filter((fase) => fase.fase_id === 1);
+    const dataFase = propFases ?? defaultFases;
 
     return (
         <>

@@ -1,6 +1,5 @@
 import React from "react";
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
-import { fases as defaultFases } from "@/Data/FaseCard";
 import { Fase } from "@/types/fase";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,14 +8,12 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 
 interface FaseCardsProps {
-    fases?: Fase[];
+    fases: Fase[];
 }
 
-export default function Category({ fases: propFases }: FaseCardsProps) {
-    const dataFase = (propFases ?? defaultFases).filter((fase) => fase.fase_id === 1);
-    const fasesNoProgress = dataFase.map(fase => ({
+export default function Category({ fases }: FaseCardsProps) {
+    const fasesNoProgress = fases.map(fase => ({
         ...fase,
-        progress: 0,
     }));
 
     return (

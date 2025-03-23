@@ -13,6 +13,6 @@ class OrangTuaSeeder extends Seeder
      */
     public function run(): void
     {
-        OrangTua::factory(20)->create();
+        OrangTua::factory(1)->create();
     }
 }

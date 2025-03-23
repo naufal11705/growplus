@@ -61,7 +61,7 @@ const TantanganCards: React.FC<TantanganCardsProps> = ({ fases, gridCols = "xl:g
                         </ul>
                         <div className="grid items-center gap-3">
                             {fase.progress > 0 ? (
-                                <a href="/tantanganDetail" className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5">
+                                <a href={`/tantangan/${fase.fase_id}`} className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5">
                                     <button className="flex space-x-2">
                                         <span className="text-gray-900 text-sm font-semibold">
                                             {fase.progress === 100 ? "Share Achievement" : "Selengkapnya"}
