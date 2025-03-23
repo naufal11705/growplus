@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
             Route::post('/pengguna-tantangan', [PenggunaTantanganController::class, 'store']);
-            Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'delete']);
+            Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'destroy']);
         });
     });
 
