@@ -17,9 +17,11 @@ use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use App\Repositories\ArtikelRepository;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
+use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
 use App\Repositories\OrangTuaRepository;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
+use App\Repositories\PenggunaTantanganRepository;
 use App\Repositories\PuskesmasRepository;
 use App\Repositories\TantanganRepository;
 use Illuminate\Support\Facades\Vite;
@@ -32,16 +34,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
-        $this->app->bind(PenggunaRepositoryInterface::class, PenggunaRepository::class);
-        $this->app->bind(AnakRepositoryInterface::class, AnakRepository::class);
-        $this->app->bind(FasKesRepositoryInterface::class, FasKesRepository::class);
-        $this->app->bind(ImunisasiRepositoryInterface::class, ImunisasiRepository::class);
-        $this->app->bind(OrangTuaRepositoryInterface::class, OrangTuaRepository::class);
-        $this->app->bind(PuskesmasRepositoryInterface::class, PuskesmasRepository::class);
-        $this->app->bind(FaseRepositoryInterface::class, FaseRepository::class);
-        $this->app->bind(TantanganRepositoryInterface::class, TantanganRepository::class);
-        $this->app->bind(ArtikelRepositoryInterface::class, ArtikelRepository::class);
+        $this->app->singleton(RoleRepositoryInterface::class, RoleRepository::class);
+        $this->app->singleton(PenggunaRepositoryInterface::class, PenggunaRepository::class);
+        $this->app->singleton(AnakRepositoryInterface::class, AnakRepository::class);
+        $this->app->singleton(FasKesRepositoryInterface::class, FasKesRepository::class);
+        $this->app->singleton(ImunisasiRepositoryInterface::class, ImunisasiRepository::class);
+        $this->app->singleton(OrangTuaRepositoryInterface::class, OrangTuaRepository::class);
+        $this->app->singleton(PuskesmasRepositoryInterface::class, PuskesmasRepository::class);
+        $this->app->singleton(FaseRepositoryInterface::class, FaseRepository::class);
+        $this->app->singleton(TantanganRepositoryInterface::class, TantanganRepository::class);
+        $this->app->singleton(ArtikelRepositoryInterface::class, ArtikelRepository::class);
+        $this->app->singleton(PenggunaTantanganRepositoryInterface::class, PenggunaTantanganRepository::class);
     }
 
     /**
