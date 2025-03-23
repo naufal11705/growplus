@@ -20,7 +20,7 @@ class FaseSeeder extends Seeder
                 'deskripsi' => 'Mengawali perjalanan sebagai seorang ibu adalah pengalaman yang luar biasa dan penuh tantangan. Dalam tantangan harian ini, Anda akan diajak untuk memahami dan mempersiapkan setiap tahap kehamilan dengan lebih baik. Mulai dari menjaga kesehatan diri, memantau perkembangan janin, hingga memastikan asupan gizi yang optimal bagi calon buah hati. Setiap hari, Anda akan diberikan tugas sederhana namun bermanfaat, seperti memeriksa kondisi kehamilan, menerapkan pola makan sehat, serta menjaga keseimbangan emosional. Dengan menyelesaikan setiap tantangan, Anda tidak hanya memperkaya pengetahuan, tetapi juga memastikan kesejahteraan diri dan bayi yang sedang berkembang. 🌱 Mulai perjalanan ini dan jadilah ibu yang siap menghadapi tantangan dengan penuh percaya diri! 💕',
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
-                'progress' => 20,
+                'progress' => 60,
                 'status' => 1
             ],
             [
@@ -29,7 +29,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'status' => 1
+                'status' => 0
             ],
             [
                 'judul' => 'Usia Kehamilan 7-9 Bulan',
@@ -37,7 +37,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'status' => 1
+                'status' => 0
             ],
             [
                 'judul' => 'Usia 0-6 Bulan',
@@ -45,7 +45,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'status' => 1
+                'status' => 0
             ],
             [
                 'judul' => 'Usia 6-12 Bulan',
