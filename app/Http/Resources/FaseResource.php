@@ -40,7 +40,7 @@ class FaseResource extends JsonResource
         return $completedTantangans;
     }
 
-    protected function calculateProgress()
+    public function calculateProgress()
     {
         if (!auth()->check()) {
             return 0;
