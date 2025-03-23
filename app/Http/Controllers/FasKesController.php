@@ -38,7 +38,7 @@ class FasKesController extends Controller
     {
         return Inertia::render('Admin/Functions/Faskes/Tambah', [
             'puskesmas' => $this->puskesmasRepository->getAllPuskesmas(),
-            'orangtua' => $this->orangTuaRepository->getAllOrangTuas()
+            'orangtua' => $this->orangTuaRepository->getAllOrangTua()
         ]);
     }
 
@@ -70,7 +70,7 @@ class FasKesController extends Controller
     {
         return Inertia::render('Admin/Functions/Faskes/Edit', [
             'puskesmas' => $this->puskesmasRepository->getAllPuskesmas(),
-            'orangtua' => $this->orangTuaRepository->getAllOrangTuas(),
+            'orangtua' => $this->orangTuaRepository->getAllOrangTua(),
             'faskes' => $this->fasKesRepository->getFaskesById($id)
         ]);
     }

@@ -25,7 +25,7 @@ class FaseResource extends JsonResource
                 'tantangan_id' => $tantangan->tantangan_id,
                 'activity' => $tantangan->activity,
             ])->toArray(),
-            'benefits' => $this->benefits ? explode(',', $this->benefits) : $this->tantangans->map(fn($tantangan) => "+{$tantangan->point} Poin")->toArray(),
+            'benefits' => array_values(array_filter(preg_split('/(?<=\.)\s+/', $this->benefits) ?: [])),
             'status' => $this->status,
             'progress' => $this->calculateProgress(),
         ];

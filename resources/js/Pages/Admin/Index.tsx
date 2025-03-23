@@ -31,7 +31,7 @@ export default function Index() {
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                 <div className="lg:p-8 p-4">
-                    <div className="grid grid-cols-3 space-x-3">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:space-x-3 gap-3">
                         <div>
                             <a href="#" className="block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-100">
                                 <h5 className="mb-2 text-md font-medium tracking-tight text-gray-800">Jumlah Puskesmas</h5>

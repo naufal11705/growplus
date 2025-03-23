@@ -29,3 +29,8 @@ Sebagai Admin
 
 -   Username: testadmin@gmail.com
 -   Password: 12345678
+
+Sebagai Petugas
+
+-   Username: testpetugas@gmail.com
+-   Password: 12345678
