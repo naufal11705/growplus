@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Interfaces\PenggunaRepositoryInterface;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PenggunaController extends Controller
 {
+    protected $penggunaRepository;
+
+    public function __construct(PenggunaRepositoryInterface $penggunaRepository)
+    {
+        $this->penggunaRepository = $penggunaRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -59,8 +67,9 @@ class PenggunaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pengguna $pengguna)
+    public function destroy($id)
     {
-        //
+        $this->penggunaRepository->deletePengguna($id);
+        
     }
 }
