@@ -15,7 +15,7 @@ class RegisterOrangtuaMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (count(auth()->user()->orangtua) == 0) {
+        if (!auth()->user()->orangtua) {
             return redirect()->route('register.step.form');
         }
 

@@ -17,6 +17,11 @@ class OrangTuaRepository implements OrangTuaRepositoryInterface
         return OrangTua::find($id);
     }
 
+    public function getOrangTuaByPenggunaId($id)
+    {
+        return auth()->user()->orangTua;
+    }
+
     public function createOrangTua(array $data)
     {
         return OrangTua::create($data);
@@ -30,5 +35,10 @@ class OrangTuaRepository implements OrangTuaRepositoryInterface
     public function deleteOrangTua($id)
     {
         return OrangTua::destroy($id);
+    }
+
+    public function countOrangTua()
+    {
+        return OrangTua::count();
     }
 }

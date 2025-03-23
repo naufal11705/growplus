@@ -31,6 +31,11 @@ class OrangTua extends Model
         'tanggungan_air'
     ];
 
+    public function anak()
+    {
+        return $this->hasOne(Anak::class, 'orangtua_id', 'orangtua_id');
+    }
+
     public function pengguna()
     {
         return $this->belongsTo(Pengguna::class, 'pengguna_id', 'pengguna_id');

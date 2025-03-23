@@ -42,7 +42,7 @@ class Pengguna extends Authenticatable
 
     public function orangtua()
     {
-        return $this->hasMany(OrangTua::class, 'pengguna_id', 'pengguna_id');
+        return $this->hasOne(OrangTua::class, 'pengguna_id', 'pengguna_id');
     }
 
     public function penggunaTantangans()

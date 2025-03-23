@@ -35,4 +35,9 @@ class PuskesmasRepository implements PuskesmasRepositoryInterface
         $puskesmas = Puskesmas::findOrFail($id);
         return $puskesmas->delete();
     }
+
+    public function countPuskesmas()
+    {
+        return Puskesmas::count();
+    }
 }

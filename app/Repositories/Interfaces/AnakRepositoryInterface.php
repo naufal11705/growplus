@@ -8,6 +8,7 @@ interface AnakRepositoryInterface
 {
     public function getAllAnaks();
     public function getAnakById($id);
+    public function getAnakByOrangTuaId($id);
     public function createAnak(array $data);
     public function updateAnak($id, array $data);
     public function deleteAnak($id);

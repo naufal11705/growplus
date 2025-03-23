@@ -46,7 +46,7 @@ export default function Category({ fases }: FaseCardsProps) {
                         </SwiperSlide>
                     ))}
                     <SwiperSlide>
-                        <div className="bg-white rounded-2xl border-2 border-gray-100 flex flex-col h-[572px] items-center justify-center">
+                        <div className="bg-white rounded-2xl border-2 border-gray-100 flex flex-col h-[500px] items-center justify-center">
                             <button type="button" className="bg-gray-100 text-gray-300 hover:text-gray-400 transition-transform duration-300 hover:rotate-[360deg] hover:bg-gray-200 font-medium rounded-full text-sm p-6 text-center inline-flex items-center me-2 w-26">
                                 <svg className="w-10 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />

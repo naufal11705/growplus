@@ -34,7 +34,14 @@ class UserController extends Controller
 
     public function profil()
     {
-        return Inertia::render('User/Profile');
+        $orangtua = auth()->user()->orangtua;
+        $pengguna = auth()->user();
+        $anak = auth()->user()->orangtua->anak;
+        return Inertia::render('User/Profile', [
+            'orangtua' => $orangtua,
+            'pengguna' => $pengguna,
+            'anak' => $anak
+        ]);
     }
 
     public function tantangan()
