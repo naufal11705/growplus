@@ -118,4 +118,11 @@ Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
 });
 
+Route::get('/admin/profile', function(){
+    return Inertia::render('Admin/Profile');
+});
+Route::get('/petugas/profile', function(){
+    return Inertia::render('Petugas/Profile');
+});
+
 require __DIR__ . '/auth.php';
