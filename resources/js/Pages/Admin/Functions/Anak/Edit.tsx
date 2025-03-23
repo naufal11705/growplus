@@ -4,6 +4,8 @@ import { router } from "@inertiajs/react";
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
 import { usePage } from "@inertiajs/react";
 import { useState } from "react";
+import AdminAlert from "@/Components/Widget/Alert/AdminAlert"; 
+
 
 interface Anak {
     anak_id: number;
@@ -28,7 +30,7 @@ interface PageProps extends InertiaPageProps {
     anak: Anak;
 }
 
-export default function OrangTua() {
+export default function Anak() { // Nama fungsi diubah dari OrangTua menjadi Anak agar sesuai konteks
     const { anak, orangtua } = usePage<PageProps>().props;
     const csrf_token = useCsrfToken();
 
@@ -38,40 +40,61 @@ export default function OrangTua() {
 
     const [formData, setFormData] = useState<Anak>({ ...anak });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // State untuk alert
+    const [alert, setAlert] = useState<{ type: "success" | "error" | "warning"; message: string; visible: boolean }>({
+        type: "success",
+        message: "",
+        visible: false,
+    });
+
+    // Fungsi untuk menampilkan alert
+    const setSuccess = (message: string) => setAlert({ type: "success", message, visible: true });
+    const setError = (message: string) => setAlert({ type: "error", message, visible: true });
+    const setWarning = (message: string) => setAlert({ type: "warning", message, visible: true });
+
+    // Fungsi untuk menutup alert
+    const closeAlert = () => setAlert({ ...alert, visible: false });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
+        if (name === "orangtua_id") {
+            setSelectedOrangTua(value);
+        }
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
-        router.put(`/admin/anak/${formData.anak_id}`, {
-            _token: csrf_token,
-            orangtua_id: formData.orangtua_id,
-            nama: formData.nama,
-            nik: formData.nik,
-            no_jkn: formData.no_jkn,
-            tempat_lahir: formData.tempat_lahir,
-            tanggal_lahir: formData.tanggal_lahir,
-            golongan_darah: formData.golongan_darah,
-            berat_badan: formData.berat_badan,
-            tinggi_badan: formData.tinggi_badan
-        }, {
-            preserveScroll: true,
-            onSuccess: () => {
-                console.log("Berhasil update tantangan");
-            },
-            onError: (errors) => {
-                console.error("Terjadi error:", errors);
-            }
-        });
 
+        router.put(
+            `/admin/anak/${formData.anak_id}`,
+            {
+                _token: csrf_token,
+                orangtua_id: selectedOrangTua,
+                nama: formData.nama,
+                nik: formData.nik,
+                no_jkn: formData.no_jkn,
+                tempat_lahir: formData.tempat_lahir,
+                tanggal_lahir: formData.tanggal_lahir,
+                golongan_darah: formData.golongan_darah,
+                berat_badan: formData.berat_badan,
+                tinggi_badan: formData.tinggi_badan,
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setSuccess("Data anak berhasil diperbarui!");
+                },
+                onError: (errors) => {
+                    setError("Gagal memperbarui data anak. Periksa kembali data yang diinput.");
+                    console.error("Terjadi error:", errors);
+                },
+            }
+        );
     };
-    
 
     return (
         <Layout>
@@ -86,7 +109,7 @@ export default function OrangTua() {
                                     id="orangtua_id"
                                     name="orangtua_id"
                                     value={selectedOrangTua}
-                                    onChange={(e) => setSelectedOrangTua(e.target.value)}
+                                    onChange={handleChange}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                     required
                                 >
@@ -99,36 +122,100 @@ export default function OrangTua() {
                                 </select>
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='nama' className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
-                                <input value={formData.nama} onChange={handleChange} type="text" name='nama' id='nama' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
+                                <input
+                                    value={formData.nama}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="nama"
+                                    id="nama"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='nik' className="block mb-2 text-sm font-medium text-gray-900">NIK</label>
-                                <input value={formData.nik} onChange={handleChange} type="text" name='nik' id='nik' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="nik" className="block mb-2 text-sm font-medium text-gray-900">NIK</label>
+                                <input
+                                    value={formData.nik}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="nik"
+                                    id="nik"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='no_jkn' className="block mb-2 text-sm font-medium text-gray-900">Nomor JKN</label>
-                                <input value={formData.nama} onChange={handleChange} type="text" name='no_jkn' id='no_jkn' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="no_jkn" className="block mb-2 text-sm font-medium text-gray-900">Nomor JKN</label>
+                                <input
+                                    value={formData.no_jkn}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="no_jkn"
+                                    id="no_jkn"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='tempat_lahir' className="block mb-2 text-sm font-medium text-gray-900">Tempat Lahir</label>
-                                <input value={formData.tempat_lahir} onChange={handleChange} type="text" name='tempat_lahir' id='tempat_lahir' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="tempat_lahir" className="block mb-2 text-sm font-medium text-gray-900">Tempat Lahir</label>
+                                <input
+                                    value={formData.tempat_lahir}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="tempat_lahir"
+                                    id="tempat_lahir"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='tanggal_lahir' className="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
-                                <input value={formData.tanggal_lahir} onChange={handleChange} type="date" name='tanggal_lahir' id='tanggal_lahir' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="tanggal_lahir" className="block mb-2 text-sm font-medium text-gray-900">Tanggal Lahir</label>
+                                <input
+                                    value={formData.tanggal_lahir}
+                                    onChange={handleChange}
+                                    type="date"
+                                    name="tanggal_lahir"
+                                    id="tanggal_lahir"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='golongan_darah' className="block mb-2 text-sm font-medium text-gray-900">Golongan Darah</label>
-                                <input value={formData.golongan_darah} onChange={handleChange} type="text" name='golongan_darah' id='golongan_darah' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="golongan_darah" className="block mb-2 text-sm font-medium text-gray-900">Golongan Darah</label>
+                                <input
+                                    value={formData.golongan_darah}
+                                    onChange={handleChange}
+                                    type="text"
+                                    name="golongan_darah"
+                                    id="golongan_darah"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='berat_badan' className="block mb-2 text-sm font-medium text-gray-900">Berat Badan (kg)</label>
-                                <input value={formData.berat_badan} onChange={handleChange} type="number" name='berat_badan' id='berat_badan' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="berat_badan" className="block mb-2 text-sm font-medium text-gray-900">Berat Badan (kg)</label>
+                                <input
+                                    value={formData.berat_badan}
+                                    onChange={handleChange}
+                                    type="number"
+                                    name="berat_badan"
+                                    id="berat_badan"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                             <div className="mt-5">
-                                <label htmlFor='tinggi_badan' className="block mb-2 text-sm font-medium text-gray-900">Tinggi Badan (cm)</label>
-                                <input value={formData.tinggi_badan} onChange={handleChange} type="number" name='tinggi_badan' id='tinggi_badan' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                <label htmlFor="tinggi_badan" className="block mb-2 text-sm font-medium text-gray-900">Tinggi Badan (cm)</label>
+                                <input
+                                    value={formData.tinggi_badan}
+                                    onChange={handleChange}
+                                    type="number"
+                                    name="tinggi_badan"
+                                    id="tinggi_badan"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    required
+                                />
                             </div>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -144,6 +231,11 @@ export default function OrangTua() {
                     </form>
                 </div>
             </div>
+
+            {/* Tampilkan AdminAlert jika visible true */}
+            {alert.visible && (
+                <AdminAlert type={alert.type} message={alert.message} onClose={closeAlert} />
+            )}
         </Layout>
     );
 }
