@@ -21,6 +21,8 @@ use App\Http\Controllers\FaseController;
 use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\PenggunaTantanganController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\ProfileAnakController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RegisterOrangtuaMiddleware;
 use App\Http\Middleware\RoleMiddleware;
@@ -67,12 +69,22 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
             Route::get('/chat-ai', [ChatController::class, 'index']);
             Route::get('/perhitungan-stunting', [AnakController::class, 'perhitunganStunting']);
-            Route::get('/profil', [UserController::class, 'profil']);
+            Route::get('/voucher', [VoucherController::class, 'index']);
+            Route::get('/profil', [UserController::class, 'profil'])->name('user.profil');
+            Route::get('/profil/anak/tambah', [ProfileAnakController::class, 'create']);
+            Route::post('/profil/anak', [ProfileAnakController::class, 'store_multiple']);
+            Route::get('/profil/anak/{id}/edit', [ProfileAnakController::class, 'edit']);
+            Route::put('/profil/anak/{id}', [ProfileAnakController::class, 'update']);
+            Route::get('/profil/edit', function () {
+                return Inertia::render('User/Functions/Profile/Edit_OrangTua');
+            });
+            Route::get('/voucher', [UserController::class, 'voucher']);
             Route::get('/tantangan', [UserController::class, 'tantangan']);
             Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
             Route::post('/pengguna-tantangan', [PenggunaTantanganController::class, 'store']);
             Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'destroy']);
+            Route::get('/imunisasi/{kecamatan}', [ImunisasiController::class, 'getImunisasiByKecamatan']);
         });
     });
 
@@ -93,14 +105,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
         Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
-        Route::get('/imunisasi', [PetugasController::class, 'imunisasi']);
+        Route::get('/imunisasi', [PetugasController::class, 'imunisasi'])->name('petugas.imunisasi');;
         Route::get('/imunisasi/tambah', [PetugasController::class, 'tambahImunisasi']);
+        Route::post('/imunisasi', [PetugasController::class, 'storeImunisasi']);
+        Route::delete('/imunisasi/{id}', [PetugasController::class, 'destroyImunisasi']);
+        Route::get('/imunisasi/{id}/edit', [PetugasController::class, 'editImunisasi']);
+        Route::put('/imunisasi/{id}', [PetugasController::class, 'updateImunisasi']);
         Route::get('/profile', [PetugasController::class, 'profile'])->name('petugas.profile');
     });
-});
-
-Route::get('/profil/edit', function () {
-    return Inertia::render('User/Functions/Profile/Edit_OrangTua');
 });
 
 Route::get('/artikel', [ArtikelController::class, 'listArticles'])->name('artikel.listArticles');
