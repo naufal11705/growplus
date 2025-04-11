@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PuskesmasStoreRequest;
 use App\Http\Requests\PuskesmasUpdateRequest;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
+use Exception;
 use Inertia\Inertia;
 
 class PuskesmasController extends Controller
@@ -42,11 +43,15 @@ class PuskesmasController extends Controller
      */
     public function store(PuskesmasStoreRequest $request)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->puskesmasRepository->createPuskesmas($request->all());
-
-        return redirect()->route('puskesmas.index');
+            $this->puskesmasRepository->createPuskesmas($validatedData);
+    
+            return redirect()->route('puskesmas.index')->with('success', 'Data berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
+        }
     }
 
     /**
@@ -72,11 +77,15 @@ class PuskesmasController extends Controller
      */
     public function update(PuskesmasUpdateRequest $request, $id)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->puskesmasRepository->updatePuskesmas($id, $request->all());
-
-        return redirect()->route('puskesmas.index');
+            $this->puskesmasRepository->updatePuskesmas($id, $validatedData);
+    
+            return redirect()->route('puskesmas.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
+        }
     }
 
     /**

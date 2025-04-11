@@ -7,6 +7,7 @@ use App\Http\Requests\TantanganStoreRequest;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use Inertia\Inertia;
+use Exception;
 
 class TantanganController extends Controller
 {
@@ -43,11 +44,15 @@ class TantanganController extends Controller
      */
     public function store(TantanganStoreRequest $request)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->tantanganRepository->createTantangan($request->all());
-
-        return redirect()->route('tantangan.index');
+            $this->tantanganRepository->createTantangan($validatedData);
+    
+            return redirect()->route('tantangan.index')->with('success', 'Data berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
+        }
     }
 
     /**
@@ -75,11 +80,15 @@ class TantanganController extends Controller
      */
     public function update(TantanganUpdateRequest $request, $id)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->tantanganRepository->updateTantangan($id, $request->all());
-
-        return redirect()->route('tantangan.index');
+            $this->tantanganRepository->updateTantangan($id, $validatedData);
+    
+            return redirect()->route('tantangan.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
+        }
     }
 
     /**

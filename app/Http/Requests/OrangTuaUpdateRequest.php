@@ -22,13 +22,17 @@ class OrangTuaUpdateRequest extends FormRequest
             'tanggal_lahir' => ['required', 'date'],
             'golongan_darah' => ['required', 'string', 'max:3'],
             'alamat' => ['required', 'string'],
+            'kecamatan' => ['required', 'string'],
+            'kabupaten' => ['required', 'string'],
+            'provinsi' => ['required', 'string'],
             'pekerjaan' => ['required', 'string', 'max:255'],
-            'penghasilan' => ['required', 'numeric'],
+            'penghasilan' => ['required', 'string'],
             'sumber_penghasilan' => ['required', 'string', 'max:255'],
             'jumlah_tanggungan' => ['required', 'integer'],
             'status_rumah' => ['required', 'string', 'max:255'],
             'tanggungan_listrik' => ['required', 'integer'],
             'tanggungan_air' => ['required', 'integer'],
+            'tingkat_ekonomi' => ['required', 'integer'],
         ];
     }
 }

@@ -23,6 +23,7 @@ class AnakStoreRequest extends FormRequest
             'golongan_darah' => ['required', 'string', 'max:3'],
             'berat_badan' => ['required', 'integer'],
             'tinggi_badan' => ['required', 'integer'],
+            'jenis_kelamin' => ['required', 'string', 'max:1'],
         ];
     }
 }
