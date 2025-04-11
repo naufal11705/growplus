@@ -22,6 +22,7 @@ export default {
                 'dark-wine': '#29101c',
                 'pinky': '#D84E89',
                 'light-pinky': '#FBD3E3',
+                'dark-pinky': '#a13865',
             },
         },
     },
