@@ -51,7 +51,7 @@ class UserController extends Controller
 
             foreach ($anakIds as $anakId) {
                 $totalPoints += $this->anakTantanganRepository->countTotalPoints($anakId);
-                $streakForThisAnak = $this->anakTantanganRepository->getAnakTantangansByAnakId($anakId);
+                $streakForThisAnak = $this->anakTantanganRepository->getAnakTantangansByAnakId($anakId)->count();
                 $totalStreak += $streakForThisAnak;
             }
 
