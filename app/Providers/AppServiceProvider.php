@@ -26,6 +26,7 @@ use App\Repositories\PuskesmasRepository;
 use App\Repositories\TantanganRepository;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,5 +54,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+        Inertia::share([
+            'auth' => function () {
+                if (auth()->user()) {
+                    return [
+                        'user' => [
+                            'id' => auth()->user()->id,
+                            'kecamatan' => auth()->user()->orangtua->kecamatan,
+                        ],
+                    ];
+                }
+                return ['user' => null];
+            },
+        ]);
     }
 }
