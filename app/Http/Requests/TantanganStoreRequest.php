@@ -17,6 +17,7 @@ class TantanganStoreRequest extends FormRequest
             'fase_id' => ['required', 'integer', 'exists:fases,fase_id'],
             'activity' => ['required', 'string', 'max:255'],
             'point' => ['required', 'integer', 'min:0'],
+            'tingkat_ekonomi' => ['required', 'integer'],
             'status' => ['required', 'boolean'],
         ];
     }
