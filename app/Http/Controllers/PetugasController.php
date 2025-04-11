@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Petugas;
+use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\ImunisasiRepositoryInterface;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
@@ -17,11 +18,13 @@ class PetugasController extends Controller
 {
     protected $imunisasiRepository;
     protected $puskesmasRepository;
+    protected $orangtuaRepository;
 
-    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository, PuskesmasRepositoryInterface $puskesmasRepository)
+    public function __construct(ImunisasiRepositoryInterface $imunisasiRepository, PuskesmasRepositoryInterface $puskesmasRepository, OrangTuaRepositoryInterface $orangtuaRepository)
     {
         $this->imunisasiRepository = $imunisasiRepository;
         $this->puskesmasRepository = $puskesmasRepository;
+        $this->orangtuaRepository = $orangtuaRepository;
     }
     public function imunisasi()
     {
@@ -46,9 +49,9 @@ class PetugasController extends Controller
             $validatedData = $request->validated();
 
             $imunisasi = $this->imunisasiRepository->createImunisasi($validatedData);
-    
+
             event(new ImunisasiNotification($imunisasi));
-    
+
             return redirect()->route('petugas.imunisasi')->with('success', 'Data berhasil ditambahkan.');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Data gagal ditambahkan.');
@@ -83,8 +86,9 @@ class PetugasController extends Controller
             $validatedData = $request->validated();
 
             $this->imunisasiRepository->updateImunisasi($id, $validatedData);
-    
-            return redirect()->route('petugas.imunisasi')->with('success', 'Data berhasil diperbarui.');;
+
+            return redirect()->route('petugas.imunisasi')->with('success', 'Data berhasil diperbarui.');
+            ;
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Data gagal diperbarui.');
         }
@@ -98,5 +102,12 @@ class PetugasController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Data gagal dihapus.');
         }
+    }
+
+    public function laporan()
+    {
+        return Inertia::render('Petugas/Laporan', [
+            'orangtuas' => $this->orangtuaRepository->getAllOrangtua(),
+        ]);
     }
 }
