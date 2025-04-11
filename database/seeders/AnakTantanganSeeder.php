@@ -15,15 +15,15 @@ class AnakTantanganSeeder extends Seeder
     {
         $data = [
             [
-                'anak_id' => 2,
+                'anak_id' => 1,
                 'tantangan_id' => 1,
             ],
             [
-                'anak_id' => 2,
+                'anak_id' => 1,
                 'tantangan_id' => 2,
             ],
             [
-                'anak_id' => 2,
+                'anak_id' => 1,
                 'tantangan_id' => 3,
             ],
         ];
