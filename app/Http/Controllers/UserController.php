@@ -7,6 +7,8 @@ use App\Models\Tantangan;
 use Illuminate\Http\Request;
 use App\Models\AnakTantangan;
 use App\Http\Resources\FaseResource;
+use App\Models\Anak;
+use App\Models\OrangTua;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
@@ -38,12 +40,25 @@ class UserController extends Controller
         $nonActiveFases = $fases->where('status', 0);
         $nonActiveFaseData = FaseResource::collection($nonActiveFases)->resolve();
 
-        $totalProgress = 0;
+        $orangTua = OrangTua::where('pengguna_id', $pengguna_id)->first();
+        $totalPoints = 0;
+
+        if ($orangTua) {
+            $anakIds = Anak::where('orangtua_id', $orangTua->orangtua_id)->pluck('anak_id');
+
+            foreach ($anakIds as $anakId) {
+                $totalPoints += $this->anakTantanganRepository->countTotalPoints($anakId);
+            }
+        }
+
+        // $totalProgress = 0;
         if ($activeFase) {
             $faseResource = new FaseResource($activeFase);
             $totalProgress = $faseResource->calculateProgress();
         }
-        $totalPoints = $this->anakTantanganRepository->countTotalPoints($pengguna_id);
+        // $totalPoints = $this->anakTantanganRepository->countTotalPoints($pengguna_id);
+        // dd($totalPoints);
+        // exit;
         $streak = $this->anakTantanganRepository->getAnakTantangansByAnakId($pengguna_id)->count();
 
         $kecamatan = auth()->user()->orangtua->kecamatan;
@@ -153,6 +168,7 @@ class UserController extends Controller
             'orangtua.tempat_lahir' => 'required|string|max:255',
             'orangtua.tanggal_lahir' => 'required|date',
             'orangtua.golongan_darah' => 'required|string|max:3',
+            'orangtua.jenis_kelamin' => 'required|string|max:11',
             'orangtua.alamat' => 'required|string',
             'orangtua.kecamatan' => 'required|string',
             'orangtua.kabupaten' => 'required|string',
@@ -174,6 +190,9 @@ class UserController extends Controller
             'anak.*.golongan_darah' => 'required_with:anak|string|max:3',
             'anak.*.berat_badan' => 'required_with:anak|integer',
             'anak.*.tinggi_badan' => 'required_with:anak|integer',
+            'anak.*.jenis_kelamin' => 'required_with:anak|string|max:255',
+            'anak.*.sudah_lahir' => 'required_with:anak|tinyint',
+            'anak.*.tanggal_terakhir_menstruasi' => 'required_with:anak|date',
         ]);
 
         $penghasilan = $validatedData['orangtua']['penghasilan'];

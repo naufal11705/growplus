@@ -21,10 +21,14 @@ class FaseResource extends JsonResource
     public function toArray(Request $request): array
     {
         // Get anak from the controller, not from additional data
-        if (request()->route('anak_id') != null) {
-            $anak = app(AnakRepository::class)->getAnakById(request()->route('anak_id'));
+        if (auth()->check()) {
+            if (request()->route('anak_id') != null) {
+                $anak = app(AnakRepository::class)->getAnakById(request()->route('anak_id'));
+            } else {
+                $anak = app(AnakRepository::class)->getAnakByOrangTuaId(auth()->user()->orangtua->orangtua_id);
+            }
         } else {
-            $anak = app(AnakRepository::class)->getAnakByOrangTuaId(auth()->user()->orangtua->orangtua_id);
+            $anak = null;
         }
 
         return [
@@ -41,9 +45,9 @@ class FaseResource extends JsonResource
             }, []),
             'benefits' => array_values(array_filter(explode('. ', $this->benefits ?? ''))),
             'status' => $this->status,
-            'progress' => $this->calculateProgress($anak),
+            'progress' => $anak != null ? $this->calculateProgress($anak) : 0,
             'durasi' => (int) $this->durasi,
-            'deadline' => $this->calculateDeadline($anak),
+            'deadline' => $anak != null ? $this->calculateDeadline($anak) : null,
             'anak' => $anak ? [
                 'anak_id' => $anak->anak_id,
                 'nama' => $anak->nama_anak ?? null,
@@ -61,7 +65,7 @@ class FaseResource extends JsonResource
     /**
      * Calculate progress based on anak data.
      */
-    protected function calculateProgress($anak = null): int
+    public function calculateProgress($anak = null): int
     {
         if (!$anak || !isset($anak->anak_id)) {
             return 0;

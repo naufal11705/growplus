@@ -116,6 +116,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/imunisasi/{id}/edit', [PetugasController::class, 'editImunisasi']);
         Route::put('/imunisasi/{id}', [PetugasController::class, 'updateImunisasi']);
         Route::get('/profile', [PetugasController::class, 'profile'])->name('petugas.profile');
+        Route::get('/laporan', [PetugasController::class, 'laporan']);
     });
 });
 
