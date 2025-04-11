@@ -307,15 +307,6 @@ const ChatInterface: React.FC = () => {
                 onClick={() => {
                   setCurrentChatId(thread.id)
                   setShowThreads(false)
-                  // Optionally fetch messages for the selected thread
-                  /*
-                  const fetchMessages = async () => {
-                    const response = await fetch(`/api/chat/messages/${thread.id}`);
-                    const messagesData = await response.json();
-                    setMessages(messagesData);
-                  };
-                  fetchMessages();
-                  */
                 }}
                 className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
               >
@@ -353,7 +344,6 @@ const ChatInterface: React.FC = () => {
     )
   }
 
-  // Render chat view
   const renderChatView = () => {
     const currentChat = chatThreads.find((thread) => thread.id === currentChatId)
 
@@ -491,7 +481,6 @@ const ChatInterface: React.FC = () => {
                             {message.isDeleted ? message.content : truncateMessage(message.content, message.id)}
                           </div>
 
-                          {/* Attachments */}
                           {message.attachments && message.attachments.length > 0 && (
                             <div className="mt-2 space-y-2">
                               {message.attachments.map((attachment) => (
