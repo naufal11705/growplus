@@ -337,7 +337,7 @@ export const generateVoucherPDF = async (voucher: Voucher): Promise<void> => {
 
             await generateBarcode(
                 doc,
-                voucher.barcode || generateBarcodeText(),
+                voucher.code || generateBarcodeText(),
                 barcodeX,
                 currentY,
                 barcodeWidth,

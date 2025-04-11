@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::get('/voucher', [UserController::class, 'voucher']);
             Route::get('/tantangan', [UserController::class, 'tantangan']);
+            Route::get('/tantangan/{anak_id}', [UserController::class, 'tantangan']);
             Route::get('/tantangan/{tantangan_id}/{anak_id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
             Route::post('/anak-tantangan', [AnakTantanganController::class, 'store']);
@@ -128,5 +129,6 @@ Route::fallback(function () {
 Route::get('/petugas/chat', function () {
     return Inertia::render('Petugas/Chat');
 });
+Route::get('/chat-petugas', [PenggunaController::class, 'getUserForChat'])->name('chat');
 
 require __DIR__ . '/auth.php';
