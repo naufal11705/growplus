@@ -7,6 +7,7 @@ Grow+ adalah website application Stunting Nutrition Planner (SNP) yang dirancang
 -   🎯 **Daily Challenge Berbasis Buku KIA** : Tantangan harian untuk meningkatkan kepatuhan gizi.
 -   🔔 **Reminder Tumbuh Kembang Berbasis Kurva WHO** : Sistem mengirim peringatan dini jika pertumbuhan anak menyimpang dari kurva WHO.
 -   💉 **Notifikasi Imunisasi Terdekat** : Memberikan informasi jadwal vaksinasi terdekat.
+-   🤖 **Agent AI Kesehatan** : Fitur chat berbasis AI yang memberikan edukasi pencegahan stunting interaktif dan personal kepada pengguna.
 
 ### Formasi Tim Kami
 
@@ -29,3 +30,11 @@ Sebagai Admin
 
 -   Username: testadmin@gmail.com
 -   Password: 12345678
+
+Sebagai Petugas
+
+-   Username: testpetugas@gmail.com
+-   Password: 12345678
+
+LINK WEBSITE
+https://growplus-main-c3oxg9.laravel.cloud/

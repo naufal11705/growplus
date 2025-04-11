@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PenggunaTantanganDeleteRequest;
+use App\Http\Requests\PenggunaTantanganStoreRequest;
 use App\Models\PenggunaTantangan;
+use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
 use Illuminate\Http\Request;
 
 class PenggunaTantanganController extends Controller
 {
+    protected $penggunaTantanganRepository;
+
+    public function __construct(PenggunaTantanganRepositoryInterface $penggunaTantanganRepository)
+    {
+        $this->penggunaTantanganRepository = $penggunaTantanganRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,9 +35,11 @@ class PenggunaTantanganController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PenggunaTantanganStoreRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->penggunaTantanganRepository->createPenggunaTantangans($validatedData);
     }
 
     /**
@@ -58,8 +69,10 @@ class PenggunaTantanganController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PenggunaTantangan $penggunaTantangan)
+    public function destroy(PenggunaTantanganDeleteRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->penggunaTantanganRepository->deletePenggunaTantangans($validatedData);
     }
 }

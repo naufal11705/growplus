@@ -15,7 +15,7 @@ class PenggunaRepository implements PenggunaRepositoryInterface
 
     public function getPenggunaById($id)
     {
-        return Pengguna::findOrFail($id);
+        return Pengguna::find($id);
     }
 
     public function createPengguna(array $data)

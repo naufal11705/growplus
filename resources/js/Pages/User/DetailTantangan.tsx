@@ -3,30 +3,101 @@ import DetailChallengeTabs from "@/Components/Widget/Tabs/DetailChallengeTabs";
 import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Layout";
 import { Fase } from "@/types/fase";
+import { router } from "@inertiajs/react";
+import useCsrfToken from "@/Utils/csrfToken";
 
-interface TantanganCardsProps {
+
+interface DetailTantanganProps {
     fase: Fase;
+    tantangansDone: {
+        pengguna_id: number;
+        tantangan_id: number;
+    }[];
+    auth: {
+        user: {
+            pengguna_id: number;
+        }
+    };
 }
 
-export default function DetailTantangan({ fase }: TantanganCardsProps) {
+export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTantanganProps) {
+    const csrf_token = useCsrfToken();
     const [activeTab, setActiveTab] = useState("Deskripsi");
-
     // State untuk tracking tantangan yang dicentang
-    const [checkedTantangans, setCheckedtantangans] = useState<boolean[]>(Array(fase.tantangans.length).fill(false));
-    const [progress, setProgress] = useState(0);
+    const [checkedTantangans, setCheckedTantangans] = useState<boolean[]>([]);
+    // Add processing state to prevent multiple submissions
+    const [processing, setProcessing] = useState(false);
 
     useEffect(() => {
-        // Hitung progress berdasarkan jumlah tugas yang dicentang
-        const totalTantangans = checkedTantangans.length;
-        const completedTantangans = checkedTantangans.filter(tantangan => tantangan).length;
-        const newProgress = Math.round((completedTantangans / totalTantangans) * 100);
-        setProgress(newProgress);
-    }, [checkedTantangans]);
+        // Initialize the checked state based on tantangansDone data
+        if (fase.tantangans && fase.tantangans.length > 0) {
+            const initialCheckedState = fase.tantangans.map(tantangan => {
+                // Check if this tantangan exists in the tantangansDone array for the current user
+                return tantangansDone.some(done =>
+                    done.tantangan_id === tantangan.tantangan_id &&
+                    done.pengguna_id === auth.user.pengguna_id
+                );
+            });
+            setCheckedTantangans(initialCheckedState);
+        }
+    }, [fase, tantangansDone, auth.user.pengguna_id]);
 
-    const handleCheckboxChange = (index: number) => {
+    const handleCheckboxChange = (index: number, tantanganId: number) => {
+        if (processing) return; // Prevent multiple submissions
+
+        setProcessing(true);
         const updatedTantangans = [...checkedTantangans];
         updatedTantangans[index] = !updatedTantangans[index];
-        setCheckedtantangans(updatedTantangans);
+        setCheckedTantangans(updatedTantangans);
+
+        if (updatedTantangans[index]) {
+            router.post('/pengguna-tantangan', {
+                pengguna_id: auth.user.pengguna_id,
+                tantangan_id: tantanganId,
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': csrf_token
+                },
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    setProcessing(false);
+                },
+                onError: (errors) => {
+                    console.error('Error updating tantangan:', errors);
+                    updatedTantangans[index] = !updatedTantangans[index];
+                    setCheckedTantangans(updatedTantangans);
+                    setProcessing(false);
+                },
+                onFinish: () => {
+                    setProcessing(false);
+                }
+            });
+        } else {
+            router.delete('/pengguna-tantangan', {
+                data: {
+                    pengguna_id: auth.user.pengguna_id,
+                    tantangan_id: tantanganId,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': csrf_token
+                },
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    setProcessing(false);
+                },
+                onError: (errors) => {
+                    console.error('Error updating tantangan:', errors);
+                    updatedTantangans[index] = !updatedTantangans[index];
+                    setCheckedTantangans(updatedTantangans);
+                    setProcessing(false);
+                },
+                onFinish: () => {
+                    setProcessing(false);
+                }
+            });
+        }
     };
 
     return (
@@ -68,15 +139,16 @@ export default function DetailTantangan({ fase }: TantanganCardsProps) {
                                         <div key={fase.fase_id} className="mt-5">
                                             <h3 className="text-lg font-semibold text-gray-800">{fase.judul}</h3>
                                             {fase.tantangans.map((tantangan, index) => (
-                                                <label key={index} className="flex items-center gap-2 mt-2 cursor-pointer">
+                                                <label key={tantangan.tantangan_id} className="flex items-center gap-2 mt-2 cursor-pointer">
                                                     <input
                                                         type="checkbox"
                                                         className="w-5 h-5 text-pinky bg-gray-100 border-gray-300 rounded-md"
-                                                        checked={checkedTantangans[index]}
-                                                        onChange={() => handleCheckboxChange(index)}
+                                                        checked={checkedTantangans[index] || false}
+                                                        onChange={() => handleCheckboxChange(index, tantangan.tantangan_id)}
+                                                        disabled={processing}
                                                     />
                                                     <span className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? 'line-through text-gray-500' : ''}`}>
-                                                        {tantangan}
+                                                        {tantangan.activity}
                                                     </span>
                                                 </label>
                                             ))}

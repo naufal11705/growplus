@@ -72,11 +72,53 @@ export default function Navbar() {
                                     <span className="block text-sm text-gray-500 truncate">{auth.user.email}</span>
                                 </div>
                                 <ul className="py-2" aria-labelledby="user-menu-button">
+                                    {(() => {
+                                        if (auth.user.role_id === 1) {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/admin/dashboard" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        } else if (auth.user.role_id === 3) {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/admin/petugas" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        } else {
+                                            return (
+                                                <li>
+                                                    <a 
+                                                        href="/dashboard" 
+                                                        onClick={closeDropdown} 
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    >
+                                                        Dashboard
+                                                    </a>
+                                                </li>
+                                            );
+                                        }
+                                    })()}
                                     <li>
-                                        <a href="/dashboard" onClick={closeDropdown} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" onClick={(e) => { handleLogout(e); closeDropdown(); }} className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Keluar</a>
+                                        <a 
+                                            href="#" 
+                                            onClick={(e) => { handleLogout(e); closeDropdown(); }} 
+                                            className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100"
+                                        >
+                                            Keluar
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

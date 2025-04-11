@@ -9,6 +9,6 @@ interface PenggunaTantanganRepositoryInterface
     public function getPenggunaTantangansByTantanganId($id);
     public function createPenggunaTantangans(array $data);
     public function updatePenggunaTantangans($id, array $data);
-    public function deletePenggunaTantangans($id);
+    public function deletePenggunaTantangans(array $data);
     public function countTotalPoints($id);
 }

@@ -32,11 +32,12 @@ class PenggunaTantanganRepository implements PenggunaTantanganRepositoryInterfac
         return PenggunaTantangan::find($id)->update($data);
     }
 
-    public function deletePenggunaTantangans($id)
+    public function deletePenggunaTantangans(array $data)
     {
-        return PenggunaTantangan::destroy($id);
+        return PenggunaTantangan::where('pengguna_id', $data['pengguna_id'])
+            ->where('tantangan_id', $data['tantangan_id'])->destroy();
     }
-    
+
     public function countTotalPoints($id)
     {
         return $points = PenggunaTantangan::where('pengguna_id', $id)

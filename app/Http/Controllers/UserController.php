@@ -137,23 +137,4 @@ class UserController extends Controller
 
         return redirect()->route('user.dashboard');
     }
-
-    // public static function calculateProgress($fase)
-    // {
-    //     if (!auth()->check()) {
-    //         return 0;
-    //     }
-
-    //     $penggunaId = auth()->user()->pengguna_id;
-    //     $totalTantangans = $fase->tantangans->count();
-    //     if ($totalTantangans == 0) {
-    //         return 0;
-    //     }
-
-    //     $completedTantangans = PenggunaTantangan::where('pengguna_id', $penggunaId)
-    //         ->whereIn('tantangan_id', $fase->tantangans->pluck('id'))
-    //         ->count();
-
-    //     return (int)(($completedTantangans / $totalTantangans) * 100);
-    // }
 }

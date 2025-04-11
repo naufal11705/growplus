@@ -1,29 +1,45 @@
-import { useState } from "react";
+// resources/js/Components/Sidebar.jsx
 import { router } from "@inertiajs/react";
+import { useState } from "react";
 
-export default function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function Sidebar({
+    isOpen,
+    toggleSidebar,
+}: {
+    isOpen: boolean;
+    toggleSidebar: () => void;
+}) {
+    const [isOpenPuskesmas, setIsOpenPuskesmas] = useState(false);
+    const [isOpenPengguna, setIsOpenPengguna] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+    const puskesmasDropdown = () => {
+        setIsOpenPuskesmas(!isOpenPuskesmas);
+    };
+
+    const penggunaDropdown = () => {
+        setIsOpenPengguna(!isOpenPengguna);
     };
 
     const handleLogout = (e: any) => {
         e.preventDefault();
-        router.post(route('logout'));
+        router.post(route("logout"));
+        toggleSidebar(); // Tutup sidebar setelah logout
+    };
+
+    const handleMenuClick = () => {
+        toggleSidebar(); // Tutup sidebar saat menu diklik
     };
 
     return (
         <>
-            <button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-xl sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-                <span className="sr-only">Open sidebar</span>
-                <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                </svg>
-            </button>
-            <aside id="sidebar-multi-level-sidebar" className="fixed top-0 left-0 z-40 lg:w-72 md:w-60 sm:w-56 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <aside
+                id="sidebar-multi-level-sidebar"
+                className={`fixed top-0 left-0 z-40 lg:w-72 md:w-60 sm:w-56 h-screen transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    } sm:translate-x-0`}
+                aria-label="Sidebar"
+            >
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50">
-                    <ul className="space-y-2 font-bold mt-14">
+                    <ul className="space-y-2 font-bold mt-5 md:mt-14">
                         <li>
                             <a href="/petugas/dashboard" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100  group">
                                 <svg className="w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -62,6 +78,14 @@ export default function Sidebar() {
                     </ul>
                 </div>
             </aside>
+
+            {/* Overlay untuk Mobile */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 sm:hidden"
+                    onClick={toggleSidebar}
+                />
+            )}
         </>
     );
 }
