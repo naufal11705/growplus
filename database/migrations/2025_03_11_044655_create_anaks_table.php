@@ -14,15 +14,17 @@ return new class extends Migration
         Schema::create('anaks', function (Blueprint $table) {
             $table->id('anak_id')->primary();
             $table->unsignedBigInteger('orangtua_id')->index();
-            $table->string('nama');
-            $table->string('nik');
-            $table->string('no_jkn');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('golongan_darah');
-            $table->integer('berat_badan');
-            $table->integer('tinggi_badan');
-            $table->string('jenis_kelamin');
+            $table->string('nama')->default('Janin');
+            $table->string('nik')->nullable();
+            $table->string('no_jkn')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('golongan_darah')->nullable();
+            $table->integer('berat_badan')->nullable();
+            $table->integer('tinggi_badan')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->boolean('sudah_lahir');
+            $table->date('tanggal_terakhir_menstruasi')->nullable();
             $table->timestamps();
 
             $table->foreign('orangtua_id')->references('orangtua_id')->on('orang_tuas');
