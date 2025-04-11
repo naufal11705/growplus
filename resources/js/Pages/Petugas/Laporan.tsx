@@ -2,7 +2,7 @@ import { usePage } from "@inertiajs/react";
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
 import Layout from "@/Layouts/Petugas";
 import { Orangtua } from "@/types/orangtua";
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Trash2 } from "lucide-react";
 
 interface PageProps extends InertiaPageProps {
     orangtuas: Orangtua[];
@@ -20,7 +20,6 @@ export default function Laporan() {
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">No</th>
                                     <th scope="col" className="px-6 py-3">Orang Tua ID</th>
                                     <th scope="col" className="px-6 py-3">Nama Orang Tua</th>
                                     <th scope="col" className="px-6 py-3">Jenis Kelamin</th>
@@ -38,18 +37,12 @@ export default function Laporan() {
                                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{orangtua.jenis_kelamin}</td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-start gap-3">
-                                                    <a
-                                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                    <a href="/petugas/laporan/detail"
+                                                        className="inline-flex cursor-pointer items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                                     >
-                                                        <Pencil className="w-3.5 h-3.5" />
-                                                        <span>Edit</span>
+                                                        <Eye className="w-3.5 h-3.5" />
+                                                        <span>Detail</span>
                                                     </a>
-                                                    <button
-                                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                                    >
-                                                        <Trash2 className="w-3.5 h-3.5" />
-                                                        <span>Delete</span>
-                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>

@@ -132,4 +132,8 @@ Route::get('/petugas/chat', function () {
 });
 Route::get('/chat-petugas', [PenggunaController::class, 'getUserForChat'])->name('chat');
 
+Route::get('/petugas/laporan/detail', function () {
+    return Inertia::render('Petugas/Functions/Laporan/Detail');
+});
+
 require __DIR__ . '/auth.php';
