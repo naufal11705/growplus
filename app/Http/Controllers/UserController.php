@@ -110,7 +110,8 @@ class UserController extends Controller
         $tantangansDone = $this->anakTantanganRepository->getAnakTantangansByAnakId($anak_id);
         return Inertia::render('User/DetailTantangan', [
             'fase' => $fase ? (new FaseResource($fase))->toArray(request()) : null,
-            'tantangansDone' => $tantangansDone
+            'tantangansDone' => $tantangansDone,
+            'anak_id' => $anak_id,
         ]);
     }
 

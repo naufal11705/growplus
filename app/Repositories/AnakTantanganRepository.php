@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\AnakTantangan;
 use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
+use Carbon\Carbon;
 
 class AnakTantanganRepository implements AnakTantanganRepositoryInterface
 {
@@ -14,7 +15,9 @@ class AnakTantanganRepository implements AnakTantanganRepositoryInterface
 
     public function getAnakTantangansByAnakId($id)
     {
-        return AnakTantangan::where('anak_id', $id)->get();
+        return AnakTantangan::where('anak_id', $id)
+            ->whereDate('tanggal_selesai', Carbon::today())
+            ->get();
     }
 
     public function getAnakTantangansByTantanganId($id)
