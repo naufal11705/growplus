@@ -25,7 +25,6 @@ class CatatanStoreRequest extends FormRequest
             'anak_id' => ['required', 'integer', 'exists:anaks,anak_id'],
             'fase_id' => ['required', 'integer', 'exists:fases,fase_id'],
             'catatan' => ['required', 'string'],
-            'tanggal' => ['required', 'date'],
         ];
     }
 }

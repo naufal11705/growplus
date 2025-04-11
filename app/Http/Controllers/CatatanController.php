@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\CatatanRepositoryInterface;
 use App\Http\Requests\CatatanStoreRequest;
+use App\Models\Catatan;
 
 class CatatanController extends Controller
 {
@@ -34,9 +35,16 @@ class CatatanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CatatanStoreRequest $request)
     {
-        
+        $validatedData = $request->validated();
+
+        $this->catatanRepository->createCatatans($validatedData);
+
+        return response()->json([
+            'message' => 'Catatan created successfully',
+            'data' => $validatedData
+        ], 201);
     }
 
     /**

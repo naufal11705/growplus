@@ -23,6 +23,8 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
     const [selectedTantanganIndex, setSelectedTantanganIndex] = useState<number | null>(null);
     const [selectedTantanganId, setSelectedTantanganId] = useState<number | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [note, setNote] = useState(""); // New state for note input
+    const [noteError, setNoteError] = useState<string | null>(null);
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
@@ -84,6 +86,42 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
         setSelectedTantanganIndex(null);
         setSelectedTantanganId(null);
         setErrorMessage(null);
+    };
+
+    const handleNoteSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!note.trim()) {
+            setNoteError("Catatan tidak boleh kosong");
+            return;
+        }
+
+        setProcessing(true);
+        setNoteError(null);
+
+        router.post(
+            "/catatan",
+            {
+                fase_id: fase.fase_id,
+                anak_id: anak_id,
+                catatan: note,
+                _token: csrf_token,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    setNote("");
+                    setProcessing(false);
+                },
+                onError: (errors: any) => {
+                    const errorDetails = Object.entries(errors)
+                        .map(([key, value]) => `${key}: ${(value as string[]).join(", ")}`)
+                        .join("; ");
+                    setNoteError(errorDetails || "Gagal menyimpan catatan. Silakan coba lagi.");
+                    setProcessing(false);
+                },
+            }
+        );
     };
 
     return (
@@ -189,9 +227,8 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                                         disabled={checkedTantangans[index] || processing}
                                                     />
                                                     <span
-                                                        className={`text-sm font-medium text-gray-900 ${
-                                                            checkedTantangans[index] ? "line-through text-gray-500" : ""
-                                                        }`}
+                                                        className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? "line-through text-gray-500" : ""
+                                                            }`}
                                                     >
                                                         {tantangan.activity}
                                                     </span>
@@ -200,6 +237,43 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                         </div>
                                     </div>
                                 )}
+                                {activeTab === "Catatan" && (
+                                    <motion.div
+                                        key={activeTab}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+                                    >
+                                        <div id="catatanSection">
+                                            <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
+                                                Tuliskan Catatan
+                                            </h2>
+                                            {noteError && (
+                                                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                                                    {noteError}
+                                                </div>
+                                            )}
+                                            <form onSubmit={handleNoteSubmit}>
+                                                <textarea
+                                                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                    placeholder="Tulis catatan Anda di sini..."
+                                                    value={note}
+                                                    onChange={(e) => setNote(e.target.value)}
+                                                    disabled={processing}
+                                                ></textarea>
+                                                <button
+                                                    type="submit"
+                                                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                                                    disabled={processing}
+                                                >
+                                                    {processing ? "Menyimpan..." : "Simpan Catatan"}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </motion.div>
+                                )}
+
                             </div>
                             <RightSide fase={fase} />
                         </div>
