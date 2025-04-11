@@ -26,8 +26,8 @@ class Tantangan extends Model
         return $this->belongsTo(Fase::class, 'fase_id', 'fase_id');
     }
 
-    public function penggunaTantangans()
+    public function anakTantangans()
     {
-        return $this->hasMany(PenggunaTantangan::class, 'tantangan_id');
+        return $this->hasMany(AnakTantangan::class, 'tantangan_id');
     }
 }

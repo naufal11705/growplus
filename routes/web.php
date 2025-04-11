@@ -19,7 +19,7 @@ use App\Http\Controllers\FasKesController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\OrangTuaController;
-use App\Http\Controllers\PenggunaTantanganController;
+use App\Http\Controllers\AnakTantanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\ProfileAnakController;
@@ -82,8 +82,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/tantangan', [UserController::class, 'tantangan']);
             Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
-            Route::post('/pengguna-tantangan', [PenggunaTantanganController::class, 'store']);
-            Route::delete('/pengguna-tantangan', [PenggunaTantanganController::class, 'destroy']);
+            Route::post('/anak-tantangan', [AnakTantanganController::class, 'store']);
+            Route::delete('/anak-tantangan', [AnakTantanganController::class, 'destroy']);
             Route::get('/imunisasi/{kecamatan}', [ImunisasiController::class, 'getImunisasiByKecamatan']);
         });
     });
@@ -105,7 +105,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('petugas')->middleware(RoleMiddleware::class . ':Petugas')->group(function () {
         Route::get('/dashboard', [PetugasController::class, 'dashboard'])->name('petugas.dashboard');
-        Route::get('/imunisasi', [PetugasController::class, 'imunisasi'])->name('petugas.imunisasi');;
+        Route::get('/imunisasi', [PetugasController::class, 'imunisasi'])->name('petugas.imunisasi');
+        ;
         Route::get('/imunisasi/tambah', [PetugasController::class, 'tambahImunisasi']);
         Route::post('/imunisasi', [PetugasController::class, 'storeImunisasi']);
         Route::delete('/imunisasi/{id}', [PetugasController::class, 'destroyImunisasi']);

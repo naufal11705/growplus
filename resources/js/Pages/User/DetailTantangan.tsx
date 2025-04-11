@@ -21,9 +21,9 @@ export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTa
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
-            const initialCheckedState = fase.tantangans.map(tantangan => 
-                tantangansDone.some(done => 
-                    done.tantangan_id === tantangan.tantangan_id && 
+            const initialCheckedState = fase.tantangans.map(tantangan =>
+                tantangansDone.some(done =>
+                    done.tantangan_id === tantangan.tantangan_id &&
                     done.pengguna_id === auth.user.pengguna_id
                 )
             );

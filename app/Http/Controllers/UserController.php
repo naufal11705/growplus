@@ -5,28 +5,28 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Tantangan;
 use Illuminate\Http\Request;
-use App\Models\PenggunaTantangan;
+use App\Models\AnakTantangan;
 use App\Http\Resources\FaseResource;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
-use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
+use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
 
 class UserController extends Controller
 {
 
-    protected $orangTuaRepository, $anakRepository, $faseRepository, $penggunaTantanganRepository;
+    protected $orangTuaRepository, $anakRepository, $faseRepository, $anakTantanganRepository;
 
     public function __construct(
         OrangTuaRepositoryInterface $orangTuaRepository,
         AnakRepositoryInterface $anakRepository,
         FaseRepositoryInterface $faseRepository,
-        PenggunaTantanganRepositoryInterface $penggunaTantanganRepository
+        AnakTantanganRepositoryInterface $anakTantanganRepository
     ) {
         $this->orangTuaRepository = $orangTuaRepository;
         $this->anakRepository = $anakRepository;
         $this->faseRepository = $faseRepository;
-        $this->penggunaTantanganRepository = $penggunaTantanganRepository;
+        $this->anakTantanganRepository = $anakTantanganRepository;
     }
 
     public function dashboard()
@@ -43,8 +43,8 @@ class UserController extends Controller
             $faseResource = new FaseResource($activeFase);
             $totalProgress = $faseResource->calculateProgress();
         }
-        $totalPoints = $this->penggunaTantanganRepository->countTotalPoints($pengguna_id);
-        $streak = $this->penggunaTantanganRepository->getPenggunaTantangansByPenggunaId($pengguna_id)->count();
+        $totalPoints = $this->anakTantanganRepository->countTotalPoints($pengguna_id);
+        $streak = $this->anakTantanganRepository->getAnakTantangansByAnakId($pengguna_id)->count();
 
         $kecamatan = auth()->user()->orangtua->kecamatan;
         // dd($kecamatan);
@@ -100,7 +100,7 @@ class UserController extends Controller
             $fase->setRelation('tantangans', $filteredTantangans);
         }
 
-        $tantangansDone = $this->penggunaTantanganRepository->getPenggunaTantangansByPenggunaId(auth()->user()->pengguna_id);
+        $tantangansDone = $this->anakTantanganRepository->getAnakTantangansByAnakId(auth()->user()->pengguna_id);
         return Inertia::render('User/DetailTantangan', [
             'fase' => $fase ? (new FaseResource($fase))->toArray(request()) : null,
             'tantangansDone' => $tantangansDone
@@ -115,7 +115,7 @@ class UserController extends Controller
     public function voucher()
     {
         $pengguna_id = auth()->user()->pengguna_id;
-        $totalPoints = $this->penggunaTantanganRepository->countTotalPoints($pengguna_id);
+        $totalPoints = $this->anakTantanganRepository->countTotalPoints($pengguna_id);
 
         return Inertia::render('User/Voucher', [
             'totalPoints' => $totalPoints

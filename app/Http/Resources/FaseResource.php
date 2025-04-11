@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
+use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,10 +33,10 @@ class FaseResource extends JsonResource
 
     protected function countCompletedTantangans($id)
     {
-        $penggunaTantanganRepository = app(PenggunaTantanganRepositoryInterface::class);
+        $anakTantanganRepository = app(AnakTantanganRepositoryInterface::class);
 
-        $completedTantangans = $penggunaTantanganRepository
-            ->getPenggunaTantangansByPenggunaId($id)
+        $completedTantangans = $anakTantanganRepository
+            ->getAnakTantangansByAnakId($id)
             ->whereIn('tantangan_id', $this->tantangans->pluck('tantangan_id')->toArray())
             ->count();
 
