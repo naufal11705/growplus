@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PenggunaTantangan extends Model
+class AnakTantangan extends Model
 {
-    /** @use HasFactory<\Database\Factories\PenggunaTantanganFactory> */
+    /** @use HasFactory<\Database\Factories\AnakTantanganFactory> */
     use HasFactory;
 
-    protected $table = 'pengguna_tantangans';
+    protected $table = 'anak_tantangans';
 
     protected $fillable = [
-        'pengguna_id',
+        'anak_id',
         'tantangan_id',
     ];
 
-    public function pengguna()
+    public function anak()
     {
-        return $this->belongsTo(Pengguna::class, 'pengguna_id', 'pengguna_id');
+        return $this->belongsTo(Anak::class, 'anak_id', 'anak_id');
     }
 
     public function tantangan()

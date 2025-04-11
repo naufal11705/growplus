@@ -23,6 +23,7 @@ class FaseFactory extends Factory
             'banner' => asset('images/Sample.png'),
             'progress' => $this->faker->randomElement([20, 40, 60, 80, 100]),
             'is_anak_required' => $this->faker->randomElement([1, 0]),
+            'durasi' => $this->faker->randomElement([5, 10, 15, 20, 25, 30]),
             'status' => $this->faker->randomElement([1, 0]),
             'created_at' => now(),
             'updated_at' => now()

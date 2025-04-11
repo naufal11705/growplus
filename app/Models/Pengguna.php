@@ -46,9 +46,9 @@ class Pengguna extends Authenticatable
         return $this->hasOne(OrangTua::class, 'pengguna_id', 'pengguna_id');
     }
 
-    public function penggunaTantangans()
+    public function anakTantangans()
     {
-        return $this->hasMany(PenggunaTantangan::class, 'pengguna_id');
+        return $this->hasMany(AnakTantangan::class, 'anak_id');
     }
 
     public function claims()
