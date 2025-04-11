@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Fase;
 
 class FaseResource extends JsonResource
 {
@@ -16,6 +17,8 @@ class FaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $additionalData = $this->additional['anak'] ?? null;
+
         return [
             'fase_id' => $this->fase_id,
             'judul' => $this->judul,
@@ -26,122 +29,207 @@ class FaseResource extends JsonResource
                 'tantangan_id' => $tantangan->tantangan_id,
                 'activity' => $tantangan->activity,
             ])->toArray(),
-            'benefits' => array_values(array_filter(preg_split('/(?<=\.)\s+/', $this->benefits) ?: [])),
+            'benefits' => array_values(array_filter(preg_split('/(?<=\.)\s+/', $this->benefits ?? '') ?: [])),
             'status' => $this->status,
-            'progress' => $this->calculateProgress(),
-            'durasi' => $this->durasi,
+            'progress' => $this->calculateProgress($additionalData),
+            'durasi' => (int) $this->durasi, // Pastikan durasi dikembalikan sebagai integer
+            'deadline' => $this->calculateDeadline($additionalData),
+            'anak' => $additionalData ? [
+                'anak_id' => $additionalData->anak_id,
+                'nama' => $additionalData->nama_anak ?? null,
+                'sudah_lahir' => $additionalData->sudah_lahir,
+                'tanggal_lahir' => $additionalData->sudah_lahir && $additionalData->tanggal_lahir
+                    ? \Carbon\Carbon::parse($additionalData->tanggal_lahir)->format('Y-m-d')
+                    : null,
+                'tanggal_terakhir_menstruasi' => !$additionalData->sudah_lahir && $additionalData->tanggal_terakhir_menstruasi
+                    ? \Carbon\Carbon::parse($additionalData->tanggal_terakhir_menstruasi)->format('Y-m-d')
+                    : null,
+            ] : null,
         ];
     }
 
-    public function calculateProgress()
+    /**
+     * Menghitung progress berdasarkan data anak dan urutan fase.
+     */
+    public function calculateProgress($anakData = null)
     {
         if (!auth()->check()) {
             return 0;
         }
 
-        $penggunaId = auth()->user()->pengguna_id;
-        $anak = request()->has('anak') ? request()->get('anak') : null;
-
-        // For the progress based on deadline
-        $startDate = $this->getStartDate($anak);
-        if (!$startDate) {
+        $baseStartDate = $this->getBaseStartDate($anakData);
+        if (!$baseStartDate) {
             return 0;
         }
 
-        $deadlineDays = $this->durasi;
+        $phaseStartDate = $this->getPhaseStartDate($baseStartDate);
+        if (!$phaseStartDate) {
+            return 0;
+        }
+
+        $deadlineDays = (int) $this->durasi; // Konversi ke integer
+        if ($deadlineDays <= 0) {
+            return 0;
+        }
+
         $now = now();
+        $daysPassedSincePhaseStart = $phaseStartDate->diffInDays($now);
 
-        // Calculate days passed since start date
-        $daysPassed = $startDate->diffInDays($now);
+        if ($now->lessThan($phaseStartDate)) {
+            return 0;
+        }
 
-        // If days passed is greater than deadline, progress is 100%
-        if ($daysPassed >= $deadlineDays) {
+        if ($daysPassedSincePhaseStart >= $deadlineDays) {
             return 100;
         }
 
-        // Calculate progress as percentage of days passed over deadline days
-        return (int) (($daysPassed / $deadlineDays) * 100);
+        $progress = (int) (($daysPassedSincePhaseStart / $deadlineDays) * 100);
+        return $progress;
     }
 
-    public function calculateDeadline()
+    /**
+     * Menghitung deadline berdasarkan data anak dan urutan fase.
+     */
+    public function calculateDeadline($anakData = null)
     {
-        $anak = request()->has('anak') ? request()->get('anak') : null;
-        $startDate = $this->getStartDate($anak);
-
-        if (!$startDate) {
+        $baseStartDate = $this->getBaseStartDate($anakData);
+        if (!$baseStartDate) {
             return null;
         }
 
-        return $startDate->addDays($this->durasi)->format('Y-m-d');
-    }
-
-    private function getStartDate($anak = null)
-    {
-        // If we have specific anak data passed
-        if ($anak && isset($anak['anak_id'])) {
-            return $this->getStartDateFromAnakId($anak['anak_id']);
+        $phaseStartDate = $this->getPhaseStartDate($baseStartDate);
+        if (!$phaseStartDate) {
+            return null;
         }
 
-        // Otherwise try to use the authenticated user's child data
+        $deadlineDays = (int) $this->durasi; // Konversi ke integer
+        if ($deadlineDays <= 0) {
+            return null;
+        }
+
+        $deadline = $phaseStartDate->copy()->addDays($deadlineDays);
+
+        return $deadline->format('Y-m-d');
+    }
+
+    /**
+     * Mendapatkan base start date dari data anak.
+     */
+    private function getBaseStartDate($anakData = null)
+    {
+        if ($anakData && isset($anakData->anak_id)) {
+
+            return $this->getStartDateFromAnakData($anakData);
+        }
+
+        $anakFromRequest = request()->has('anak') ? request()->get('anak') : null;
+        if ($anakFromRequest && isset($anakFromRequest['anak_id'])) {
+
+            return $this->getStartDateFromAnakId($anakFromRequest['anak_id']);
+        }
+
         if (auth()->check() && auth()->user()->orangtua) {
             $anakList = auth()->user()->orangtua->anak;
             if ($anakList && $anakList->count() > 0) {
                 $firstAnak = $anakList->first();
+
                 return $this->getStartDateFromAnakData($firstAnak);
             }
         }
 
+
         return null;
     }
 
+    /**
+     * Mendapatkan start date spesifik untuk fase ini.
+     */
+    private function getPhaseStartDate($baseStartDate)
+    {
+        if (!$baseStartDate) {
+            return null;
+        }
+
+        // Hitung total durasi fase sebelumnya
+        $previousPhasesDuration = Fase::where('fase_id', '<', $this->fase_id)->sum('durasi');
+        // Pastikan $previousPhasesDuration adalah integer
+        $previousPhasesDuration = (int) $previousPhasesDuration;
+
+
+
+        $phaseStartDate = $baseStartDate->copy()->addDays($previousPhasesDuration);
+
+
+        return $phaseStartDate;
+    }
+
+    /**
+     * Mendapatkan start date dari anak_id.
+     */
     private function getStartDateFromAnakId($anakId)
     {
         $anakRepository = app(AnakRepositoryInterface::class);
         $anak = $anakRepository->getAnakById($anakId);
         if (!$anak) {
+
             return null;
         }
 
         return $this->getStartDateFromAnakData($anak);
     }
 
+    /**
+     * Mendapatkan start date dari data anak.
+     */
     private function getStartDateFromAnakData($anak)
     {
         if (!$anak) {
+
             return null;
         }
 
-        // If child is born, use birth date
         if ($anak->sudah_lahir && $anak->tanggal_lahir) {
-            return \Carbon\Carbon::parse($anak->tanggal_lahir);
+            $startDate = \Carbon\Carbon::parse($anak->tanggal_lahir);
+
+            return $startDate;
         }
 
-        // If child is not born, use last menstruation date
         if (!$anak->sudah_lahir && $anak->tanggal_terakhir_menstruasi) {
-            return \Carbon\Carbon::parse($anak->tanggal_terakhir_menstruasi);
+            $startDate = \Carbon\Carbon::parse($anak->tanggal_terakhir_menstruasi);
+
+            return $startDate;
         }
 
-        // Fallback to first tantangan completion date if available
         $firstTantangan = $this->getFirstCompletedTantangan();
         if ($firstTantangan) {
-            return \Carbon\Carbon::parse($firstTantangan->created_at);
+            $startDate = \Carbon\Carbon::parse($firstTantangan->created_at);
+
+            return $startDate;
         }
+
 
         return null;
     }
 
+    /**
+     * Mendapatkan tantangan pertama yang selesai.
+     */
     private function getFirstCompletedTantangan()
     {
         if (!auth()->check()) {
+
             return null;
         }
 
         $anakTantanganRepository = app(AnakTantanganRepositoryInterface::class);
         $tantanganIds = $this->tantangans->pluck('tantangan_id')->toArray();
 
-        return $anakTantanganRepository->getFirstCompletedTantangan(
+        $firstTantangan = $anakTantanganRepository->getFirstCompletedTantangan(
             auth()->user()->pengguna_id,
             $tantanganIds
         );
+
+
+        return $firstTantangan;
     }
 }
