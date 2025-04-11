@@ -38,6 +38,7 @@ export const fases: Fase[] = [
             "Membangun Kebiasaan Positif Sejak Dini",
         ],
         progress: 60,
+        is_anak_required: false,
         status: 1,
     },
     {
@@ -64,6 +65,7 @@ export const fases: Fase[] = [
         ],
         benefits: ["Persiapan Mental dan Emosional"],
         progress: 80,
+        is_anak_required: false,
         status: 0,
     },
     {
@@ -90,6 +92,7 @@ export const fases: Fase[] = [
         ],
         benefits: ["Persiapan Mental dan Emosional"],
         progress: 80,
+        is_anak_required: false,
         status: 0,
     },
     {
@@ -116,6 +119,7 @@ export const fases: Fase[] = [
         ],
         benefits: ["Persiapan Mental dan Emosional"],
         progress: 20,
+        is_anak_required: true,
         status: 0,
     },
     {
@@ -142,6 +146,7 @@ export const fases: Fase[] = [
         ],
         benefits: ["Persiapan Mental dan Emosional"],
         progress: 100,
+        is_anak_required: true,
         status: 0,
     },
 ];
