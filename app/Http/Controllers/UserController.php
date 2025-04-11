@@ -71,46 +71,55 @@ class UserController extends Controller
         ]);
     }
 
-    public function tantangan($anak_id = null)
+    public function tantangan($id = null)
     {
         $fases = $this->faseRepository->getAllFase()->load('tantangans');
-        $tingkat_ekonomi = auth()->user()->orangtua->tingkat_ekonomi;
+        $orangtua = auth()->user()->orangtua;
+        $tingkat_ekonomi = $orangtua->tingkat_ekonomi;
 
+        // Map phases and filter tantangans by tingkat_ekonomi
         $filteredFases = $fases->map(function ($fase) use ($tingkat_ekonomi) {
-            $filteredTantangans = $fase->tantangans->where('tingkat_ekonomi', $tingkat_ekonomi)->values();
             $fase->setRelation(
                 'tantangans',
-                $filteredTantangans
+                $fase->tantangans->where('tingkat_ekonomi', $tingkat_ekonomi)->values()
             );
             return $fase;
+        })->filter(function ($fase) {
+            // Only include phases that have tantangans after filtering
+            return $fase->tantangans->isNotEmpty();
         });
 
-        $anak = null;
-        if ($anak_id) {
-            $anak = $this->anakRepository->getAnakById($anak_id);
-        }
+        $anak = $this->anakRepository->getAllAnaks()->where('orangtua_id', $orangtua->orangtua_id);
 
-        // Fix: Pass the request() to toArray(), and use additional() for extra data
         return Inertia::render('User/Tantangan', [
-            'fases' => FaseResource::collection($filteredFases)->additional(['anak' => $anak])->toArray(request()),
+            'fases' => FaseResource::collection($filteredFases)->toArray(request()),
             'tingkatEkonomi' => $tingkat_ekonomi,
-            'anak' => auth()->user()->orangtua->anak->get(),
+            'anak' => $anak,
+            'selectedAnak' => $id,
         ]);
     }
 
-    public function showTantangan($tantangan_id, $anak_id)
+    public function showTantangan($fase_id, $anak_id)
     {
-        $fase = $this->faseRepository->getFaseById($tantangan_id)->load('tantangans');
+        $fase = $this->faseRepository->getFaseById($fase_id)->load('tantangans');
+        $tingkat_ekonomi = auth()->user()->orangtua->tingkat_ekonomi;
 
         if ($fase) {
-            $filteredTantangans = $fase->tantangans->where('tingkat_ekonomi', auth()->user()->orangtua->tingkat_ekonomi)->values();
-            $fase->setRelation('tantangans', $filteredTantangans);
+            $fase->setRelation(
+                'tantangans',
+                $fase->tantangans->where('tingkat_ekonomi', $tingkat_ekonomi)->values()
+            );
         }
 
-        $tantangansDone = $this->anakTantanganRepository->getAnakTantangansByAnakId($anak_id);
+        $anak = $this->anakRepository->getAnakById($anak_id);
+        $tantangansDone = $anak_id ? $this->anakTantanganRepository->getAnakTantangansByAnakId($anak_id) : [];
+
         return Inertia::render('User/DetailTantangan', [
-            'fase' => $fase ? (new FaseResource($fase))->additional(['anak' => $this->anakRepository->getAnakById($anak_id)])->toArray(request()) : null,
+            'fase' => $fase && $fase->tantangans->isNotEmpty()
+                ? (new FaseResource($fase))->toArray(request())
+                : null,
             'tantangansDone' => $tantangansDone,
+            'anak' => $anak,
             'anak_id' => $anak_id,
         ]);
     }
@@ -144,6 +153,7 @@ class UserController extends Controller
             'orangtua.tempat_lahir' => 'required|string|max:255',
             'orangtua.tanggal_lahir' => 'required|date',
             'orangtua.golongan_darah' => 'required|string|max:3',
+            'orangtua.jenis_kelamin' => 'required|string|max:11',
             'orangtua.alamat' => 'required|string',
             'orangtua.kecamatan' => 'required|string',
             'orangtua.kabupaten' => 'required|string',
@@ -165,6 +175,9 @@ class UserController extends Controller
             'anak.*.golongan_darah' => 'required_with:anak|string|max:3',
             'anak.*.berat_badan' => 'required_with:anak|integer',
             'anak.*.tinggi_badan' => 'required_with:anak|integer',
+            'anak.*.jenis_kelamin' => 'required_with:anak|string|max:255',
+            'anak.*.sudah_lahir' => 'required_with:anak|tinyint',
+            'anak.*.tanggal_terakhir_menstruasi' => 'required_with:anak|date',
         ]);
 
         $penghasilan = $validatedData['orangtua']['penghasilan'];

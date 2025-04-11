@@ -51,7 +51,7 @@ class ProfileAnakController extends Controller
             $validatedData = $request->validated();
 
             $this->anakRepository->createAnak($validatedData);
-    
+
             return redirect()->route('user.profil')->with('success', 'Data berhasil ditambahkan.');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Data gagal ditambahkan.');
@@ -72,13 +72,13 @@ class ProfileAnakController extends Controller
             'children.*.berat_badan' => ['required', 'integer'],
             'children.*.tinggi_badan' => ['required', 'integer'],
         ]);
-    
+
         foreach ($validatedData['children'] as $child) {
             $this->anakRepository->createAnak(array_merge($child, [
                 'orangtua_id' => $validatedData['orangtua_id'],
             ]));
         }
-    
+
         return redirect()->route('user.profil');
     }
 
@@ -110,7 +110,7 @@ class ProfileAnakController extends Controller
             $validatedData = $request->validated();
 
             $this->anakRepository->updateAnak($id, $validatedData);
-    
+
             return redirect()->route('user.profil')->with('success', 'Data berhasil diperbarui.');;
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Data gagal diperbarui.');
@@ -129,5 +129,4 @@ class ProfileAnakController extends Controller
     {
         return Inertia::render('User/PerhitunganStunting');
     }
-
 }

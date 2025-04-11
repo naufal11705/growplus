@@ -1,23 +1,25 @@
 import TantanganCards from "@/Components/Widget/Tantangan_Card";
-import Tabs from "@/Components/Widget/Tabs/ChallengeTabs"
+import Tabs from "@/Components/Widget/Tabs/ChallengeTabs";
 import Layout from "@/Layouts/Layout";
 import { Fase } from "@/types/fase";
 import { Anak } from "@/types/anak";
 import React, { useState, useEffect } from "react";
+import { router } from "@inertiajs/react";
 
 interface FaseCardsProps {
     fases: Fase[];
-    hasAnak: boolean;
     anak: Anak[];
+    selectedAnak: number | null; // From controller
 }
 
-const Forum: React.FC<FaseCardsProps> = ({ fases, hasAnak, anak }) => {
-    // Hitung fase yang sudah di-unlock
+const Forum: React.FC<FaseCardsProps> = ({ fases, anak, selectedAnak }) => {
+    // Calculate unlocked phases
     const unlockedFaseIds: number[] = [];
     for (let i = 0; i < fases.length; i++) {
         const fase = fases[i];
         unlockedFaseIds.push(fase.fase_id);
-        if (fase.progress < 100 || (fase.is_anak_required != true && hasAnak != true)) break;
+        // Assuming is_anak_required implies anak must exist
+        if (fase.progress < 100 || (fase.is_anak_required && anak.length === 0)) break;
     }
 
     const unlockedFases = fases.filter(fase =>
@@ -28,13 +30,30 @@ const Forum: React.FC<FaseCardsProps> = ({ fases, hasAnak, anak }) => {
         !unlockedFaseIds.includes(fase.fase_id) && fase.progress === 0
     );
 
-    const [selectedAnakId, setSelectedAnakId] = useState(anak[0]?.anak_id || "");
+    // Initialize selectedAnakId with selectedAnak from controller, fallback to first anak or empty string
+    const [selectedAnakId, setSelectedAnakId] = useState<string>(
+        selectedAnak ? selectedAnak.toString() : anak[0]?.anak_id?.toString() || ""
+    );
 
+    // Update selectedAnakId if anak or selectedAnak changes
     useEffect(() => {
-        if (anak.length > 0) {
-          setSelectedAnakId(anak[0].anak_id);
+        if (selectedAnak) {
+            setSelectedAnakId(selectedAnak.toString());
+        } else if (anak.length > 0) {
+            setSelectedAnakId(anak[0].anak_id.toString());
+        } else {
+            setSelectedAnakId("");
         }
-      }, [anak]);      
+    }, [anak, selectedAnak]);
+
+    // Handle dropdown change and navigate to tantangan/{id}
+    const handleAnakChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const anakId = e.target.value;
+        setSelectedAnakId(anakId);
+        if (anakId) {
+            router.get(`/tantangan/${anakId}`);
+        }
+    };
 
     return (
         <Layout>
@@ -47,14 +66,14 @@ const Forum: React.FC<FaseCardsProps> = ({ fases, hasAnak, anak }) => {
                         </p>
                         {/* Pilih Anak */}
                         <div className="mt-5">
-                            <label htmlFor="orangtua_id" className="block mb-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="anak_id" className="block mb-2 text-sm font-medium text-gray-900">
                                 Pilih Anak
                             </label>
                             <select
-                                id="orangtua_id"
-                                name="orangtua_id"
+                                id="anak_id"
+                                name="anak_id"
                                 value={selectedAnakId}
-                                onChange={(e) => setSelectedAnakId(Number(e.target.value))}
+                                onChange={handleAnakChange}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                                 required
                             >
