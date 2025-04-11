@@ -61,7 +61,7 @@ class FaseResource extends JsonResource
     /**
      * Calculate progress based on anak data.
      */
-    protected function calculateProgress($anak = null): int
+    public function calculateProgress($anak = null): int
     {
         if (!$anak || !isset($anak->anak_id)) {
             return 0;
