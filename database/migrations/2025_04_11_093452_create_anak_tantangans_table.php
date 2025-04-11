@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('anak_tantangans', callback: function (Blueprint $table) {
             $table->unsignedBigInteger('anak_id')->index();
             $table->unsignedBigInteger('tantangan_id')->index();
+            $table->string('gambar_url')->nullable();
             $table->date('tanggal_selesai')->default(now());
             $table->timestamps();
 
