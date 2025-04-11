@@ -10,10 +10,23 @@ interface PlaygroundProps {
 }
 
 export default function Playground({ geminiApiKey }: PlaygroundProps) {
-  const [activeTab, setActiveTab] = useState<"stunting-risk" | "future-simulation" | "generate-name">("stunting-risk");
+  // Define the Feature type explicitly
+  type Feature = "stunting-risk" | "future-simulation" | "generate-name";
 
-  const { result, loading, error, sendPrompt } = usePlayground(geminiApiKey);
+  // Update the useState type
+  const [activeTab, setActiveTab] = useState<Feature>("stunting-risk");
 
+  // Assuming usePlayground hook expects a Feature type for the second argument of sendPrompt
+  interface PlaygroundResult {
+    result: string | null;
+    loading: boolean;
+    error: string | null;
+    sendPrompt: (prompt: string, feature: Feature) => void;
+  }
+
+  const { result, loading, error, sendPrompt } = usePlayground(geminiApiKey) as PlaygroundResult;
+
+  // Rest of your state declarations remain unchanged
   const [stuntingForm, setStuntingForm] = useState({
     age: "",
     weight: "",
@@ -39,6 +52,7 @@ export default function Playground({ geminiApiKey }: PlaygroundProps) {
     syllables: "",
   });
 
+  // Form change handlers remain unchanged
   const handleStuntingFormChange = (field: string, value: string) => {
     setStuntingForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -51,6 +65,7 @@ export default function Playground({ geminiApiKey }: PlaygroundProps) {
     setNameForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Submit handlers remain unchanged
   const handleSubmitStuntingRisk = (e: FormEvent) => {
     e.preventDefault();
     if (!geminiApiKey) {
@@ -99,7 +114,7 @@ export default function Playground({ geminiApiKey }: PlaygroundProps) {
       Syllables: ${nameForm.syllables || "Any"}
       Provide up to 10 names with their meanings and origins.
     `;
-    sendPrompt(prompt, "generate-name"); // Now valid with updated Feature type
+    sendPrompt(prompt, "generate-name");
   };
 
   // List of countries for the origin dropdown
