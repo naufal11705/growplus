@@ -125,4 +125,8 @@ Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
 });
 
+Route::get('/petugas/chat', function () {
+    return Inertia::render('Petugas/Chat');
+});
+
 require __DIR__ . '/auth.php';
