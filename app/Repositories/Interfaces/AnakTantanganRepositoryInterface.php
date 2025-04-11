@@ -11,4 +11,5 @@ interface AnakTantanganRepositoryInterface
     public function updateAnakTantangans($id, array $data);
     public function deleteAnakTantangans(array $data);
     public function countTotalPoints($id);
+    public function getFirstCompletedTantangan($anakId, array $tantanganId);
 }

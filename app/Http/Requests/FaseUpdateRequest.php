@@ -19,6 +19,7 @@ class FaseUpdateRequest extends FormRequest
             'benefits' => ['required', 'string'],
             'banner' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
             'progress' => ['required', 'string'],
+            'durasi' => ['required', 'integer'],
             'is_anak_required' => ['required', 'boolean'],
             'status' => ['required', 'boolean'],
         ];

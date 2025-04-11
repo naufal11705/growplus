@@ -21,7 +21,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'durasi' => 30,
+                'durasi' => 90,
                 'is_anak_required' => 0,
                 'status' => 1
             ],
@@ -31,7 +31,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'durasi' => 30,
+                'durasi' => 90,
                 'is_anak_required' => 0,
                 'status' => 0
             ],
@@ -41,7 +41,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'durasi' => 30,
+                'durasi' => 90,
                 'is_anak_required' => 0,
                 'status' => 0
             ],
@@ -51,7 +51,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'durasi' => 30,
+                'durasi' => 180,
                 'is_anak_required' => 1,
                 'status' => 0
             ],
@@ -61,10 +61,20 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
-                'durasi' => 30,
+                'durasi' => 180,
                 'is_anak_required' => 1,
                 'status' => 0
             ],
+            [
+                'judul' => 'Usia 4-5 Tahun',
+                'deskripsi' => 'Memasuki usia 4-5 tahun, si kecil semakin aktif dan penasaran dengan dunia di sekitarnya. Dalam tantangan harian ini, Anda akan diajak untuk mendukung eksplorasi dan pembelajaran si kecil dengan cara yang menyenangkan. Mulai dari aktivitas fisik, permainan edukatif, hingga pengenalan konsep dasar. Setiap hari, Anda akan mendapatkan tugas menarik seperti bermain di luar ruangan, membaca buku bersama, atau melakukan eksperimen sederhana. Dengan setiap tantangan, Anda membantu si kecil mengembangkan keterampilan sosial, motorik, dan kognitifnya. 🌟 Bersama-sama, kita ciptakan pengalaman belajar yang tak terlupakan! 💛',
+                'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
+                'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
+                'progress' => 0,
+                'durasi' => 365,
+                'is_anak_required' => 1,
+                'status' => 0
+            ]
         ];
 
         foreach ($data as $fase) {
