@@ -24,6 +24,8 @@ class Anak extends Model
         'berat_badan',
         'tinggi_badan',
         'jenis_kelamin',
+        'sudah_lahir',
+        'tanggal_terakhir_menstruasi',
     ];
 
     public function orangtua()

@@ -41,7 +41,9 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', HomeController::class)->name('home');
-
+Route::get('/playground', function () {
+    return Inertia::render('User/Playground');
+});
 Route::middleware(RedirectIfAuthenticated::class)->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
