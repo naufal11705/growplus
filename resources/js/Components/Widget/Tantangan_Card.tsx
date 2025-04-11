@@ -5,9 +5,10 @@ interface TantanganCardsProps {
   fases: Fase[];
   gridCols?: string;
   unlockedFaseIds?: number[];
+  anakId?: string | number;
 }
 
-export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4", unlockedFaseIds = [] }: TantanganCardsProps) {
+export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4", unlockedFaseIds = [], anakId }: TantanganCardsProps) {
   return (
     <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-2 ${gridCols} w-full`}>
       {fases.map((fase, index) => {
@@ -90,7 +91,7 @@ export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4", unl
               </div>
               <div className="pt-4">
                 {isUnlocked ? (
-                  <a href={`/tantangan/${fase.fase_id}`} className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5 w-full">
+                  <a href={`/tantangan/${fase.fase_id}/${anakId}`} className="group flex items-center justify-center space-x-2 rounded-xl bg-white hover:bg-gray-50 border-gray-100 border-2 py-2.5 w-full">
                     <button className="flex space-x-2">
                       <span className="text-gray-900 text-sm font-semibold">
                         {fase.progress === 100 ? "Share Achievement" : "Selengkapnya"}
@@ -132,7 +133,7 @@ export default function TantanganCards({ fases, gridCols = "xl:grid-cols-4", unl
                     </button>
                   </a>
                 ) : showAcceptChallenge ? (
-                  <a href={`/tantangan/${fase.fase_id}`} className="group flex items-center justify-center space-x-2 rounded-xl bg-pinky hover:bg-dark-pinky text-white py-2.5 w-full">
+                  <a href={`/tantangan/${fase.fase_id}/${anakId}`} className="group flex items-center justify-center space-x-2 rounded-xl bg-pinky hover:bg-dark-pinky text-white py-2.5 w-full">
                     <button className="flex space-x-2">
                       <span className="text-sm font-semibold">Terima Tantangan</span>
                       <svg

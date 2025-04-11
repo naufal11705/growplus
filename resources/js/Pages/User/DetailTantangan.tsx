@@ -56,8 +56,8 @@ export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTa
         };
 
         // Hanya lakukan POST request untuk menandai tantangan selesai
-        router.post('/pengguna-tantangan', {
-            pengguna_id: auth.user.pengguna_id,
+        router.post('/anak-tantangan', {
+            anak_id: props.anak_id,
             tantangan_id: tantanganId,
         }, requestConfig);
     };

@@ -88,19 +88,20 @@ class UserController extends Controller
         return Inertia::render('User/Tantangan', [
             'fases' => FaseResource::collection($filteredFases)->toArray(request()),
             'tingkatEkonomi' => $tingkat_ekonomi,
+            'anak' => auth()->user()->orangtua->anak->get(),
         ]);
     }
 
-    public function showTantangan($id)
+    public function showTantangan($tantangan_id, $anak_id)
     {
-        $fase = $this->faseRepository->getFaseById($id)->load('tantangans');
+        $fase = $this->faseRepository->getFaseById($tantangan_id)->load('tantangans');
 
         if ($fase) {
             $filteredTantangans = $fase->tantangans->where('tingkat_ekonomi', auth()->user()->orangtua->tingkat_ekonomi)->values();
             $fase->setRelation('tantangans', $filteredTantangans);
         }
 
-        $tantangansDone = $this->anakTantanganRepository->getAnakTantangansByAnakId(auth()->user()->pengguna_id);
+        $tantangansDone = $this->anakTantanganRepository->getAnakTantangansByAnakId($anak_id);
         return Inertia::render('User/DetailTantangan', [
             'fase' => $fase ? (new FaseResource($fase))->toArray(request()) : null,
             'tantangansDone' => $tantangansDone
