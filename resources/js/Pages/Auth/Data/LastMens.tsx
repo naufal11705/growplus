@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-interface LastMenstrualDateFormProps {
+interface LastMensProps {
     onNext: (data: { lastMenstrualDate: string }) => void;
     onBackToChildForm: () => void;
 }
 
-export default function LastMenstrualDateForm({ onNext, onBackToChildForm }: LastMenstrualDateFormProps) {
+export default function LastMens({ onNext, onBackToChildForm }: LastMensProps) {
     const [lastMenstrualDate, setLastMenstrualDate] = useState("");
     const [error, setError] = useState("");
 

@@ -71,7 +71,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function tantangan()
+    public function tantangan($anak_id = null)
     {
         $fases = $this->faseRepository->getAllFase()->load('tantangans');
         $tingkat_ekonomi = auth()->user()->orangtua->tingkat_ekonomi;
@@ -85,8 +85,14 @@ class UserController extends Controller
             return $fase;
         });
 
+        $anak = null;
+        if ($anak_id) {
+            $anak = $this->anakRepository->getAnakById($anak_id);
+        }
+
+        // Fix: Pass the request() to toArray(), and use additional() for extra data
         return Inertia::render('User/Tantangan', [
-            'fases' => FaseResource::collection($filteredFases)->toArray(request()),
+            'fases' => FaseResource::collection($filteredFases)->additional(['anak' => $anak])->toArray(request()),
             'tingkatEkonomi' => $tingkat_ekonomi,
             'anak' => auth()->user()->orangtua->anak->get(),
         ]);
