@@ -10,5 +10,6 @@ export interface Fase {
     tantangans: Tantangan[];
     benefits: string[];
     progress: number;
+    is_anak_required: boolean;
     status: number;
 }
