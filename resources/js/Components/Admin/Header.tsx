@@ -1,6 +1,21 @@
 import Notification from "@/Components/Widget/Notification";
+import { usePage } from "@inertiajs/react";
 
 export default function Header({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: () => void }) {
+    const { auth } = usePage().props as {
+            auth: {
+                user: {
+                    id: number;
+                    orangtua?: {
+                        kecamatan?: string
+                    }
+                } | null
+            }
+        };
+
+        console.log(auth);
+        const kecamatan = auth.user?.orangtua?.kecamatan || '';
+        console.log("Kecamatan:", kecamatan);
     return (
         <nav className="fixed top-0 z-50 w-full bg-gray-50 border-b border-gray-200">
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -33,7 +48,7 @@ export default function Header({ isOpen, toggleSidebar }: { isOpen: boolean, tog
                         </a>
                     </div>
                     <div className="flex items-center">
-                        <Notification domUser="Malang" />
+                        <Notification kecamatan={kecamatan} />
                         <div className="flex items-center ms-3">
                             <div>
                                 <button

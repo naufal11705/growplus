@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface DataAnakProps {
     onNext: (data: any) => void;
@@ -16,6 +16,7 @@ interface ChildData {
     golongan_darah: string;
     berat_badan: string;
     tinggi_badan: string;
+    jenis_kelamin: string;
 }
 
 type ValidationErrors = Record<string, string>;
@@ -29,10 +30,12 @@ const initialChildData: ChildData = {
     golongan_darah: "Pilih",
     berat_badan: "",
     tinggi_badan: "",
+    jenis_kelamin: "Pilih",
 };
 
 const dropdownOptions: Record<string, string[]> = {
     golongan_darah: ["AB", "A", "B", "O"],
+    jenis_kelamin: ["Laki-laki", "Perempuan"],
 };
 
 export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialData = [] }: DataAnakProps) {
@@ -55,11 +58,11 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         return initialErrors;
     });
     const [dropdownStates, setDropdownStates] = useState<{
-        [key: string]: { isBloodTypeOpen: boolean };
+        [key: string]: { isBloodTypeOpen: boolean; isGenderOpen: boolean };
     }>(() => {
-        const initialDropdowns: { [key: string]: { isBloodTypeOpen: boolean } } = {};
+        const initialDropdowns: { [key: string]: { isBloodTypeOpen: boolean; isGenderOpen: boolean } } = {};
         for (let i = 1; i <= (initialData.length || 1); i++) {
-            initialDropdowns[i.toString()] = { isBloodTypeOpen: false };
+            initialDropdowns[i.toString()] = { isBloodTypeOpen: false, isGenderOpen: false };
         }
         return initialDropdowns;
     });
@@ -71,25 +74,33 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         setChildrenCount(initialData.length || 1);
     }, [initialData]);
 
-    const toggleDropdown = (childId: string) => {
+    const toggleDropdown = (childId: string, field: string) => {
         setDropdownStates((prev) => ({
             ...prev,
-            [childId]: { isBloodTypeOpen: !prev[childId].isBloodTypeOpen },
+            [childId]: {
+                ...prev[childId],
+                ...(field === "golongan_darah" && { isBloodTypeOpen: !prev[childId].isBloodTypeOpen }),
+                ...(field === "jenis_kelamin" && { isGenderOpen: !prev[childId].isGenderOpen }),
+            },
         }));
     };
 
-    const handleSelect = (childId: string, option: string) => {
+    const handleSelect = (childId: string, field: string, option: string) => {
         setFormData((prev) => ({
             ...prev,
-            [childId]: { ...prev[childId], golongan_darah: option },
+            [childId]: { ...prev[childId], [field]: option },
         }));
         setDropdownStates((prev) => ({
             ...prev,
-            [childId]: { isBloodTypeOpen: false },
+            [childId]: {
+                ...prev[childId],
+                ...(field === "golongan_darah" && { isBloodTypeOpen: false }),
+                ...(field === "jenis_kelamin" && { isGenderOpen: false }),
+            },
         }));
         setErrors((prev) => ({
             ...prev,
-            [childId]: { ...prev[childId], golongan_darah: "" },
+            [childId]: { ...prev[childId], [field]: "" },
         }));
     };
 
@@ -120,7 +131,7 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         }));
         setDropdownStates((prev) => ({
             ...prev,
-            [newCount.toString()]: { isBloodTypeOpen: false },
+            [newCount.toString()]: { isBloodTypeOpen: false, isGenderOpen: false },
         }));
         setErrors((prev) => ({
             ...prev,
@@ -176,6 +187,7 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         golongan_darah: (value) => validateDropdown(value, "Golongan darah"),
         berat_badan: (value) => validateNonNegativeNumber(value, "Berat badan"),
         tinggi_badan: (value) => validateNonNegativeNumber(value, "Tinggi badan"),
+        jenis_kelamin: (value) => validateDropdown(value, "Jenis kelamin"),
     };
 
     const validateForm = (): boolean => {
@@ -211,10 +223,10 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
             const submissionData = isNotYetDelivered
                 ? { lastMenstrualDate }
                 : Object.values(formData).map((data) => ({
-                      ...data,
-                      berat_badan: parseInt(data.berat_badan) || 0,
-                      tinggi_badan: parseInt(data.tinggi_badan) || 0,
-                  }));
+                    ...data,
+                    berat_badan: parseInt(data.berat_badan) || 0,
+                    tinggi_badan: parseInt(data.tinggi_badan) || 0,
+                }));
             console.log("Submission data:", submissionData); // Debug log
             onNext(submissionData);
         } else {
@@ -251,7 +263,7 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         setChildrenCount(1);
         setFormData({ "1": { ...initialChildData } });
         setErrors({ "1": {} });
-        setDropdownStates({ "1": { isBloodTypeOpen: false } });
+        setDropdownStates({ "1": { isBloodTypeOpen: false, isGenderOpen: false } });
     };
 
     const renderChildForm = (childNumber: number) => {
@@ -344,7 +356,7 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
                         <label className="block mb-2 text-sm font-medium text-gray-900">Golongan Darah</label>
                         <button
                             type="button"
-                            onClick={() => toggleDropdown(childId)}
+                            onClick={() => toggleDropdown(childId, "golongan_darah")}
                             className={`text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5 ${errors[childId]?.golongan_darah ? "border-2 border-red-500" : ""}`}
                         >
                             {data.golongan_darah}
@@ -361,7 +373,7 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    handleSelect(childId, option);
+                                                    handleSelect(childId, 'golongan_darah', option);
                                                 }}
                                                 className="flex items-center px-4 py-2 hover:bg-gray-200"
                                             >
@@ -397,6 +409,41 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
                             placeholder="Tinggi Badan"
                         />
                         {errors[childId]?.tinggi_badan && <p className="text-red-500 text-xs mt-1">{errors[childId].tinggi_badan}</p>}
+                    </div>
+                    {/* Jenis Kelamin */}
+                    <div className="w-full">
+                        <label className="block mb-2 text-sm font-medium text-gray-900">Jenis Kelamin</label>
+                        <button
+                            type="button"
+                            onClick={() => toggleDropdown(childId, "jenis_kelamin")}
+                            className={`text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5 ${errors[childId]?.jenis_kelamin ? "border-2 border-red-500" : ""}`}
+                        >
+                            {data.jenis_kelamin}
+                            <svg className={`w-2.5 h-2.5 ml-3 transform ${state.isGenderOpen ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+                        {state.isGenderOpen && (
+                            <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
+                                <ul className="py-2 text-gray-700 font-medium">
+                                    {dropdownOptions.jenis_kelamin.map((option) => (
+                                        <li key={option}>
+                                            <a
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleSelect(childId, 'jenis_kelamin', option);
+                                                }}
+                                                className="flex items-center px-4 py-2 hover:bg-gray-200"
+                                            >
+                                                {option}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {errors[childId]?.jenis_kelamin && <p className="text-red-500 text-xs mt-1">{errors[childId].jenis_kelamin}</p>}
                     </div>
                 </div>
             </div>

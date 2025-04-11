@@ -15,7 +15,7 @@ export default function Header({ isOpen, toggleSidebar }: { isOpen: boolean, tog
     };
 
     console.log(auth);
-    const kecamatan = auth?.user?.orangtua?.kecamatan;
+    const kecamatan = auth.user?.orangtua?.kecamatan || '';
     console.log("Kecamatan:", kecamatan);
 
     // useEffect(() => {

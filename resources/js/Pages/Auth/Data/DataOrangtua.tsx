@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface DataOrangtuaProps {
     onNext: (data: any) => void;
-    initialData?: any; 
+    initialData?: any;
 }
 
 interface FormData {
@@ -12,6 +12,7 @@ interface FormData {
     tempat_lahir: string;
     tanggal_lahir: string;
     golongan_darah: string;
+    jenis_kelamin: string;
     alamat: string;
     pekerjaan: string;
     penghasilan: string;
@@ -34,6 +35,7 @@ const initialFormData: FormData = {
     tempat_lahir: "",
     tanggal_lahir: "",
     golongan_darah: "Pilih",
+    jenis_kelamin: "Pilih",
     alamat: "",
     pekerjaan: "",
     penghasilan: "Pilih",
@@ -43,12 +45,13 @@ const initialFormData: FormData = {
     tanggungan_listrik: "",
     tanggungan_air: "",
     kecamatan: "",
-    kabupaten: "",  
+    kabupaten: "",
     provinsi: "",
 };
 
 const dropdownOptions: Record<string, string[]> = {
     golongan_darah: ["AB", "A", "B", "O"],
+    jenis_kelamin: ["Laki-laki", "Perempuan"],
     sumber_penghasilan: ["Gaji", "Freelance", "Usaha", "Pensiun", "Tidak Ada"],
     status_rumah: ["Milik Sendiri", "Milik Sendiri (Cicilan)", "Kontrak", "Tidak Ada"],
     penghasilan: ["500.000 - 1.000.000", "1.000.000 - 2.000.001", "2.000.001 - 3.000.000", "3.000.001 - 4.000.000", "4.000.001 - <5.000.000"],
@@ -62,6 +65,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
     const [errors, setErrors] = useState<ValidationErrors>({});
     const [dropdowns, setDropdowns] = useState({
         golongan_darah: false,
+        jenis_kelamin: false,
         sumber_penghasilan: false,
         status_rumah: false,
         penghasilan: false,
@@ -70,6 +74,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
     const toggleDropdown = (field: keyof typeof dropdowns) => {
         setDropdowns((prev) => ({
             golongan_darah: false,
+            jenis_kelamin: false,
             sumber_penghasilan: false,
             status_rumah: false,
             penghasilan: false,
@@ -108,6 +113,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
         tempat_lahir: (value) => validateRequired(value, "Tempat lahir"),
         tanggal_lahir: (value) => validateRequired(value, "Tanggal lahir"),
         golongan_darah: (value) => validateDropdown(value, "Golongan darah"),
+        jenis_kelamin: (value) => validateDropdown(value, "Jenis kelamin"),
         alamat: (value) => validateRequired(value, "Alamat"),
         pekerjaan: (value) => validateRequired(value, "Pekerjaan"),
         sumber_penghasilan: (value) => validateDropdown(value, "Sumber penghasilan"),
@@ -118,7 +124,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
         tanggungan_air: (value) => validateNonNegativeNumber(value, "Tanggungan air"),
         kecamatan: (value) => validateRequired(value, "Kecamatan"),
         kabupaten: (value) => validateRequired(value, "Kabupaten"),
-        provinsi: (value) => validateRequired(value, "Provinsi"), 
+        provinsi: (value) => validateRequired(value, "Provinsi"),
     };
 
     const validateForm = (): boolean => {
@@ -285,6 +291,42 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             {errors.golongan_darah && <p className="text-red-500 text-xs mt-1">{errors.golongan_darah}</p>}
                         </div>
 
+                        {/* Jenis Kelamin */}
+                        <div className="lg:col-span-2">
+                            <label className="block mb-2 text-sm font-medium text-gray-900">Jenis Kelamin</label>
+                            <button
+                                type="button"
+                                onClick={() => toggleDropdown("jenis_kelamin")}
+                                className={`text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5 ${errors.jenis_kelamin ? "border-2 border-red-500" : ""}`}
+                            >
+                                {formData.jenis_kelamin}
+                                <svg className={`w-2.5 h-2.5 ml-3 transform ${dropdowns.jenis_kelamin ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            {dropdowns.jenis_kelamin && (
+                                <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
+                                    <ul className="py-2 text-gray-700 font-medium">
+                                        {dropdownOptions.jenis_kelamin.map((option) => (
+                                            <li key={option}>
+                                                <a
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleSelect("jenis_kelamin", option);
+                                                    }}
+                                                    className="flex items-center px-4 py-2 hover:bg-gray-200"
+                                                >
+                                                    {option}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {errors.jenis_kelamin && <p className="text-red-500 text-xs mt-1">{errors.jenis_kelamin}</p>}
+                        </div>
+
                         {/* Alamat */}
                         <div className="lg:col-span-2">
                             <label htmlFor="alamat" className="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
@@ -298,7 +340,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             />
                             {errors.alamat && <p className="text-red-500 text-xs mt-1">{errors.alamat}</p>}
                         </div>
-                        
+
                         {/* Kecamatan */}
                         <div>
                             <label htmlFor="kecamatan" className="block mb-2 text-sm font-medium text-gray-900">Kecamatan</label>
@@ -313,7 +355,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             />
                             {errors.kecamatan && <p className="text-red-500 text-xs mt-1">{errors.kecamatan}</p>}
                         </div>
-                        
+
                         {/* Kabupaten */}
                         <div>
                             <label htmlFor="kabupaten" className="block mb-2 text-sm font-medium text-gray-900">Kabupaten</label>
@@ -328,7 +370,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             />
                             {errors.kabupaten && <p className="text-red-500 text-xs mt-1">{errors.kabupaten}</p>}
                         </div>
-                        
+
                         {/* Provinsi */}
                         <div>
                             <label htmlFor="provinsi" className="block mb-2 text-sm font-medium text-gray-900">Provinsi</label>
