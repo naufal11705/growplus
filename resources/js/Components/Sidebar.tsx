@@ -43,12 +43,12 @@ export default function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, to
                         <span className="ms-3">Tutup</span>
                     </button>
 
-                    <ul className="space-y-2 font-bold mt-5 md:mt-14">
+                    <ul className="space-y-2 font-bold mt-10 md:mt-14">
                         <li>
                             <a
                                 href="/dashboard"
                                 onClick={handleMenuClick}
-                                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
+                                className="flex items-center mt-10 p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
                             >
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75"
@@ -78,6 +78,18 @@ export default function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, to
                                     <path d="M8.597 3.2A1 1 0 0 0 7.04 4.289a3.49 3.49 0 0 1 .057 1.795 3.448 3.448 0 0 1-.84 1.575.999.999 0 0 0-.077.094c-.596.817-3.96 5.6-.941 10.762l.03.049a7.73 7.73 0 0 0 2.917 2.602 7.617 7.617 0 0 0 3.772.829 8.06 8.06 0 0 0 3.986-.975 8.185 8.185 0 0 0 3.04-2.864c1.301-2.2 1.184-4.556.588-6.441-.583-1.848-1.68-3.414-2.607-4.102a1 1 0 0 0-1.594.757c-.067 1.431-.363 2.551-.794 3.431-.222-2.407-1.127-4.196-2.224-5.524-1.147-1.39-2.564-2.3-3.323-2.788a8.487 8.487 0 0 1-.432-.287Z" />
                                 </svg>
                                 <span className="ms-3">Tantangan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/voucher"
+                                onClick={handleMenuClick}
+                                className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group"
+                            >
+                                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4 5a2 2 0 0 0-2 2v2.5a1 1 0 0 0 1 1 1.5 1.5 0 1 1 0 3 1 1 0 0 0-1 1V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a1 1 0 0 0-1-1 1.5 1.5 0 1 1 0-3 1 1 0 0 0 1-1V7a2 2 0 0 0-2-2H4Z"/>
+                                </svg>
+                                <span className="ms-3">Voucher</span>
                             </a>
                         </li>
                         <li>

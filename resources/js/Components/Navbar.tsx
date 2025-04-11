@@ -154,6 +154,9 @@ export default function Navbar() {
                         <li>
                             <a href="/artikel" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Artikel</a>
                         </li>
+                        <li>
+                            <a href="/playground" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-wine md:p-0">Playground</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -179,6 +182,9 @@ export default function Navbar() {
                     </li>
                     <li>
                         <a href="/artikel" onClick={closeMenu} className="text-gray-900 hover:text-wine">Artikel</a>
+                    </li>
+                    <li>
+                        <a href="/playground" onClick={closeMenu} className="text-gray-900 hover:text-wine">Artikel</a>
                     </li>
                     {!isLoggedIn && (
                         <li className="px-8 py-2 rounded-xl bg-wine hover:bg-dark-wine">
