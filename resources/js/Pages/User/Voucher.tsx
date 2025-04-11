@@ -13,22 +13,22 @@ import { useEffect, useState } from "react"
 
 interface BannerProps {
     totalPoints: number
-    vouchers: Voucher[]
+    vouchers?: Voucher[] // Make vouchers optional to handle undefined case
 }
 
-export default function VoucherDashboard({ totalPoints, vouchers }: BannerProps) {
+export default function VoucherDashboard({ totalPoints, vouchers = [] }: BannerProps) {
     const [userPoints, setUserPoints] = useState(totalPoints)
     const [searchQuery, setSearchQuery] = useState("")
-    const [vouchersItem, setVouchersItem] = useState(vouchers)
+    const [vouchersItem, setVouchersItem] = useState<Voucher[]>(vouchers) // Initialize with vouchers or empty array
     const [ownedVouchers, setOwnedVouchers] = useState(mockOwnedVouchers)
     const [activeTab, setActiveTab] = useState("available")
 
     useEffect(() => {
         if (searchQuery.trim() === "") {
-            setVouchersItem(vouchersItem)
+            setVouchersItem(vouchers) // Reset to original vouchers prop
             setOwnedVouchers(mockOwnedVouchers)
         } else {
-            const filteredVouchers = vouchersItem.filter(
+            const filteredVouchers = vouchers.filter(
                 (voucher) =>
                     voucher.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     voucher.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -45,7 +45,7 @@ export default function VoucherDashboard({ totalPoints, vouchers }: BannerProps)
             setVouchersItem(filteredVouchers)
             setOwnedVouchers(filteredOwnedVouchers)
         }
-    }, [searchQuery])
+    }, [searchQuery, vouchers]) // Add vouchers to dependencies
 
     const handleRedeemVoucher = (voucherId: string) => {
         const voucher = vouchers.find((v) => v.id === voucherId)
@@ -135,16 +135,16 @@ export default function VoucherDashboard({ totalPoints, vouchers }: BannerProps)
                                     exit={{ opacity: 0 }}
                                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                                 >
-                                    {vouchersItem.map((voucher) => (
-                                        <VoucherCard
-                                            key={voucher.id}
-                                            voucher={voucher}
-                                            userPoints={userPoints}
-                                            onRedeem={() => handleRedeemVoucher(voucher.id)}
-                                        />
-                                    ))}
-
-                                    {vouchersItem.length === 0 && (
+                                    {Array.isArray(vouchersItem) && vouchersItem.length > 0 ? (
+                                        vouchersItem.map((voucher) => (
+                                            <VoucherCard
+                                                key={voucher.id}
+                                                voucher={voucher}
+                                                userPoints={userPoints}
+                                                onRedeem={() => handleRedeemVoucher(voucher.id)}
+                                            />
+                                        ))
+                                    ) : (
                                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="col-span-full text-center py-12">
                                             <p className="text-gray-500 text-lg">No vouchers found matching your search.</p>
                                         </motion.div>
