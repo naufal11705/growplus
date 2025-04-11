@@ -35,6 +35,18 @@ const Forum: React.FC<FaseCardsProps> = ({ fases, hasAnak }) => {
                         <p className="text-md text-gray-400 font-medium">
                             Kerjakan challenge di bawah ini untuk tumbuh kembang anak yang optimal.
                         </p>
+                        <div className="mt-5">
+                                <label htmlFor="orangtua_id" className="block mb-2 text-sm font-medium text-gray-900">Pilih Anak</label>
+                                <select
+                                    id="orangtua_id"
+                                    name="orangtua_id"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                                    required
+                                >
+                                    <option value="">Pilih Anak</option>
+
+                                </select>
+                            </div>
                     </div>
 
                     {/* <Tabs /> */}

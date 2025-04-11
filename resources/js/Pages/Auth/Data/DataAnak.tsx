@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 interface DataAnakProps {
     onNext: (data: any) => void;
     onBack?: () => void;
-    onSkip?: () => void;
+    onNotYetDelivered?: () => void;
     initialData?: any[];
 }
 
@@ -35,7 +35,7 @@ const dropdownOptions: Record<string, string[]> = {
     golongan_darah: ["AB", "A", "B", "O"],
 };
 
-export default function DataAnak({ onNext, onBack, onSkip, initialData = [] }: DataAnakProps) {
+export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialData = [] }: DataAnakProps) {
     const [childrenCount, setChildrenCount] = useState(initialData.length || 1);
     const [formData, setFormData] = useState<{ [key: string]: ChildData }>(() => {
         if (initialData.length > 0) {
@@ -366,12 +366,15 @@ export default function DataAnak({ onNext, onBack, onSkip, initialData = [] }: D
                     <h1 className="font-bold leading-tight tracking-tight text-gray-900 text-2xl">
                         Isi Data Anak Anda ✍️
                     </h1>
-                    <button
-                        type="button" onClick={onSkip}
-                        className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
+                    {onNotYetDelivered && (
+                        <button
+                            type="button"
+                            onClick={onNotYetDelivered}
+                            className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
                         >
-                        Lewati
-                    </button>
+                            Belum Melahirkan
+                        </button>
+                    )}
                 </div>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                     {Array.from({ length: childrenCount }, (_, i) => renderChildForm(i + 1))}
