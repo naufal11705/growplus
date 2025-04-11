@@ -1,5 +1,7 @@
 import Header from '@/Components/Admin/Header';
 import Sidebar from '@/Components/Admin/Sidebar';
+import '../../css/user.css';
+
 import { useState } from 'react';
 interface LayoutProps {
     children: React.ReactNode;

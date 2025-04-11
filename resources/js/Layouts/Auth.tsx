@@ -1,3 +1,4 @@
+import '../../css/user.css';
 interface AuthProps {
     children: React.ReactNode;
 }
