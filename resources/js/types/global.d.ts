@@ -63,6 +63,4 @@ declare module "pusher-js" {
         bind(eventName: string, callback: (data: any) => void): void;
         unbind(eventName: string, callback?: (data: any) => void): void;
     }
-
-    
 }

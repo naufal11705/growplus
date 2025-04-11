@@ -29,8 +29,6 @@ declare module "laravel-echo" {
     }
 }
 
-
-
 declare global {
     interface Window {
         Echo: import("laravel-echo").default;
