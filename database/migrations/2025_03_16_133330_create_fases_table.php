@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('benefits');
             $table->string('banner');
             $table->integer('progress');
+            $table->boolean('is_anak_required');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
