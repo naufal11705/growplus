@@ -21,6 +21,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
+                'durasi' => 30,
                 'is_anak_required' => 0,
                 'status' => 1
             ],
@@ -30,6 +31,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
+                'durasi' => 30,
                 'is_anak_required' => 0,
                 'status' => 0
             ],
@@ -39,6 +41,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
+                'durasi' => 30,
                 'is_anak_required' => 0,
                 'status' => 0
             ],
@@ -48,6 +51,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
+                'durasi' => 30,
                 'is_anak_required' => 1,
                 'status' => 0
             ],
@@ -57,6 +61,7 @@ class FaseSeeder extends Seeder
                 'benefits' => 'Memastikan kesehatan ibu dan perkembangan bayi. Agar dapat dirawat dengan segera jika ditemukan kondisi yang membahayakan ibu dan bayi. ',
                 'banner' => 'https://i.ibb.co.com/KMqbPmX/brave-screenshot.png',
                 'progress' => 0,
+                'durasi' => 30,
                 'is_anak_required' => 1,
                 'status' => 0
             ],
