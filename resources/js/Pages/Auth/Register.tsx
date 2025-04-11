@@ -3,6 +3,7 @@ import Layout from "@/Layouts/Auth";
 import { useForm } from "@inertiajs/react";
 import { FormEvent } from "react";
 import Alert from "@/Components/Widget/Alert/Alert";
+import { motion } from "framer-motion"
 
 export default function Register() {
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,12 @@ export default function Register() {
             {showToast && <Alert message="Pendaftaran Berhasil!" onClose={() => setShowToast(false)} />}
             <section>
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen min-h-screen lg:py-0">
-                    <div className="w-full max-w-md mb-5 flex items-center justify-center relative">
+                    <motion.div 
+                        className="w-full max-w-md mb-5 flex items-center justify-center relative"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.6 }}
+                        >
                         <a href="/" className="absolute left-0">
                             <button type="button" className="px-5 py-3 text-base font-medium text-center inline-flex items-center text-black border border-gray-200 bg-white rounded-xl hover:bg-gray-50">
                                 <svg 
@@ -62,12 +68,22 @@ export default function Register() {
                         <a href="#" className="flex items-center text-center justify-center text-2xl font-semibold text-gray-900">
                             Grow+
                         </a>
-                    </div>
+                    </motion.div>
                     <div className="w-full bg-white rounded-2xl shadow border border-gray-200 sm:max-w-md xl:p-0">
                         <div className="p-6 space-y-4 sm:p-8">
-                            <h1 className="text-2xl font-bold text-gray-900">Daftarkan Akun Anda!</h1>
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3, delay: 0.6 }}
+                            >
+                                <h1 className="text-2xl font-bold text-gray-900">Daftarkan Akun Anda!</h1>
+                            </motion.div>
                             <form className="space-y-4" onSubmit={handleSubmit}>
-                                <div>
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >
                                     <label htmlFor="username" className="block text-sm font-medium text-gray-900">Username</label>
                                     <input
                                         type="text"
@@ -81,8 +97,12 @@ export default function Register() {
                                         required
                                     />
                                     {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
-                                </div>
-                                <div>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >
                                     <label htmlFor="nama" className="block text-sm font-medium text-gray-900">Nama Lengkap</label>
                                     <input
                                         type="text"
@@ -95,8 +115,12 @@ export default function Register() {
                                         placeholder="Nama Lengkap"
                                         required
                                     />
-                                </div>
-                                <div>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email</label>
                                     <input
                                         type="email"
@@ -110,8 +134,12 @@ export default function Register() {
                                         required
                                     />
                                     {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                                </div>
-                                <div>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                    >
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-900">Kata Sandi</label>
                                     <input
                                         type="password"
@@ -125,16 +153,28 @@ export default function Register() {
                                         required
                                     />
                                     {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-                                </div>
-                                <button
-                                    disabled={processing}
-                                    type="submit"
-                                    className="w-full text-white bg-wine hover:bg-dark-wine font-medium rounded-xl text-md px-5 py-3 text-center">
-                                    {isLoading ? "Loading..." : "Daftar"}
-                                </button>
-                                <p className="text-sm font-light text-gray-500">
-                                    Sudah Punya Akun? <a href="/login" className="font-bold text-wine hover:underline">Masuk</a>
-                                </p>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >
+                                    <button
+                                        disabled={processing}
+                                        type="submit"
+                                        className="w-full text-white bg-wine hover:bg-dark-wine font-medium rounded-xl text-md px-5 py-3 text-center">
+                                        {isLoading ? "Loading..." : "Daftar"}
+                                    </button>
+                                </motion.div >
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >    
+                                    <p className="text-sm font-light text-gray-500">
+                                        Sudah Punya Akun? <a href="/login" className="font-bold text-wine hover:underline">Masuk</a>
+                                    </p>
+                                </motion.div>
                             </form>
                         </div>
                     </div>

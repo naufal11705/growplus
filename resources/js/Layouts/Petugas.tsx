@@ -1,6 +1,8 @@
 import Header from '@/Components/Petugas/Header';
 import Sidebar from '@/Components/Petugas/Sidebar';
 import { useState } from 'react';
+import '../../css/user.css';
+
 interface LayoutProps {
     children: React.ReactNode;
 }

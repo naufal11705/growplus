@@ -4,6 +4,8 @@ import { router } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Admin";
 import FilterDropdown from "@/Components/Widget/Filter/FilterFase";
+import { Pencil, Trash2 } from "lucide-react"
+
 
 interface Fase {
     fase_id: number;
@@ -76,9 +78,23 @@ export default function Fase() {
                                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{trimText(item.benefits)}</td>
                                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><img src={`${window.location.origin}/storage/${item.banner}`} alt="Fase Banner" className="w-16 h-16 object-cover rounded-md" /></td>
                                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"><span className={getStatusClass(item.status)}>{convertStatus(item.status)}</span></td>
-                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                <a href={`/admin/fase/${item.fase_id}/edit`} className="font-medium text-wine hover:underline">Edit</a> │
-                                                <button onClick={() => handleDelete(item.fase_id)} className="font-medium text-red-500 hover:underline">Delete</button>
+                                            <td className="px-6 py-4 text-right">
+                                                <div className="flex justify-end gap-3">
+                                                    <a
+                                                        href={`/admin/fase/${item.fase_id}/edit`}
+                                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                    >
+                                                        <Pencil className="w-3.5 h-3.5" />
+                                                        <span>Edit</span>
+                                                    </a>
+                                                    <button
+                                                        onClick={() => handleDelete(item.fase_id)}
+                                                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                    >
+                                                        <Trash2 className="w-3.5 h-3.5" />
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))

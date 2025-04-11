@@ -1,5 +1,7 @@
 import Layout from "@/Layouts/Anonymous";
 import { Article } from "@/types/article";
+import "../../css/app.css"
+
 
 interface ArtikelProps {
     articles: Article[]

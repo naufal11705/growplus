@@ -1,4 +1,4 @@
-import Layout from "@/Layouts/Admin";
+import Layout from "@/Layouts/Layout";
 import { usePage } from "@inertiajs/react";
 import useCsrfToken from "@/Utils/csrfToken";
 import { router } from "@inertiajs/react";
@@ -41,7 +41,7 @@ export default function Anak() {
     
         const formData = new FormData();
         formData.append("_token", csrf_token);
-        formData.append("orangtua_id", selectedOrangTua);
+        formData.append("orangtua_id", orangtua[0].orangtua_id.toString());
     
         anakList.forEach((item, index) => {
             formData.append(`children[${index}][nama]`, e.currentTarget[`nama_${item.id}`].value);
@@ -54,7 +54,7 @@ export default function Anak() {
             formData.append(`children[${index}][tinggi_badan]`, e.currentTarget[`tinggi_badan_${item.id}`].value);
         });
     
-        router.post('/admin/anak/store_multiple', formData);
+        router.post('/profil/anak', formData);
     };
 
     return (
@@ -64,7 +64,7 @@ export default function Anak() {
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Buat Data Anak</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-                            <div className="sm:col-span-2">
+                            {/* <div className="sm:col-span-2">
                                 <label htmlFor="orangtua_id" className="block mb-2 text-sm font-medium text-gray-900">Orang Tua</label>
                                 <select
                                     id="orangtua_id"
@@ -82,7 +82,7 @@ export default function Anak() {
                                     ))}
                                 </select>
 
-                            </div>
+                            </div> */}
                             {anakList.map((item, index) => (
                                 <div key={item.id} className="sm:col-span-3 relative">
                                     <hr className="h-px my-2 bg-gray-200 border-0 sm:col-span-2" />
@@ -136,7 +136,7 @@ export default function Anak() {
                             <button onClick={tambahDataAnak} type="button" className="px-5 py-3 text-sm font-medium text-center text-black bg-white rounded-xl hover:bg-gray-100 border">
                                 Tambah Data Anak
                             </button>
-                            <a href="/admin/anak">
+                            <a href="/profil">
                                 <button type="button" className="px-5 py-3 text-sm font-medium text-center text-gray-900 bg-white rounded-xl hover:bg-gray-100 border border-gray-200">
                                     Kembali
                                 </button>

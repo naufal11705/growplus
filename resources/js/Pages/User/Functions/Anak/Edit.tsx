@@ -1,4 +1,4 @@
-import Layout from "@/Layouts/Admin";
+import Layout from "@/Layouts/Layout";
 import useCsrfToken from "@/Utils/csrfToken";
 import { router, usePage } from "@inertiajs/react";
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
@@ -73,6 +73,7 @@ export default function Anak() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("Form submitted with data:", formData)
         setAlert({
             type: "confirm",
             message: "Update Perubahan?",
@@ -84,7 +85,7 @@ export default function Anak() {
     const confirmUpdate = () => {
         if (pendingUpdate) {
             router.put(
-                `/admin/anak/${formData.anak_id}`,
+                `/profil/anak/${formData.anak_id}`,
                 {
                     _token: csrf_token,
                     orangtua_id: selectedOrangTua,
@@ -99,9 +100,6 @@ export default function Anak() {
                 },
                 {
                     preserveScroll: true,
-                    onSuccess: () => {
-                        router.visit('/admin/anak');
-                    },
                     onError: (errors) => {
                         setAlert({
                             type: "error",
@@ -124,7 +122,7 @@ export default function Anak() {
                     <h2 className="mb-4 text-2xl font-bold text-gray-900">Update Data Anak</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-                            <div className="sm:col-span-2">
+                            {/* <div className="sm:col-span-2">
                                 <label htmlFor="orangtua_id" className="block mb-2 text-sm font-medium text-gray-900">Orang Tua</label>
                                 <select
                                     id="orangtua_id"
@@ -141,7 +139,7 @@ export default function Anak() {
                                         </option>
                                     ))}
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="mt-5">
                                 <label htmlFor="nama" className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
                                 <input

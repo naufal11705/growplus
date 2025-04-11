@@ -1,6 +1,7 @@
+import Header from '@/Components/Header';
+import Sidebar from '@/Components/Sidebar';
 import { useState } from "react";
-import Header from '../Components/Header';
-import Sidebar from '../Components/Sidebar';
+import '../../css/user.css';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -14,7 +15,7 @@ export default function Layout({ children }: LayoutProps) {
     };
     return (
         <>
-            <div className="bg-white min-h-screen">
+            <div className="bg-white">
                 <Header isOpen={isOpen} toggleSidebar={toggleSidebar} />
                 <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
                 <main className="mt-16 md:mt-0">{children}</main>

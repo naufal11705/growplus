@@ -1,9 +1,9 @@
-export interface Article {
-    id: number;
-    title: string;
-    author: string;
-    content: string;
-    slug: string;
-    banner: string;
-    created_at: Date;
-}
+    export interface Article {
+        id: bigint;
+        title: string;
+        author: string;
+        content: string;
+        slug: string;
+        banner: string;
+        created_at: Date;
+    }

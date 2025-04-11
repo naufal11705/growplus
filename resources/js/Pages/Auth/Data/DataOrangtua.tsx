@@ -20,6 +20,9 @@ interface FormData {
     status_rumah: string;
     tanggungan_listrik: string;
     tanggungan_air: string;
+    kecamatan: string;
+    kabupaten: string;
+    provinsi: string;
 }
 
 type ValidationErrors = Record<string, string>;
@@ -33,18 +36,22 @@ const initialFormData: FormData = {
     golongan_darah: "Pilih",
     alamat: "",
     pekerjaan: "",
-    penghasilan: "",
+    penghasilan: "Pilih",
     sumber_penghasilan: "Pilih",
     jumlah_tanggungan: "",
     status_rumah: "Pilih",
     tanggungan_listrik: "",
     tanggungan_air: "",
+    kecamatan: "",
+    kabupaten: "",  
+    provinsi: "",
 };
 
 const dropdownOptions: Record<string, string[]> = {
     golongan_darah: ["AB", "A", "B", "O"],
     sumber_penghasilan: ["Gaji", "Freelance", "Usaha", "Pensiun", "Tidak Ada"],
-    status_rumah: ["Milik Sendiri", "Sewa", "Kontrak", "Dinas", "Tidak Ada"],
+    status_rumah: ["Milik Sendiri", "Milik Sendiri (Cicilan)", "Kontrak", "Tidak Ada"],
+    penghasilan: ["500.000 - 1.000.000", "1.000.000 - 2.000.001", "2.000.001 - 3.000.000", "3.000.001 - 4.000.000", "4.000.001 - <5.000.000"],
 };
 
 export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaProps) {
@@ -57,6 +64,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
         golongan_darah: false,
         sumber_penghasilan: false,
         status_rumah: false,
+        penghasilan: false,
     });
 
     const toggleDropdown = (field: keyof typeof dropdowns) => {
@@ -64,6 +72,7 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
             golongan_darah: false,
             sumber_penghasilan: false,
             status_rumah: false,
+            penghasilan: false,
             [field]: !prev[field],
         }));
     };
@@ -102,11 +111,14 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
         alamat: (value) => validateRequired(value, "Alamat"),
         pekerjaan: (value) => validateRequired(value, "Pekerjaan"),
         sumber_penghasilan: (value) => validateDropdown(value, "Sumber penghasilan"),
+        penghasilan: (value) => validateDropdown(value, "Penghasilan gaji"),
         status_rumah: (value) => validateDropdown(value, "Status rumah"),
-        penghasilan: (value) => validateNonNegativeNumber(value, "Penghasilan"),
         jumlah_tanggungan: (value) => validateNonNegativeNumber(value, "Jumlah tanggungan"),
         tanggungan_listrik: (value) => validateNonNegativeNumber(value, "Tanggungan listrik"),
         tanggungan_air: (value) => validateNonNegativeNumber(value, "Tanggungan air"),
+        kecamatan: (value) => validateRequired(value, "Kecamatan"),
+        kabupaten: (value) => validateRequired(value, "Kabupaten"),
+        provinsi: (value) => validateRequired(value, "Provinsi"), 
     };
 
     const validateForm = (): boolean => {
@@ -127,7 +139,6 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
         if (validateForm()) {
             const submissionData = {
                 ...formData,
-                penghasilan: parseInt(formData.penghasilan) || 0,
                 jumlah_tanggungan: parseInt(formData.jumlah_tanggungan) || 0,
                 tanggungan_listrik: parseInt(formData.tanggungan_listrik) || 0,
                 tanggungan_air: parseInt(formData.tanggungan_air) || 0,
@@ -287,6 +298,51 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             />
                             {errors.alamat && <p className="text-red-500 text-xs mt-1">{errors.alamat}</p>}
                         </div>
+                        
+                        {/* Kecamatan */}
+                        <div>
+                            <label htmlFor="kecamatan" className="block mb-2 text-sm font-medium text-gray-900">Kecamatan</label>
+                            <input
+                                type="text"
+                                id="kecamatan"
+                                value={formData.kecamatan}
+                                onChange={(e) => handleInputChange("kecamatan", e.target.value, 255)}
+                                className={getInputClassName("kecamatan")}
+                                placeholder="kecamatan"
+                                maxLength={255}
+                            />
+                            {errors.kecamatan && <p className="text-red-500 text-xs mt-1">{errors.kecamatan}</p>}
+                        </div>
+                        
+                        {/* Kabupaten */}
+                        <div>
+                            <label htmlFor="kabupaten" className="block mb-2 text-sm font-medium text-gray-900">Kabupaten</label>
+                            <input
+                                type="text"
+                                id="kabupaten"
+                                value={formData.kabupaten}
+                                onChange={(e) => handleInputChange("kabupaten", e.target.value, 255)}
+                                className={getInputClassName("kabupaten")}
+                                placeholder="kabupaten"
+                                maxLength={255}
+                            />
+                            {errors.kabupaten && <p className="text-red-500 text-xs mt-1">{errors.kabupaten}</p>}
+                        </div>
+                        
+                        {/* Provinsi */}
+                        <div>
+                            <label htmlFor="provinsi" className="block mb-2 text-sm font-medium text-gray-900">Provinsi</label>
+                            <input
+                                type="text"
+                                id="provinsi"
+                                value={formData.provinsi}
+                                onChange={(e) => handleInputChange("provinsi", e.target.value, 255)}
+                                className={getInputClassName("provinsi")}
+                                placeholder="provinsi"
+                                maxLength={255}
+                            />
+                            {errors.provinsi && <p className="text-red-500 text-xs mt-1">{errors.provinsi}</p>}
+                        </div>
 
                         {/* Pekerjaan */}
                         <div>
@@ -305,15 +361,37 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
 
                         {/* Penghasilan */}
                         <div>
-                            <label htmlFor="penghasilan" className="block mb-2 text-sm font-medium text-gray-900">Penghasilan per Bulan</label>
-                            <input
-                                type="text"
-                                id="penghasilan"
-                                value={formData.penghasilan}
-                                onChange={(e) => handleInputChange("penghasilan", e.target.value)}
-                                className={getInputClassName("penghasilan")}
-                                placeholder="Penghasilan dalam Rupiah"
-                            />
+                            <label className="block mb-2 text-sm font-medium text-gray-900">Penghasilan</label>
+                            <button
+                                type="button"
+                                onClick={() => toggleDropdown("penghasilan")}
+                                className={`text-gray-500 w-full bg-gray-100 hover:bg-gray-200 flex justify-between items-center h-11 font-medium rounded-xl text-sm px-5 py-2.5 ${errors.penghasilan ? "border-2 border-red-500" : ""}`}
+                            >
+                                {formData.penghasilan}
+                                <svg className={`w-2.5 h-2.5 ml-3 transform ${dropdowns.penghasilan ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            {dropdowns.penghasilan && (
+                                <div className="z-10 bg-gray-100 rounded-xl shadow-sm mt-2 w-full">
+                                    <ul className="py-2 text-gray-700 font-medium">
+                                        {dropdownOptions.penghasilan.map((option) => (
+                                            <li key={option}>
+                                                <a
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleSelect("penghasilan", option);
+                                                    }}
+                                                    className="flex items-center px-4 py-2 hover:bg-gray-200"
+                                                >
+                                                    {option}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                             {errors.penghasilan && <p className="text-red-500 text-xs mt-1">{errors.penghasilan}</p>}
                         </div>
 
@@ -416,20 +494,19 @@ export default function DataOrangtua({ onNext, initialData = {} }: DataOrangtuaP
                             />
                             {errors.tanggungan_listrik && <p className="text-red-500 text-xs mt-1">{errors.tanggungan_listrik}</p>}
                         </div>
-
-                    </div>
-                    {/* Tanggungan Air */}
-                    <div>
-                        <label htmlFor="tanggungan_air" className="block mb-2 text-sm font-medium text-gray-900">Tanggungan Air per Bulan</label>
-                        <input
-                            type="text"
-                            id="tanggungan_air"
-                            value={formData.tanggungan_air}
-                            onChange={(e) => handleInputChange("tanggungan_air", e.target.value)}
-                            className={getInputClassName("tanggungan_air")}
-                            placeholder="Tagihan air dalam Rupiah"
-                        />
-                        {errors.tanggungan_air && <p className="text-red-500 text-xs mt-1">{errors.tanggungan_air}</p>}
+                        {/* Tanggungan Air */}
+                        <div>
+                            <label htmlFor="tanggungan_air" className="block mb-2 text-sm font-medium text-gray-900">Tanggungan Air per Bulan</label>
+                            <input
+                                type="text"
+                                id="tanggungan_air"
+                                value={formData.tanggungan_air}
+                                onChange={(e) => handleInputChange("tanggungan_air", e.target.value)}
+                                className={getInputClassName("tanggungan_air")}
+                                placeholder="Tagihan air dalam Rupiah"
+                            />
+                            {errors.tanggungan_air && <p className="text-red-500 text-xs mt-1">{errors.tanggungan_air}</p>}
+                        </div>
                     </div>
 
                     <div className="flex justify-end mt-6">

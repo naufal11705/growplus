@@ -1,6 +1,8 @@
 import Layout from "@/Layouts/Anonymous";
 import { Article } from "@/types/article";
 import { useEffect, useState } from 'react';
+import "../../css/app.css"
+
 
 interface ArtikelProps {
     article: Article
