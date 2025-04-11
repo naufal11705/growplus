@@ -46,20 +46,22 @@ class UserController extends Controller
         if ($orangTua) {
             $anakIds = Anak::where('orangtua_id', $orangTua->orangtua_id)->pluck('anak_id');
 
+            $totalPoints = 0;
+            $totalStreak = 0;
+
             foreach ($anakIds as $anakId) {
                 $totalPoints += $this->anakTantanganRepository->countTotalPoints($anakId);
+                $streakForThisAnak = $this->anakTantanganRepository->getAnakTantangansByAnakId($anakId);
+                $totalStreak += $streakForThisAnak;
             }
+
+            $streak = $totalStreak;
         }
 
-        // $totalProgress = 0;
         if ($activeFase) {
             $faseResource = new FaseResource($activeFase);
             $totalProgress = $faseResource->calculateProgress();
         }
-        // $totalPoints = $this->anakTantanganRepository->countTotalPoints($pengguna_id);
-        // dd($totalPoints);
-        // exit;
-        $streak = $this->anakTantanganRepository->getAnakTantangansByAnakId($pengguna_id)->count();
 
         $kecamatan = auth()->user()->orangtua->kecamatan;
         // dd($kecamatan);
