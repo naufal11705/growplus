@@ -64,46 +64,5 @@ declare module "pusher-js" {
         unbind(eventName: string, callback?: (data: any) => void): void;
     }
 
-    // global.d.ts
-    declare module "pusher-js" {
-        interface Channel {
-            bind(eventName: string, callback: (data: any) => void): void;
-            unbind(eventName: string, callback?: (data: any) => void): void;
-            unsubscribe(): void;
-        }
-
-        interface Pusher {
-            subscribe(channelName: string): Channel;
-            unsubscribe(channelName: string): void;
-            bind(eventName: string, callback: (...args: any[]) => void): void;
-            unbind(
-                eventName: string,
-                callback?: (...args: any[]) => void
-            ): void;
-            disconnect(): void;
-            connect(): void;
-        }
-
-        class Pusher implements Pusher {
-            constructor(
-                appKey: string,
-                options: {
-                    encrypted?: boolean;
-                    cluster?: string;
-                    [key: string]: any;
-                }
-            );
-            subscribe(channelName: string): Channel;
-            unsubscribe(channelName: string): void;
-            bind(eventName: string, callback: (...args: any[]) => void): void;
-            unbind(
-                eventName: string,
-                callback?: (...args: any[]) => void
-            ): void;
-            disconnect(): void;
-            connect(): void;
-        }
-
-        export default Pusher;
-    }
+    
 }

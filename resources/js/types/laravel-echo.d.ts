@@ -29,11 +29,7 @@ declare module "laravel-echo" {
     }
 }
 
-declare module "pusher-js" {
-    export default class Pusher {
-        constructor(appKey: string, options?: any);
-    }
-}
+
 
 declare global {
     interface Window {

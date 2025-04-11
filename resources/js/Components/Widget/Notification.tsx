@@ -21,7 +21,7 @@ const Notification: React.FC<NotificationProps> = ({ kecamatan }: NotificationPr
   useEffect(() => {
     const pusher = new Pusher("4f2eccc31a509bd5e1ad", {
       cluster: "ap1",
-      encrypted: true,
+      // encrypted: true,
     })
 
     try {
