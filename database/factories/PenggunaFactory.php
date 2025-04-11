@@ -23,6 +23,7 @@ class PenggunaFactory extends Factory
             'password' => bcrypt($this->faker->password()),
             'nama' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
+            'total_point' => $this->faker->numberBetween(200, 500),
             'created_at' => now(),
             'updated_at' => now()
         ];
