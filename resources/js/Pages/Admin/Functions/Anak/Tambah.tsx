@@ -100,11 +100,11 @@ export default function Anak() {
                                     </div>
                                     <div className="mt-5">
                                         <label htmlFor={`nik_${item.id}`} className="block mb-2 text-sm font-medium text-gray-900">NIK</label>
-                                        <input type="text" name={`nik_${item.id}`} id={`nik_${item.id}`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                        <input type="text" onInput={(e) => {const target = e.target as HTMLInputElement; target.value = target.value.replace(/\D/g, '');}} inputMode="numeric" pattern="\d*" maxLength={16} name={`nik_${item.id}`} id={`nik_${item.id}`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
                                     </div>
                                     <div className="mt-5">
                                         <label htmlFor={`no_jkn_${item.id}`} className="block mb-2 text-sm font-medium text-gray-900">Nomor JKN</label>
-                                        <input type="text" name={`no_jkn_${item.id}`} id={`no_jkn_${item.id}`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                        <input type="text" onInput={(e) => {const target = e.target as HTMLInputElement; target.value = target.value.replace(/\D/g, '');}} inputMode="numeric" pattern="\d*" maxLength={13} name={`no_jkn_${item.id}`} id={`no_jkn_${item.id}`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
                                     </div>
                                     <div className="mt-5">
                                         <label htmlFor={`tempat_lahir_${item.id}`} className="block mb-2 text-sm font-medium text-gray-900">Tempat Lahir</label>

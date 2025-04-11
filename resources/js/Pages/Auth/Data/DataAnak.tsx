@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 interface DataAnakProps {
     onNext: (data: any) => void;
     onBack?: () => void;
+    onSkip?: () => void;
     initialData?: any[];
 }
 
@@ -34,7 +35,7 @@ const dropdownOptions: Record<string, string[]> = {
     golongan_darah: ["AB", "A", "B", "O"],
 };
 
-export default function DataAnak({ onNext, onBack, initialData = [] }: DataAnakProps) {
+export default function DataAnak({ onNext, onBack, onSkip, initialData = [] }: DataAnakProps) {
     const [childrenCount, setChildrenCount] = useState(initialData.length || 1);
     const [formData, setFormData] = useState<{ [key: string]: ChildData }>(() => {
         if (initialData.length > 0) {
@@ -361,9 +362,17 @@ export default function DataAnak({ onNext, onBack, initialData = [] }: DataAnakP
     return (
         <div className="w-full bg-white rounded-2xl shadow border border-gray-200">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 className="font-bold leading-tight tracking-tight text-gray-900 text-2xl">
-                    Isi Data Anak Anda ✍️
-                </h1>
+                <div className="flex justify-between items-center">
+                    <h1 className="font-bold leading-tight tracking-tight text-gray-900 text-2xl">
+                        Isi Data Anak Anda ✍️
+                    </h1>
+                    <button
+                        type="button" onClick={onSkip}
+                        className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
+                        >
+                        Lewati
+                    </button>
+                </div>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                     {Array.from({ length: childrenCount }, (_, i) => renderChildForm(i + 1))}
                     <div className="space-y-2 flex flex-col mt-6">

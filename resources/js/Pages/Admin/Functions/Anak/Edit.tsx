@@ -1,11 +1,9 @@
 import Layout from "@/Layouts/Admin";
 import useCsrfToken from "@/Utils/csrfToken";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { PageProps as InertiaPageProps } from "@inertiajs/core";
-import { usePage } from "@inertiajs/react";
-import { useState } from "react";
-import AdminAlert from "@/Components/Widget/Alert/AdminAlert"; 
-
+import { useState, useEffect } from "react";
+import AdminAlert from "@/Components/Widget/Alert/AdminAlert";
 
 interface Anak {
     anak_id: number;
@@ -28,31 +26,40 @@ interface OrangTua {
 interface PageProps extends InertiaPageProps {
     orangtua: OrangTua[];
     anak: Anak;
+    flash?: { success?: string; error?: string };
 }
 
-export default function Anak() { // Nama fungsi diubah dari OrangTua menjadi Anak agar sesuai konteks
-    const { anak, orangtua } = usePage<PageProps>().props;
+export default function Anak() {
+    const { anak, orangtua, flash } = usePage<PageProps>().props;
     const csrf_token = useCsrfToken();
 
     const [selectedOrangTua, setSelectedOrangTua] = useState<string>(
         anak.orangtua_id ? anak.orangtua_id.toString() : ""
     );
-
     const [formData, setFormData] = useState<Anak>({ ...anak });
 
     // State untuk alert
-    const [alert, setAlert] = useState<{ type: "success" | "error" | "warning"; message: string; visible: boolean }>({
+    const [alert, setAlert] = useState<{
+        type: "success" | "error" | "warning" | "confirm";
+        message: string;
+        visible: boolean;
+    }>({
         type: "success",
         message: "",
         visible: false,
     });
 
-    // Fungsi untuk menampilkan alert
-    const setSuccess = (message: string) => setAlert({ type: "success", message, visible: true });
-    const setError = (message: string) => setAlert({ type: "error", message, visible: true });
-    const setWarning = (message: string) => setAlert({ type: "warning", message, visible: true });
+    const [pendingUpdate, setPendingUpdate] = useState<boolean>(false);
 
-    // Fungsi untuk menutup alert
+    // Consume flash message dari controller
+    useEffect(() => {
+        if (flash?.success) {
+            setAlert({ type: "success", message: flash.success, visible: true });
+        } else if (flash?.error) {
+            setAlert({ type: "error", message: flash.error, visible: true });
+        }
+    }, [flash]);
+
     const closeAlert = () => setAlert({ ...alert, visible: false });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -61,39 +68,53 @@ export default function Anak() { // Nama fungsi diubah dari OrangTua menjadi Ana
             ...prev,
             [name]: value,
         }));
-        if (name === "orangtua_id") {
-            setSelectedOrangTua(value);
-        }
+        if (name === "orangtua_id") setSelectedOrangTua(value);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setAlert({
+            type: "confirm",
+            message: "Update Perubahan?",
+            visible: true,
+        });
+        setPendingUpdate(true);
+    };
 
-        router.put(
-            `/admin/anak/${formData.anak_id}`,
-            {
-                _token: csrf_token,
-                orangtua_id: selectedOrangTua,
-                nama: formData.nama,
-                nik: formData.nik,
-                no_jkn: formData.no_jkn,
-                tempat_lahir: formData.tempat_lahir,
-                tanggal_lahir: formData.tanggal_lahir,
-                golongan_darah: formData.golongan_darah,
-                berat_badan: formData.berat_badan,
-                tinggi_badan: formData.tinggi_badan,
-            },
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setSuccess("Data anak berhasil diperbarui!");
+    const confirmUpdate = () => {
+        if (pendingUpdate) {
+            router.put(
+                `/admin/anak/${formData.anak_id}`,
+                {
+                    _token: csrf_token,
+                    orangtua_id: selectedOrangTua,
+                    nama: formData.nama,
+                    nik: formData.nik,
+                    no_jkn: formData.no_jkn,
+                    tempat_lahir: formData.tempat_lahir,
+                    tanggal_lahir: formData.tanggal_lahir,
+                    golongan_darah: formData.golongan_darah,
+                    berat_badan: formData.berat_badan,
+                    tinggi_badan: formData.tinggi_badan,
                 },
-                onError: (errors) => {
-                    setError("Gagal memperbarui data anak. Periksa kembali data yang diinput.");
-                    console.error("Terjadi error:", errors);
-                },
-            }
-        );
+                {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        router.visit('/admin/anak');
+                    },
+                    onError: (errors) => {
+                        setAlert({
+                            type: "error",
+                            message: "Gagal memperbarui data anak. Periksa kembali data yang diinput.",
+                            visible: true,
+                        });
+                        console.error("Terjadi error:", errors);
+                    },
+                }
+            );
+        }
+        setPendingUpdate(false);
+        closeAlert();
     };
 
     return (
@@ -234,7 +255,12 @@ export default function Anak() { // Nama fungsi diubah dari OrangTua menjadi Ana
 
             {/* Tampilkan AdminAlert jika visible true */}
             {alert.visible && (
-                <AdminAlert type={alert.type} message={alert.message} onClose={closeAlert} />
+                <AdminAlert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={closeAlert}
+                    onConfirm={alert.type === 'confirm' ? confirmUpdate : undefined}
+                />
             )}
         </Layout>
     );
