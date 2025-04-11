@@ -19,6 +19,7 @@ class Fase extends Model
         'benefits',
         'banner',
         'progress',
+        'durasi',
         'is_anak_required',
         'status'
     ];
