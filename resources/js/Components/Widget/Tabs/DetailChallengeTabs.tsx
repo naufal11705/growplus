@@ -6,7 +6,7 @@ interface DetailChallengeTabsProps {
 }
 
 export default function DetailChallengeTabs({ activeTab, setActiveTab }: DetailChallengeTabsProps) {
-    const categories: string[] = ["Deskripsi", "Tugas"];
+    const categories: string[] = ["Deskripsi", "Tugas", "Makanan Challenges"];
 
     return (
         <div className="flex bg-gray-100 p-1 rounded-lg space-x-2 lg:mb-8 mb-4 w-full">
