@@ -177,7 +177,8 @@ function useScrollBlur(threshold = 0.1) {
   useEffect(() => {
     return scrollYProgress.onChange((latest) => {
       // Calculate blur based on scroll velocity
-      const delta = Math.abs(latest - scrollYProgress.getPrevious())
+      const previous = scrollYProgress.getPrevious() ?? latest;
+      const delta = Math.abs(latest - previous);
       if (delta > threshold) {
         setBlurAmount(Math.min(delta * 50, 10)) // Max blur of 10px
 
