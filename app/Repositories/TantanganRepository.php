@@ -36,4 +36,9 @@ class TantanganRepository implements TantanganRepositoryInterface
     {
         return Tantangan::count();
     }
+
+    public function getTantanganByStatus($id)
+    {
+        return Tantangan::where('status', $id)->get();
+    }
 }

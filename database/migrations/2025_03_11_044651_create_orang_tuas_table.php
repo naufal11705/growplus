@@ -20,14 +20,19 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('golongan_darah');
+            $table->string('jenis_kelamin');
             $table->text('alamat');
+            $table->string('kecamatan');
+            $table->string('kabupaten');
+            $table->string('provinsi');
             $table->string('pekerjaan');
-            $table->integer('penghasilan');
+            $table->string('penghasilan');
             $table->string('sumber_penghasilan');
             $table->integer('jumlah_tanggungan');
             $table->string('status_rumah');
             $table->integer('tanggungan_listrik');
             $table->integer('tanggungan_air');
+            $table->integer('tingkat_ekonomi');
             $table->timestamps();
 
             $table->foreign('pengguna_id')->references('pengguna_id')->on('penggunas');

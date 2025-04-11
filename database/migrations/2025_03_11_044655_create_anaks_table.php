@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('golongan_darah');
             $table->integer('berat_badan');
             $table->integer('tinggi_badan');
+            $table->string('jenis_kelamin');
             $table->timestamps();
 
             $table->foreign('orangtua_id')->references('orangtua_id')->on('orang_tuas');

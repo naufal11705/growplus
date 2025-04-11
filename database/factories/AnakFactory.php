@@ -29,6 +29,7 @@ class AnakFactory extends Factory
             'golongan_darah' => $this->faker->randomElement(['A', 'B', 'O', 'AB']),
             'berat_badan' => $this->faker->numberBetween(40, 80),
             'tinggi_badan' => $this->faker->numberBetween(120, 180),
+            'jenis_kelamin' => $this->faker->randomElement(['L', 'P']),
             'created_at' => now(),
             'updated_at' => now()
         ];

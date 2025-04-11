@@ -21,14 +21,19 @@ class OrangTua extends Model
         'tempat_lahir',
         'tanggal_lahir',
         'golongan_darah',
+        'jenis_kelamin',
         'alamat',
+        'kecamatan',
+        'kabupaten',
+        'provinsi',
         'pekerjaan',
         'penghasilan',
         'sumber_penghasilan',
         'jumlah_tanggungan',
         'status_rumah',
         'tanggungan_listrik',
-        'tanggungan_air'
+        'tanggungan_air',
+        'tingkat_ekonomi'
     ];
 
     public function anak()
