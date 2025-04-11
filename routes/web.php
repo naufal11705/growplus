@@ -128,8 +128,6 @@ Route::fallback(function () {
 Route::get('/petugas/chat', function () {
     return Inertia::render('Petugas/Chat');
 });
-Route::get('/chat-petugas', function () {
-    return Inertia::render('User/ChatPetugas');
-});
+Route::get('/chat-petugas', [PenggunaController::class, 'getUserForChat'])->name('chat');
 
 require __DIR__ . '/auth.php';

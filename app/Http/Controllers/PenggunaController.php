@@ -72,4 +72,19 @@ class PenggunaController extends Controller
         $this->penggunaRepository->deletePengguna($id);
         
     }
+    public function getUserForChat()
+    {
+        $pengguna = $this->penggunaRepository->findById(3);
+
+        if (!$pengguna) {
+            abort(404, 'Pengguna tidak ditemukan');
+        }
+
+        return Inertia::render('User/ChatPetugas', [
+            'user' => [
+                'pengguna_id' => $pengguna->pengguna_id,
+                'email' => $pengguna->email,
+            ],
+        ]);
+    }
 }

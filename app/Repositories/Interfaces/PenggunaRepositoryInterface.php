@@ -11,4 +11,5 @@ interface PenggunaRepositoryInterface
     public function createPengguna(array $data);
     public function updatePengguna($id, array $data);
     public function deletePengguna($id);
+    public function findById($id);
 }
