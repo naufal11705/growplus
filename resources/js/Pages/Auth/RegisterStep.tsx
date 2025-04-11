@@ -102,7 +102,7 @@ export default function RegisterStep() {
         setStep(2);
     };
 
-    const handleSkipAnak = () => {
+    const handleNotYet = () => {
         setStep(3);
     }
 
@@ -217,7 +217,7 @@ export default function RegisterStep() {
                             <DataAnak
                                 onNext={handleNextAnak}
                                 onBack={handleBackToOrangtua}
-                                onSkip={handleSkipAnak}
+                                onNotYetDelivered={handleNotYet}
                                 initialData={dataAnak}
                             />
                         )}
