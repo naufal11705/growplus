@@ -2,7 +2,9 @@
 
 import { useState, type FormEvent } from "react";
 import { usePlayground } from "@/Lib/usePlayground";
-import Layout from "@/Layouts/Anonymous"; // Import Layout to wrap the component, following ChatAI pattern
+import Layout from "@/Layouts/Anonymous";
+import "../../../css/app.css"
+
 
 interface PlaygroundProps {
   geminiApiKey: string; // Define prop type

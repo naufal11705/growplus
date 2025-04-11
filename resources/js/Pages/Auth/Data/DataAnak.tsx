@@ -63,6 +63,9 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         }
         return initialDropdowns;
     });
+    const [isNotYetDelivered, setIsNotYetDelivered] = useState(false);
+    const [lastMenstrualDate, setLastMenstrualDate] = useState("");
+    const [mensError, setMensError] = useState("");
 
     useEffect(() => {
         setChildrenCount(initialData.length || 1);
@@ -178,29 +181,44 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
     const validateForm = (): boolean => {
         const newErrors: { [key: string]: ValidationErrors } = {};
 
-        Object.entries(formData).forEach(([childId, data]) => {
-            const childErrors: ValidationErrors = {};
-            Object.entries(data).forEach(([field, value]) => {
-                const validateFn = validationRules[field as keyof ChildData];
-                const error = validateFn(value);
-                if (error) childErrors[field] = error;
+        if (!isNotYetDelivered) {
+            Object.entries(formData).forEach(([childId, data]) => {
+                const childErrors: ValidationErrors = {};
+                Object.entries(data).forEach(([field, value]) => {
+                    const validateFn = validationRules[field as keyof ChildData];
+                    const error = validateFn(value);
+                    if (error) childErrors[field] = error;
+                });
+                if (Object.keys(childErrors).length > 0) newErrors[childId] = childErrors;
             });
-            if (Object.keys(childErrors).length > 0) newErrors[childId] = childErrors;
-        });
+        }
+
+        if (isNotYetDelivered && !lastMenstrualDate) {
+            setMensError("Tanggal terakhir menstruasi harus diisi");
+            return false; // Explicitly return false if validation fails
+        } else {
+            setMensError("");
+        }
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        return Object.keys(newErrors).length === 0 && (!isNotYetDelivered || !!lastMenstrualDate);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        console.log("Submitting with lastMenstrualDate:", lastMenstrualDate); // Debug log
         if (validateForm()) {
-            const submissionData = Object.values(formData).map((data) => ({
-                ...data,
-                berat_badan: parseInt(data.berat_badan) || 0,
-                tinggi_badan: parseInt(data.tinggi_badan) || 0,
-            }));
+            const submissionData = isNotYetDelivered
+                ? { lastMenstrualDate }
+                : Object.values(formData).map((data) => ({
+                      ...data,
+                      berat_badan: parseInt(data.berat_badan) || 0,
+                      tinggi_badan: parseInt(data.tinggi_badan) || 0,
+                  }));
+            console.log("Submission data:", submissionData); // Debug log
             onNext(submissionData);
+        } else {
+            console.log("Validation failed, mensError:", mensError); // Debug log
         }
     };
 
@@ -208,6 +226,32 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
         return errors[childId]?.[field]
             ? "bg-gray-50 border-2 border-red-500 text-gray-900 rounded-xl focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
             : "bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5";
+    };
+
+    const getMensInputClassName = (): string => {
+        return mensError
+            ? "bg-gray-50 border-2 border-red-500 text-gray-900 rounded-xl focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+            : "bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-wine focus:border-wine block w-full p-2.5";
+    };
+
+    const handleNotYetDelivered = () => {
+        setIsNotYetDelivered(true);
+        setChildrenCount(0); // Clear child forms
+        setFormData({}); // Reset form data
+        setErrors({}); // Reset errors
+        setDropdownStates({}); // Reset dropdowns
+        setLastMenstrualDate(""); // Ensure menstrual date is reset
+        setMensError("");
+    };
+
+    const handleBackToChildForm = () => {
+        setIsNotYetDelivered(false);
+        setLastMenstrualDate("");
+        setMensError("");
+        setChildrenCount(1);
+        setFormData({ "1": { ...initialChildData } });
+        setErrors({ "1": {} });
+        setDropdownStates({ "1": { isBloodTypeOpen: false } });
     };
 
     const renderChildForm = (childNumber: number) => {
@@ -366,10 +410,10 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
                     <h1 className="font-bold leading-tight tracking-tight text-gray-900 text-2xl">
                         Isi Data Anak Anda ✍️
                     </h1>
-                    {onNotYetDelivered && (
+                    {!isNotYetDelivered && (
                         <button
                             type="button"
-                            onClick={onNotYetDelivered}
+                            onClick={handleNotYetDelivered}
                             className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
                         >
                             Belum Melahirkan
@@ -377,36 +421,74 @@ export default function DataAnak({ onNext, onBack, onNotYetDelivered, initialDat
                     )}
                 </div>
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-                    {Array.from({ length: childrenCount }, (_, i) => renderChildForm(i + 1))}
-                    <div className="space-y-2 flex flex-col mt-6">
-                        <div className="grid lg:grid-cols-2 gap-4">
-                            {onBack && (
+                    {!isNotYetDelivered && Array.from({ length: childrenCount }, (_, i) => renderChildForm(i + 1))}
+                    {isNotYetDelivered && (
+                        <div className="space-y-4">
+                            <div>
+                                <label htmlFor="lastMenstrualDate" className="block mb-2 text-sm font-medium text-gray-900">
+                                    Tanggal Terakhir Menstruasi
+                                </label>
+                                <input
+                                    type="date"
+                                    id="lastMenstrualDate"
+                                    value={lastMenstrualDate}
+                                    onChange={(e) => {
+                                        console.log("Date selected:", e.target.value); // Debug log
+                                        setLastMenstrualDate(e.target.value);
+                                    }}
+                                    className={getMensInputClassName()}
+                                    required // Add required attribute for browser validation
+                                />
+                                {mensError && <p className="text-red-500 text-xs mt-1">{mensError}</p>}
+                            </div>
+                            <div className="grid lg:grid-cols-2 gap-4">
                                 <button
                                     type="button"
-                                    onClick={onBack}
-                                    className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
+                                    onClick={handleBackToChildForm}
+                                    className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 w-full hover:bg-gray-300"
                                 >
-                                    Kembali ke Form Orang Tua
+                                    Kembali ke Form Data Anak
                                 </button>
-                            )}
+                                <button
+                                    type="submit"
+                                    className="bg-wine text-white font-medium rounded-xl px-6 py-2.5 w-full hover:bg-dark-wine"
+                                >
+                                    Selanjutnya
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {!isNotYetDelivered && (
+                        <div className="space-y-2 flex flex-col mt-6">
+                            <div className="grid lg:grid-cols-2 gap-4">
+                                {onBack && (
+                                    <button
+                                        type="button"
+                                        onClick={onBack}
+                                        className="bg-gray-200 text-gray-900 font-medium rounded-xl px-6 py-2.5 hover:bg-gray-300"
+                                    >
+                                        Kembali ke Form Orang Tua
+                                    </button>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="bg-wine text-white font-medium rounded-xl px-6 py-2.5 hover:bg-dark-wine"
+                                >
+                                    Selanjutnya
+                                </button>
+                            </div>
                             <button
-                                type="submit"
-                                className="bg-wine text-white font-medium rounded-xl px-6 py-2.5 hover:bg-dark-wine"
+                                type="button"
+                                onClick={addChild}
+                                className="w-full gap-2 flex justify-center items-center text-black bg-white hover:bg-gray-100 border border-dashed focus:ring-4 focus:outline-none focus:ring-dark-wine font-medium rounded-xl text-md px-5 py-3 text-center"
                             >
-                                Selanjutnya
+                                <svg className="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5" />
+                                </svg>
+                                Tambah Data Anak
                             </button>
                         </div>
-                        <button
-                            type="button"
-                            onClick={addChild}
-                            className="w-full gap-2 flex justify-center items-center text-black bg-white hover:bg-gray-100 border border-dashed focus:ring-4 focus:outline-none focus:ring-dark-wine font-medium rounded-xl text-md px-5 py-3 text-center"
-                        >
-                            <svg className="w-5 h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5" />
-                            </svg>
-                            Tambah Data Anak
-                        </button>
-                    </div>
+                    )}
                 </form>
             </div>
         </div>
