@@ -24,6 +24,7 @@ class AnakTantanganStoreRequest extends FormRequest
         return [
             'anak_id' => ['required', 'integer', 'exists:anaks,anak_id'],
             'tantangan_id' => ['required', 'integer', 'exists:tantangans,tantangan_id'],
+            'gambar_url' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
     }
 }
