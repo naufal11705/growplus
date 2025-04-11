@@ -35,4 +35,8 @@ class PenggunaRepository implements PenggunaRepositoryInterface
         $pengguna = Pengguna::findOrFail($id);
         return $pengguna->delete();
     }
+    public function findById($id)
+    {
+        return Pengguna::find($id);
+    }
 }

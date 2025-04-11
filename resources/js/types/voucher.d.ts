@@ -1,5 +1,5 @@
 export interface Voucher {
-    id?: string;
+    id: string;
     title: string;
     description: string;
     pointsCost: number;
