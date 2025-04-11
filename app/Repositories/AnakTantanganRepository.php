@@ -48,11 +48,10 @@ class AnakTantanganRepository implements AnakTantanganRepositoryInterface
             ->sum('tantangans.point') ?? 0;
     }
 
-    public function getFirstCompletedTantangan($anakId, array $tantanganIds)
+    public function getFirstCompletedTantangan($anakId)
     {
         return AnakTantangan::where('anak_id', $anakId)
-            ->whereIn('tantangan_id', $tantanganIds)
-            ->orderBy('created_at', 'asc')
+            ->orderBy('tanggal_selesai', 'asc')
             ->first();
     }
 }
