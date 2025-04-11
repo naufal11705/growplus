@@ -3,6 +3,7 @@ import { PageProps as InertiaPageProps } from "@inertiajs/core";
 import { router } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Admin";
+import { Pencil, Trash2 } from "lucide-react"
 import FilterDropdown from "@/Components/Widget/Filter/FilterPuskesmas";
 
 interface Faskes {
@@ -63,10 +64,24 @@ export default function Faskes() {
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.puskesmas_id}</td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.no_reg_kohort_ibu}</td>
                       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{item.no_reg_kohort_anak}</td>
-                      <td className="px-6 py-4 text-right flex gap-2">
-                        <a href={`/admin/faskes/${item.faskes_id}/edit`} className="font-medium text-wine hover:underline">Edit</a> │
-                        <button onClick={() => handleDelete(item.faskes_id)} className="font-medium text-red-500 hover:underline">Delete</button>
-                      </td>
+                      <td className="px-6 py-4 text-right">
+                          <div className="flex justify-start gap-3">
+                            <a
+                              href={`/admin/faskes/${item.faskes_id}/edit`}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            >
+                              <Pencil className="w-3.5 h-3.5" />
+                              <span>Edit</span>
+                            </a>
+                            <button
+                              onClick={() => handleDelete(item.faskes_id)}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>Delete</span>
+                            </button>
+                          </div>
+                        </td>  
                     </tr>
                   ))
                 )}
