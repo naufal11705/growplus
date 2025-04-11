@@ -21,7 +21,7 @@ class PuskesmasFactory extends Factory
         return [
             'nama' => $nama = $faker->city(),
             'alamat' => $faker->address(),
-            'kecamatan' => $faker->state(),
+            'kecamatan' => $faker->randomElement(['Ledo', 'Bengkalis']),
             'kota' => $nama,
             'kontak' => $faker->phoneNumber(),
             'created_at' => now(),
