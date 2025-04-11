@@ -6,6 +6,7 @@ use App\Http\Requests\FaseStoreRequest;
 use App\Http\Requests\FaseUpdateRequest;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use Inertia\Inertia;
+use Exception;
 
 class FaseController extends Controller
 {
@@ -21,7 +22,8 @@ class FaseController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Fase', [
-            'fase' => $this->faseRepository->getAllFase()
+            'fase' => $this->faseRepository->getAllFase(),
+            'hasAnak' => auth()->user()->orangtua->anak->count() > 0,
         ]);
     }
 
@@ -40,16 +42,20 @@ class FaseController extends Controller
      */
     public function store(FaseStoreRequest $request)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public'); 
-            $validatedData['banner'] = $path;
+            if ($request->hasFile('banner')) {
+                $path = $request->file('banner')->store('banners', 'public');
+                $validatedData['banner'] = $path;
+            }
+
+            $this->faseRepository->createFase($validatedData);
+
+            return redirect()->route('fase.index')->with('success', 'Data berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
         }
-    
-        $this->faseRepository->createFase($validatedData);
-
-        return redirect()->route('fase.index');
     }
 
     /**
@@ -76,16 +82,20 @@ class FaseController extends Controller
      */
     public function update(FaseUpdateRequest $request, $id)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public'); 
-            $validatedData['banner'] = $path;
+            if ($request->hasFile('banner')) {
+                $path = $request->file('banner')->store('banners', 'public');
+                $validatedData['banner'] = $path;
+            }
+
+            $this->faseRepository->updateFase($id, $validatedData);
+
+            return redirect()->route('fase.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
         }
-
-        $this->faseRepository->updateFase($id, $validatedData);
-
-        return redirect()->route('fase.index');
     }
 
     /**
