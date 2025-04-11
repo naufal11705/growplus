@@ -131,6 +131,28 @@ export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTa
                                         </div>
                                     </div>
                                 )}
+                                {activeTab === "Makanan Challenges" && (
+                                    <div id="tugasSection">
+                                        <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mt-1">Tugas Makanan yang harus diselesaikan:</h2>
+                                        <div key={fase.fase_id} className="mt-5">
+                                            <h3 className="text-lg font-semibold text-gray-800">{fase.judul}</h3>
+                                            {fase.tantangans.map((tantangan, index) => (
+                                                <label key={tantangan.tantangan_id} className="flex items-center gap-2 mt-2 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="w-5 h-5 text-pinky bg-gray-100 border-gray-300 rounded-md"
+                                                        checked={checkedTantangans[index] || false}
+                                                        onChange={() => handleCheckboxChange(index, tantangan.tantangan_id)}
+                                                        disabled={checkedTantangans[index] || processing} // Disable jika sudah checked atau sedang processing
+                                                    />
+                                                    <span className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? 'line-through text-gray-500' : ''}`}>
+                                                        {tantangan.activity}
+                                                    </span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <RightSide fase={fase} />
                         </div>
