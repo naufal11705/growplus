@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('point');
             $table->integer('tingkat_ekonomi');
             $table->boolean('status')->default(false);
+            $table->boolean('butuh_gambar')->default(false);
             $table->timestamps();
 
             $table->foreign('fase_id')->references('fase_id')->on('fases');

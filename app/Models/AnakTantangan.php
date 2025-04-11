@@ -15,6 +15,7 @@ class AnakTantangan extends Model
     protected $fillable = [
         'anak_id',
         'tantangan_id',
+        'gambar_url',
     ];
 
     public function anak()

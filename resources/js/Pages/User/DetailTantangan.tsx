@@ -19,9 +19,10 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
     const [activeTab, setActiveTab] = useState("Deskripsi");
     const [checkedTantangans, setCheckedTantangans] = useState<boolean[]>([]);
     const [processing, setProcessing] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
-    const [selectedTantanganIndex, setSelectedTantanganIndex] = useState<number | null>(null); // Index tantangan yang dipilih
-    const [selectedTantanganId, setSelectedTantanganId] = useState<number | null>(null); // ID tantangan yang dipilih
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTantanganIndex, setSelectedTantanganIndex] = useState<number | null>(null);
+    const [selectedTantanganId, setSelectedTantanganId] = useState<number | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
@@ -33,10 +34,8 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
     }, [fase, tantangansDone, anak_id]);
 
     const handleCheckboxClick = (index: number, tantanganId: number) => {
-        // Jika checkbox sudah checked atau sedang processing, jangan lakukan apa-apa
         if (checkedTantangans[index] || processing) return;
 
-        // Buka modal dan simpan index serta ID tantangan yang dipilih
         setSelectedTantanganIndex(index);
         setSelectedTantanganId(tantanganId);
         setIsModalOpen(true);
@@ -46,53 +45,61 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
         if (selectedTantanganIndex === null || selectedTantanganId === null) return;
 
         setProcessing(true);
+        setErrorMessage(null);
 
         const formData = new FormData();
         formData.append("anak_id", anak_id.toString());
         formData.append("tantangan_id", selectedTantanganId.toString());
-        formData.append("image", file);
+        formData.append("gambar_url", file); // Changed to match backend expectation
 
-        const requestConfig = {
-            headers: {
-                "X-CSRF-TOKEN": csrf_token,
-                // Tidak perlu set Content-Type karena FormData akan otomatis menanganinya
-            },
-            preserveScroll: true,
-            preserveState: true,
-            onSuccess: () => {
-                // Tandai checkbox setelah upload berhasil
-                const updatedTantangans = [...checkedTantangans];
-                updatedTantangans[selectedTantanganIndex] = true;
-                setCheckedTantangans(updatedTantangans);
-                setProcessing(false);
-                setIsModalOpen(false);
-                setSelectedTantanganIndex(null);
-                setSelectedTantanganId(null);
-            },
-            onError: (errors: any) => {
-                console.error("Error uploading image:", errors);
-                setProcessing(false);
-                setIsModalOpen(false);
-                setSelectedTantanganIndex(null);
-                setSelectedTantanganId(null);
-            },
-            onFinish: () => setProcessing(false),
-        };
-
-        // Kirim POST request dengan FormData
-        router.post("/anak-tantangan/upload", formData, requestConfig);
+        router.post(
+            "/anak-tantangan",
+            formData,
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    const updatedTantangans = [...checkedTantangans];
+                    updatedTantangans[selectedTantanganIndex] = true;
+                    setCheckedTantangans(updatedTantangans);
+                    setIsModalOpen(false);
+                    setSelectedTantanganIndex(null);
+                    setSelectedTantanganId(null);
+                    router.reload({ only: ["tantangansDone"] });
+                },
+                onError: (errors: any) => {
+                    const errorDetails = Object.entries(errors)
+                        .map(([key, value]) => `${key}: ${(value as string[]).join(", ")}`)
+                        .join("; ");
+                    setErrorMessage(errorDetails || "Failed to upload image. Please try again.");
+                    console.error("Detailed upload errors:", errors);
+                },
+                onFinish: () => setProcessing(false),
+            }
+        );
     };
 
     const handleModalClose = () => {
         setIsModalOpen(false);
         setSelectedTantanganIndex(null);
         setSelectedTantanganId(null);
+        setErrorMessage(null);
     };
 
     return (
         <Layout>
             <div key={fase.fase_id} className="w-full lg:p-8">
                 <div className="w-full p-4 lg:p-8">
+                    {errorMessage && (
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                            {errorMessage}
+                        </div>
+                    )}
+                    {processing && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+                            <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+                        </div>
+                    )}
                     <div className="relative rounded-xl sm:ml-64 md:h-72 lg:pl-8">
                         <img
                             src={fase.banner}

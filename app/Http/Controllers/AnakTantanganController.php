@@ -48,6 +48,11 @@ class AnakTantanganController extends Controller
         $pengguna = $this->anakRepository->getAnakById($validatedData['anak_id']);
         $tantangan = $this->tantanganRepository->getTantanganById($validatedData['tantangan_id']);
 
+        if ($request->hasFile('gambar_url')) {
+            $path = $request->file('gambar_url')->store('tantangan', 'public'); 
+            $validatedData['gambar_url'] = $path;
+        }
+
         $this->anakTantanganRepository->createAnakTantangans($validatedData);
 
         $pengguna->update([
