@@ -6,6 +6,7 @@ use App\Http\Requests\ArtikelStoreRequest;
 use App\Http\Requests\ArtikelUpdateRequest;
 use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
+use Exception;
 use Inertia\Inertia;
 
 class ArtikelController extends Controller
@@ -62,16 +63,19 @@ class ArtikelController extends Controller
      */
     public function store(ArtikelStoreRequest $request)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public'); 
-            $validatedData['banner'] = $path;
+            if ($request->hasFile('banner')) {
+                $path = $request->file('banner')->store('banners', 'public'); 
+                $validatedData['banner'] = $path;
+            }
+    
+            $this->artikelRepository->createArtikel($validatedData);
+            return redirect()->route('artikel.index')->with('success', 'Data berhasil ditambahkan.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
         }
-
-        $this->artikelRepository->createArtikel($validatedData);
-
-        return redirect()->route('artikel.index');
     }
 
 
@@ -102,16 +106,20 @@ class ArtikelController extends Controller
      */
     public function update(ArtikelUpdateRequest $request, $id)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public'); 
-            $validatedData['banner'] = $path;
+            if ($request->hasFile('banner')) {
+                $path = $request->file('banner')->store('banners', 'public'); 
+                $validatedData['banner'] = $path;
+            }
+    
+            $this->artikelRepository->updateArtikel($id, $validatedData);
+    
+            return redirect()->route('artikel.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
         }
-
-        $this->artikelRepository->updateArtikel($id, $validatedData);
-
-        return redirect()->route('artikel.index');
     }
 
     /**

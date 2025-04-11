@@ -7,8 +7,7 @@ use App\Http\Requests\AnakUpdateRequest;
 use App\Models\Anak;
 use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
-use App\Repositories\OrangTuaRepository;
-use Dom\ChildNode;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -48,11 +47,15 @@ class AnakController extends Controller
      */
     public function store(AnakStoreRequest $request)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->anakRepository->createAnak($validatedData);
-
-        return redirect()->route('anak.index');
+            $this->anakRepository->createAnak($validatedData);
+    
+            return redirect()->route('anak.index')->with('success', 'Data berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
+        }
     }
 
     public function store_multiple(Request $request)
@@ -103,11 +106,15 @@ class AnakController extends Controller
      */
     public function update(AnakUpdateRequest $request, $id)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->anakRepository->updateAnak($id, $request->all());
-
-        return redirect()->route('anak.index');
+            $this->anakRepository->updateAnak($id, $validatedData);
+    
+            return redirect()->route('anak.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
+        }
     }
 
     /**

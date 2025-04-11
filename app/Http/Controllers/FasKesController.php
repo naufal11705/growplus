@@ -8,6 +8,7 @@ use App\Repositories\Interfaces\FasKesRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
 use Inertia\Inertia;
+use Exception;
 
 class FasKesController extends Controller
 {
@@ -47,11 +48,15 @@ class FasKesController extends Controller
      */
     public function store(FaskesStoreRequest $request)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->fasKesRepository->createFasKes($request->all());
-
-        return redirect()->route('faskes.index');
+            $this->fasKesRepository->createFasKes($validatedData);
+    
+            return redirect()->route('faskes.index')->with('success', 'Data berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
+        }
     }
 
     /**
@@ -80,11 +85,15 @@ class FasKesController extends Controller
      */
     public function update(FaskesUpdateRequest $request, $id)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->fasKesRepository->updateFasKes($id, $request->all());
-
-        return redirect()->route('faskes.index');
+            $this->fasKesRepository->updateFasKes($id, $validatedData);
+    
+            return redirect()->route('faskes.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
+        }
     }
 
     /**

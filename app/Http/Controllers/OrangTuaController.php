@@ -7,7 +7,7 @@ use App\Http\Requests\OrangTuaUpdateRequest;
 use App\Models\OrangTua;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\PenggunaRepositoryInterface;
-use Illuminate\Http\Request;
+use Exception;
 use Inertia\Inertia;
 
 class OrangTuaController extends Controller
@@ -47,11 +47,16 @@ class OrangTuaController extends Controller
      */
     public function store(OrangTuaStoreRequest $request)
     {
-        $validatedData = $request->validated();
 
-        $this->orangTuaRepository->createOrangTua($validatedData);
+        try {
+            $validatedData = $request->validated();
 
-        return redirect()->route('orangtua.index');
+            $this->orangTuaRepository->createOrangTua($validatedData);
+    
+            return redirect()->route('orangtua.index')->with('success', 'Data berhasil ditambahkan.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal ditambahkan.');
+        }
     }
 
     /**
@@ -78,11 +83,15 @@ class OrangTuaController extends Controller
      */
     public function update(OrangTuaUpdateRequest $request, $id)
     {
-        $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $this->orangTuaRepository->updateOrangTua($id, $request->all());
-
-        return redirect()->route('orangtua.index');
+            $this->orangTuaRepository->updateOrangTua($id, $validatedData);
+    
+            return redirect()->route('orangtua.index')->with('success', 'Data berhasil diperbarui.');;
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diperbarui.');
+        }
     }
 
     /**
