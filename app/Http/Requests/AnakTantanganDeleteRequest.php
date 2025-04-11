@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PenggunaTantanganDeleteRequest extends FormRequest
+class AnakTantanganDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class PenggunaTantanganDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pengguna_id' => ['required', 'integer', 'exists:penggunas,pengguna_id'],
+            'anak_id' => ['required', 'integer', 'exists:anaks,anak_id'],
             'tantangan_id' => ['required', 'integer', 'exists:tantangans,tantangan_id'],
         ];
     }

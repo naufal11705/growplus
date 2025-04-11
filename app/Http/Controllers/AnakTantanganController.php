@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PenggunaTantanganDeleteRequest;
-use App\Http\Requests\PenggunaTantanganStoreRequest;
-use App\Models\PenggunaTantangan;
-use App\Repositories\Interfaces\PenggunaRepositoryInterface;
-use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
+use App\Http\Requests\AnakTantanganDeleteRequest;
+use App\Http\Requests\AnakTantanganStoreRequest;
+use App\Models\AnakTantangan;
+use App\Repositories\Interfaces\AnakRepositoryInterface;
+use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use Illuminate\Http\Request;
 
-class PenggunaTantanganController extends Controller
+class AnakTantanganController extends Controller
 {
-    protected $penggunaTantanganRepository, $penggunaRepository, $tantanganRepository;
+    protected $anakTantanganRepository, $anakRepository, $tantanganRepository;
 
     public function __construct(
-        PenggunaTantanganRepositoryInterface $penggunaTantanganRepository,
-        PenggunaRepositoryInterface $penggunaRepository,
+        AnakTantanganRepositoryInterface $anakTantanganRepository,
+        AnakRepositoryInterface $anakRepository,
         TantanganRepositoryInterface $tantanganRepository,
     ) {
-        $this->penggunaTantanganRepository = $penggunaTantanganRepository;
-        $this->penggunaRepository = $penggunaRepository;
+        $this->anakTantanganRepository = $anakTantanganRepository;
+        $this->anakRepository = $anakRepository;
         $this->tantanganRepository = $tantanganRepository;
     }
     /**
@@ -42,13 +42,13 @@ class PenggunaTantanganController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PenggunaTantanganStoreRequest $request)
+    public function store(AnakTantanganStoreRequest $request)
     {
         $validatedData = $request->validated();
-        $pengguna = $this->penggunaRepository->getPenggunaById($validatedData['pengguna_id']);
+        $pengguna = $this->anakRepository->getAnakById($validatedData['anak_id']);
         $tantangan = $this->tantanganRepository->getTantanganById($validatedData['tantangan_id']);
 
-        $this->penggunaTantanganRepository->createPenggunaTantangans($validatedData);
+        $this->anakTantanganRepository->createAnakTantangans($validatedData);
 
         $pengguna->update([
             'total_point' => $pengguna->total_point + $tantangan->point
@@ -58,7 +58,7 @@ class PenggunaTantanganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PenggunaTantangan $penggunaTantangan)
+    public function show(AnakTantangan $anakTantangan)
     {
         //
     }
@@ -66,7 +66,7 @@ class PenggunaTantanganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PenggunaTantangan $penggunaTantangan)
+    public function edit(AnakTantangan $anakTantangan)
     {
         //
     }
@@ -74,7 +74,7 @@ class PenggunaTantanganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PenggunaTantangan $penggunaTantangan)
+    public function update(Request $request, AnakTantangan $penggunaTantaanakTantanganngan)
     {
         //
     }
@@ -82,14 +82,14 @@ class PenggunaTantanganController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PenggunaTantanganDeleteRequest $request)
+    public function destroy(AnakTantanganDeleteRequest $request)
     {
         $validatedData = $request->validated();
 
-        $pengguna = $this->penggunaRepository->getPenggunaById($validatedData['pengguna_id']);
+        $pengguna = $this->anakRepository->getAnakById($validatedData['anak_id']);
         $tantangan = $this->tantanganRepository->getTantanganById($validatedData['tantangan_id']);
 
-        $this->penggunaTantanganRepository->deletePenggunaTantangans($validatedData);
+        $this->anakTantanganRepository->deleteAnakTantangans($validatedData);
 
         $pengguna->update([
             'total_point' => $pengguna->total_point - $tantangan->point
