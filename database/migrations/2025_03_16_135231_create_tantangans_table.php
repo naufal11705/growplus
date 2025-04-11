@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('fase_id')->index();
             $table->string('activity');
             $table->integer('point');
+            $table->integer('tingkat_ekonomi');
             $table->boolean('status')->default(false);
             $table->timestamps();
 
