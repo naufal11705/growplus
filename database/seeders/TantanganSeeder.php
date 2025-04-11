@@ -14,7 +14,7 @@ class TantanganSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            // Challenge 1: Usia Kehamilan 1-3 Bulan (Trimester 1)
+            // Fase 1: Usia Kehamilan 1-3 Bulan (Trimester 1)\
             [
                 'fase_id' => 1,
                 'activity' => 'Melakukan pemeriksaan kehamilan',
@@ -44,7 +44,7 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 1,
-                'activity' => 'Menghindari paparan rokok',
+                'activity' => 'Minum tablet tambah darah',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 1,
@@ -53,7 +53,16 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 1,
-                'activity' => 'Mengonsumsi tablet tambah darah',
+                'activity' => 'Minum suplemen mineral',
+                'point' => 10,
+                'tingkat_ekonomi' => 3,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'fase_id' => 1,
+                'activity' => 'Berbicara dengan bayi',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 1,
@@ -61,10 +70,10 @@ class TantanganSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
-            // Challenge 2: Pemberian (MPASI)
+            // Fase X : Bayi Usia 6-12 Bulan
             [
                 'fase_id' => 2,
-                'activity' => 'Mulai MPASI pada usia 6 bulan dengan makanan yang kaya gizi',
+                'activity' => 'Mengajari bayi makan sendiri',
                 'point' => 15,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
@@ -73,7 +82,7 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 2,
-                'activity' => 'Perkenalkan berbagai jenis makanan dengan tekstur lembut',
+                'activity' => 'Mengajari bayi duduk',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
@@ -82,7 +91,7 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 2,
-                'activity' => 'Berikan sayur dan buah setiap hari untuk memenuhi kebutuhan gizi',
+                'activity' => 'Mengecek tanda bahaya pada bayi',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
@@ -90,10 +99,10 @@ class TantanganSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
-            // Challenge 3: Makanan Bergizi
+            // Fase X : Anak usia 4-5 tahun
             [
                 'fase_id' => 3,
-                'activity' => 'Berikan makanan yang mengandung protein, karbohidrat, dan lemak',
+                'activity' => 'Mendengarkan cerita dari anak',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
@@ -102,7 +111,7 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 3,
-                'activity' => 'Pastikan anak mendapatkan sumber vitamin dan mineral yang cukup',
+                'activity' => 'Mengajak anak menggambar',
                 'point' => 10,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
@@ -111,7 +120,43 @@ class TantanganSeeder extends Seeder
             ],
             [
                 'fase_id' => 3,
-                'activity' => 'Hindari memberikan makanan olahan dan cepat saji yang tinggi gula',
+                'activity' => 'Mengajak anak bermain',
+                'point' => 15,
+                'tingkat_ekonomi' => 3,
+                'status' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'fase_id' => 3,
+                'activity' => 'Mengenalkan ilmu baru pada anak (Contoh: Nama Hari)',
+                'point' => 15,
+                'tingkat_ekonomi' => 3,
+                'status' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'fase_id' => 3,
+                'activity' => 'Mengajak anak sikat gigi bersama',
+                'point' => 15,
+                'tingkat_ekonomi' => 3,
+                'status' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'fase_id' => 3,
+                'activity' => 'Membiasakan anak memakai pakaian sendiri',
+                'point' => 15,
+                'tingkat_ekonomi' => 3,
+                'status' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'fase_id' => 3,
+                'activity' => 'Memberi anak pujian',
                 'point' => 15,
                 'tingkat_ekonomi' => 3,
                 'status' => 0,
