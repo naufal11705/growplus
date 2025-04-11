@@ -1,4 +1,4 @@
-export interface PenggunaTantangan {
-    pengguna_id: number;
+export interface AnakTantangan {
+    anak_id: number;
     tantangan_id: number;
 }

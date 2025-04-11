@@ -17,11 +17,11 @@ use App\Repositories\Interfaces\ArtikelRepositoryInterface;
 use App\Repositories\ArtikelRepository;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
-use App\Repositories\Interfaces\PenggunaTantanganRepositoryInterface;
+use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
 use App\Repositories\OrangTuaRepository;
 use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
 use App\Repositories\Interfaces\TantanganRepositoryInterface;
-use App\Repositories\PenggunaTantanganRepository;
+use App\Repositories\AnakTantanganRepository;
 use App\Repositories\PuskesmasRepository;
 use App\Repositories\TantanganRepository;
 use Illuminate\Support\Facades\Vite;
@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(FaseRepositoryInterface::class, FaseRepository::class);
         $this->app->singleton(TantanganRepositoryInterface::class, TantanganRepository::class);
         $this->app->singleton(ArtikelRepositoryInterface::class, ArtikelRepository::class);
-        $this->app->singleton(PenggunaTantanganRepositoryInterface::class, PenggunaTantanganRepository::class);
+        $this->app->singleton(AnakTantanganRepositoryInterface::class, AnakTantanganRepository::class);
     }
 
     /**

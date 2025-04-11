@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             FaseSeeder::class,
             ArtikelSeeder::class,
             TantanganSeeder::class,
-            PenggunaTantanganSeeder::class,
+            AnakTantanganSeeder::class,
             VoucherSeeder::class,
         ]);
     }
