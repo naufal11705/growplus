@@ -15,10 +15,9 @@ class AnakTantanganRepository implements AnakTantanganRepositoryInterface
 
     public function getAnakTantangansByAnakId($id)
     {
-        $allRecords = AnakTantangan::where('anak_id', $id)->count();
         $todayRecords = AnakTantangan::where('anak_id', $id)
             ->whereDate('tanggal_selesai', Carbon::today())
-            ->count();
+            ->get();
 
         return $todayRecords;
     }
