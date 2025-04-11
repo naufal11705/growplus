@@ -30,6 +30,8 @@ class AnakFactory extends Factory
             'berat_badan' => $this->faker->numberBetween(40, 80),
             'tinggi_badan' => $this->faker->numberBetween(120, 180),
             'jenis_kelamin' => $this->faker->randomElement(['L', 'P']),
+            'sudah_lahir' => $this->faker->boolean(),
+            'tanggal_terakhir_menstruasi' => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
             'created_at' => now(),
             'updated_at' => now()
         ];
