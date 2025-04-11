@@ -22,7 +22,8 @@ class Anak extends Model
         'tanggal_lahir',
         'golongan_darah',
         'berat_badan',
-        'tinggi_badan'
+        'tinggi_badan',
+        'jenis_kelamin',
     ];
 
     public function orangtua()

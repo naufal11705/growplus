@@ -21,7 +21,8 @@ class Pengguna extends Authenticatable
         'username',
         'password',
         'nama',
-        'email'
+        'email',
+        'total_point',
     ];
 
     protected $hidden = [
@@ -48,5 +49,10 @@ class Pengguna extends Authenticatable
     public function penggunaTantangans()
     {
         return $this->hasMany(PenggunaTantangan::class, 'pengguna_id');
+    }
+
+    public function claims()
+    {
+        return $this->hasMany(Claim::class, 'user_id');
     }
 }

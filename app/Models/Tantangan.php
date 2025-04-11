@@ -17,6 +17,7 @@ class Tantangan extends Model
         'fase_id',
         'activity',
         'point',
+        'tingkat_ekonomi',
         'status'
     ];
 
