@@ -144,6 +144,7 @@ class UserController extends Controller
             'orangtua.tempat_lahir' => 'required|string|max:255',
             'orangtua.tanggal_lahir' => 'required|date',
             'orangtua.golongan_darah' => 'required|string|max:3',
+            'orangtua.jenis_kelamin' => 'required|string|max:11',
             'orangtua.alamat' => 'required|string',
             'orangtua.kecamatan' => 'required|string',
             'orangtua.kabupaten' => 'required|string',
@@ -165,6 +166,9 @@ class UserController extends Controller
             'anak.*.golongan_darah' => 'required_with:anak|string|max:3',
             'anak.*.berat_badan' => 'required_with:anak|integer',
             'anak.*.tinggi_badan' => 'required_with:anak|integer',
+            'anak.*.jenis_kelamin' => 'required_with:anak|string|max:255',
+            'anak.*.sudah_lahir' => 'required_with:anak|tinyint',
+            'anak.*.tanggal_terakhir_menstruasi' => 'required_with:anak|date',
         ]);
 
         $penghasilan = $validatedData['orangtua']['penghasilan'];

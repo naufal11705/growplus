@@ -1,10 +1,10 @@
 import Stepper from "@/Components/Widget/Stepper";
-import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Auth";
-import DataAnak from "./Data/DataAnak";
-import DataOrangtua from "./Data/DataOrangtua";
 import { router } from "@inertiajs/react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import DataAnak from "./Data/DataAnak";
+import DataOrangtua from "./Data/DataOrangtua";
 
 export default function RegisterStep() {
     const [step, setStep] = useState(1);
@@ -141,6 +141,7 @@ export default function RegisterStep() {
                     {renderDataField("Tempat Lahir", data.tempat_lahir)}
                     {renderDataField("Tanggal Lahir", data.tanggal_lahir)}
                     {renderDataField("Golongan Darah", data.golongan_darah)}
+                    {renderDataField("Jenis Kelamin", data.jenis_kelamin)}
                     {renderDataField("Alamat", data.alamat)}
                     {renderDataField("Kecamatan", data.kecamatan)}
                     {renderDataField("Kabupaten", data.kabupaten)}
@@ -178,6 +179,7 @@ export default function RegisterStep() {
                     {renderDataField("Tempat Lahir", data.tempat_lahir)}
                     {renderDataField("Tanggal Lahir", data.tanggal_lahir)}
                     {renderDataField("Golongan Darah", data.golongan_darah)}
+                    {renderDataField("Jenis Kelamin", data.jenis_kelamin)}
                     {renderDataField("Berat Badan", data.berat_badan ? `${data.berat_badan} kg` : "-")}
                     {renderDataField("Tinggi Badan", data.tinggi_badan ? `${data.tinggi_badan} cm` : "-")}
                 </div>
