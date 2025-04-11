@@ -9,11 +9,12 @@ import { motion } from "framer-motion"
 
 interface DetailTantanganProps {
     fase: Fase;
-    tantangansDone: { pengguna_id: number; tantangan_id: number; }[];
-    auth: { user: { pengguna_id: number; } };
+    tantangansDone: { anak_id: number; tantangan_id: number; }[];
+    //auth: { user: { pengguna_id: number; } };
+    anak_id: number;
 }
 
-export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTantanganProps) {
+export default function DetailTantangan({ fase, tantangansDone, anak_id }: DetailTantanganProps) {
     const csrf_token = useCsrfToken();
     const [activeTab, setActiveTab] = useState("Deskripsi");
     const [checkedTantangans, setCheckedTantangans] = useState<boolean[]>([]);
@@ -23,13 +24,12 @@ export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTa
         if (fase.tantangans && fase.tantangans.length > 0) {
             const initialCheckedState = fase.tantangans.map(tantangan =>
                 tantangansDone.some(done =>
-                    done.tantangan_id === tantangan.tantangan_id &&
-                    done.pengguna_id === auth.user.pengguna_id
+                    done.tantangan_id === tantangan.tantangan_id
                 )
             );
             setCheckedTantangans(initialCheckedState);
         }
-    }, [fase, tantangansDone, auth.user.pengguna_id]);
+    }, [fase, tantangansDone, anak_id]);
 
     const handleCheckboxChange = (index: number, tantanganId: number) => {
         // Jika checkbox sudah checked, jangan izinkan perubahan
@@ -56,8 +56,8 @@ export default function DetailTantangan({ fase, tantangansDone, auth }: DetailTa
         };
 
         // Hanya lakukan POST request untuk menandai tantangan selesai
-        router.post('/pengguna-tantangan', {
-            pengguna_id: auth.user.pengguna_id,
+        router.post('/anak-tantangan', {
+            anak_id: anak_id,
             tantangan_id: tantanganId,
         }, requestConfig);
     };

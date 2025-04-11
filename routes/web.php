@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::get('/voucher', [UserController::class, 'voucher']);
             Route::get('/tantangan', [UserController::class, 'tantangan']);
-            Route::get('/tantangan/{id}', [UserController::class, 'showTantangan']);
+            Route::get('/tantangan/{tantangan_id}/{anak_id}', [UserController::class, 'showTantangan']);
             Route::get('/artikel', [UserController::class, 'artikel']);
             Route::post('/anak-tantangan', [AnakTantanganController::class, 'store']);
             Route::delete('/anak-tantangan', [AnakTantanganController::class, 'destroy']);
@@ -123,6 +123,10 @@ Route::get('/detail-artikel/{slug}', [ArtikelController::class, 'showArticle'])-
 
 Route::fallback(function () {
     return Inertia::render('Error/404')->toResponse(request())->setStatusCode(404);
+});
+
+Route::get('/petugas/chat', function () {
+    return Inertia::render('Petugas/Chat');
 });
 
 require __DIR__ . '/auth.php';
