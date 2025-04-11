@@ -35,7 +35,7 @@ class PenggunaTantanganRepository implements PenggunaTantanganRepositoryInterfac
     public function deletePenggunaTantangans(array $data)
     {
         return PenggunaTantangan::where('pengguna_id', $data['pengguna_id'])
-            ->where('tantangan_id', $data['tantangan_id'])->destroy();
+            ->where('tantangan_id', $data['tantangan_id'])->delete();
     }
 
     public function countTotalPoints($id)
