@@ -22,6 +22,7 @@ use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\AnakTantanganController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\ProfileAnakController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RegisterOrangtuaMiddleware;
@@ -88,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/anak-tantangan', [AnakTantanganController::class, 'store']);
             Route::delete('/anak-tantangan', [AnakTantanganController::class, 'destroy']);
             Route::get('/imunisasi/{kecamatan}', [ImunisasiController::class, 'getImunisasiByKecamatan']);
+            Route::post('/catatan', [CatatanController::class, 'store']);
         });
     });
 
