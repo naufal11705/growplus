@@ -41,10 +41,7 @@ class CatatanController extends Controller
 
         $this->catatanRepository->createCatatans($validatedData);
 
-        return response()->json([
-            'message' => 'Catatan created successfully',
-            'data' => $validatedData
-        ], 201);
+        return back()->with('success', 'Catatan berhasil ditambahkan');
     }
 
     /**

@@ -4,9 +4,9 @@ namespace App\Repositories;
 
 use App\Models\AnakTantangan;
 use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
+use App\Repositories\Interfaces\CatatanRepositoryInterface;
 use Carbon\Carbon;
 use App\Models\Catatan;
-use App\Repositories\Interfaces\CatatanRepositoryInterface;
 
 class CatatanRepository implements CatatanRepositoryInterface
 {

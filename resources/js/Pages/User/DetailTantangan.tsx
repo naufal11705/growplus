@@ -4,6 +4,7 @@ import ImageUploadModal from "@/Components/Widget/ModalChallenges";
 import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Layout";
 import { Fase } from "@/types/fase";
+import { Catatan } from "@/types/catatan";
 import { router } from "@inertiajs/react";
 import useCsrfToken from "@/Utils/csrfToken";
 import { motion } from "framer-motion";
@@ -12,9 +13,10 @@ interface DetailTantanganProps {
     fase: Fase;
     tantangansDone: { anak_id: number; tantangan_id: number }[];
     anak_id: number;
+    catatan: Catatan[];
 }
 
-export default function DetailTantangan({ fase, tantangansDone, anak_id }: DetailTantanganProps) {
+export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan }: DetailTantanganProps) {
     const csrf_token = useCsrfToken();
     const [activeTab, setActiveTab] = useState("Deskripsi");
     const [checkedTantangans, setCheckedTantangans] = useState<boolean[]>([]);
@@ -238,73 +240,71 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                     </div>
                                 )}
                                 {activeTab === "Catatan" && (
-                                    <motion.div
-                                        key={activeTab}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-                                    >
-                                        <div id="catatanSection">
-                                            <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
-                                                Tuliskan Catatan
-                                            </h2>
-                                            {noteError && (
-                                                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-                                                    {noteError}
-                                                </div>
-                                            )}
-                                            <form onSubmit={handleNoteSubmit}>
-                                                <textarea
-                                                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine    "
-                                                    placeholder="Tulis catatan Anda di sini..."
-                                                    value={note}
-                                                    onChange={(e) => setNote(e.target.value)}
-                                                    disabled={processing}
-                                                ></textarea>
-                                                <button
-                                                    type="submit"
-                                                    className="mt-4 px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-blue-400 disabled:cursor-not-allowed"
-                                                    disabled={processing}
-                                                >
-                                                    {processing ? "Menyimpan..." : "Simpan Catatan"}
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-                                            <div className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white">
-                                                <div className="flex flex-col h-full justify-between">
-                                                    <h3 className="text-lg font-medium text-gray-800 mb-8">title</h3>
-
-                                                    <div className="flex items-center justify-between mt-auto">
-                                                    <span className="text-sm text-gray-600">date</span>
-                                                    {/* <a href="">
-                                                        <button
-                                                        className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
-                                                        aria-label="Edit note"
-                                                        >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="16"
-                                                            height="16"
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            strokeWidth="2"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        >
-                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                                        </svg>
-                                                        </button>
-                                                    </a> */}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                )}
-
+    <motion.div
+        key={activeTab}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+    >
+        <div id="catatanSection">
+            <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
+                Tuliskan Catatan
+            </h2>
+            {noteError && (
+                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                    {noteError}
+                </div>
+            )}
+            <form onSubmit={handleNoteSubmit}>
+                <textarea
+                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine"
+                    placeholder="Tulis catatan Anda di sini..."
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    disabled={processing}
+                ></textarea>
+                <button
+                    type="submit"
+                    className="mt-4 px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-blue-400 disabled:cursor-not-allowed"
+                    disabled={processing}
+                >
+                    {processing ? "Menyimpan..." : "Simpan Catatan"}
+                </button>
+            </form>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+            {Array.isArray(catatan) && catatan.length > 0 ? (
+                catatan.map((noteItem, index) => (
+                    <div
+                        key={index} // Use index since id is not available
+                        className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white"
+                    >
+                        <div className="flex flex-col h-full justify-between">
+                            <h3 className="text-lg font-medium text-gray-800 mb-8">
+                                {noteItem.catatan}
+                            </h3>
+                            <div className="flex items-center justify-between mt-auto">
+                                <span className="text-sm text-gray-600">
+                                    {new Date(noteItem.tanggal).toLocaleDateString(
+                                        "id-ID",
+                                        {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        }
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <p className="text-gray-600">Belum ada catatan.</p>
+            )}
+        </div>
+    </motion.div>
+)}
                             </div>
                             <RightSide fase={fase} />
                         </div>
