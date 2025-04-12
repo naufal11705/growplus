@@ -20,15 +20,17 @@ class FaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $isLandingPage = $request->route()->getName() === 'home';
+
+        $anak = null;
+
         // Get anak from the controller, not from additional data
-        if (auth()->check()) {
+        if (auth()->check() && !$isLandingPage) {
             if (request()->route('anak_id') != null) {
                 $anak = app(AnakRepository::class)->getAnakById(request()->route('anak_id'));
             } else {
                 $anak = app(AnakRepository::class)->getAnakByOrangTuaId(auth()->user()->orangtua->orangtua_id);
             }
-        } else {
-            $anak = null;
         }
 
         return [

@@ -25,6 +25,8 @@ class AnakTantanganDeleteRequest extends FormRequest
             'anak_id' => ['required', 'integer', 'exists:anaks,anak_id'],
             'tantangan_id' => ['required', 'integer', 'exists:tantangans,tantangan_id'],
             'gambar_url' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'tanggal_selesai' => ['required', 'date'],
+            'sudah_klaim' => ['required', 'boolean'],
         ];
     }
 }

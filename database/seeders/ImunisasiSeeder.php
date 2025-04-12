@@ -15,7 +15,7 @@ class ImunisasiSeeder extends Seeder
     {
         $data = [
             [
-                'puskesmas_id' => 1,
+                'puskesmas_id' => 2,
                 'nama' => 'Imunisasi DPT',
                 'jenis' => 'DPT',
                 'usia_minimum' => 2,

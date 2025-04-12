@@ -26,8 +26,8 @@ class PuskesmasSeeder extends Seeder
             [
                 'nama' => 'Puskesmas Bengkalis',
                 'alamat' => 'Jl. Raya No. 2',
-                'kecamatan' => 'Bengkalis',
-                'kota' => 'Bengkalis',
+                'kecamatan' => 'Antapani',
+                'kota' => 'Bandung',
                 'kontak' => '081234567891',
                 'created_at' => now(),
                 'updated_at' => now()

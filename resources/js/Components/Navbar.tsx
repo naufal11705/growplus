@@ -184,7 +184,7 @@ export default function Navbar() {
                         <a href="/artikel" onClick={closeMenu} className="text-gray-900 hover:text-wine">Artikel</a>
                     </li>
                     <li>
-                        <a href="/playground" onClick={closeMenu} className="text-gray-900 hover:text-wine">Artikel</a>
+                        <a href="/playground" onClick={closeMenu} className="text-gray-900 hover:text-wine">Playground</a>
                     </li>
                     {!isLoggedIn && (
                         <li className="px-8 py-2 rounded-xl bg-wine hover:bg-dark-wine">

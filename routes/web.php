@@ -120,6 +120,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/imunisasi/{id}', [PetugasController::class, 'updateImunisasi']);
         Route::get('/profile', [PetugasController::class, 'profile'])->name('petugas.profile');
         Route::get('/laporan', [PetugasController::class, 'laporan']);
+        Route::get('/laporan/detail/{id}', [PetugasController::class, 'detailLaporan']);
+        Route::get('/laporan/anak/{anak_id}', [PetugasController::class, 'getLaporanByAnak']);
     });
 });
 
@@ -134,9 +136,5 @@ Route::get('/petugas/chat', function () {
     return Inertia::render('Petugas/Chat');
 });
 Route::get('/chat-petugas', [PenggunaController::class, 'getUserForChat'])->name('chat');
-
-Route::get('/petugas/laporan/detail', function () {
-    return Inertia::render('Petugas/Functions/Laporan/Detail');
-});
 
 require __DIR__ . '/auth.php';
