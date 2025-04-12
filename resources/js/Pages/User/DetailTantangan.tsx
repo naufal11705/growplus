@@ -271,6 +271,37 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                                 </button>
                                             </form>
                                         </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+                                            <div className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white">
+                                                <div className="flex flex-col h-full justify-between">
+                                                    <h3 className="text-lg font-medium text-gray-800 mb-8">title</h3>
+
+                                                    <div className="flex items-center justify-between mt-auto">
+                                                    <span className="text-sm text-gray-600">date</span>
+                                                    {/* <a href="">
+                                                        <button
+                                                        className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                                                        aria-label="Edit note"
+                                                        >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="16"
+                                                            height="16"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        >
+                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                                                        </svg>
+                                                        </button>
+                                                    </a> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </motion.div>
                                 )}
 
