@@ -138,7 +138,7 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
                     )}
                     {processing && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/20">
-                            <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+                            <div className="animate-spin h-8 w-8 border-4 border-wine border-t-transparent rounded-full"></div>
                         </div>
                     )}
                     <div className="relative rounded-xl sm:ml-64 md:h-72 lg:pl-8">
@@ -240,71 +240,71 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
                                     </div>
                                 )}
                                 {activeTab === "Catatan" && (
-    <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-    >
-        <div id="catatanSection">
-            <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
-                Tuliskan Catatan
-            </h2>
-            {noteError && (
-                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-                    {noteError}
-                </div>
-            )}
-            <form onSubmit={handleNoteSubmit}>
-                <textarea
-                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine"
-                    placeholder="Tulis catatan Anda di sini..."
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                    disabled={processing}
-                ></textarea>
-                <button
-                    type="submit"
-                    className="mt-4 px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-blue-400 disabled:cursor-not-allowed"
-                    disabled={processing}
-                >
-                    {processing ? "Menyimpan..." : "Simpan Catatan"}
-                </button>
-            </form>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-            {Array.isArray(catatan) && catatan.length > 0 ? (
-                catatan.map((noteItem, index) => (
-                    <div
-                        key={index} // Use index since id is not available
-                        className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white"
-                    >
-                        <div className="flex flex-col h-full justify-between">
-                            <h3 className="text-lg font-medium text-gray-800 mb-8">
-                                {noteItem.catatan}
-                            </h3>
-                            <div className="flex items-center justify-between mt-auto">
-                                <span className="text-sm text-gray-600">
-                                    {new Date(noteItem.tanggal).toLocaleDateString(
-                                        "id-ID",
-                                        {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        }
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                ))
-            ) : (
-                <p className="text-gray-600">Belum ada catatan.</p>
-            )}
-        </div>
-    </motion.div>
-)}
+                                <motion.div
+                                    key={activeTab}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+                                >
+                                    <div id="catatanSection">
+                                        <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
+                                            Tuliskan Catatan
+                                        </h2>
+                                        {noteError && (
+                                            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                                                {noteError}
+                                            </div>
+                                        )}
+                                        <form onSubmit={handleNoteSubmit}>
+                                            <textarea
+                                                className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine"
+                                                placeholder="Tulis catatan Anda di sini..."
+                                                value={note}
+                                                onChange={(e) => setNote(e.target.value)}
+                                                disabled={processing}
+                                            ></textarea>
+                                            <button
+                                                type="submit"
+                                                className="mt-4 px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-dark-wine disabled:cursor-not-allowed"
+                                                disabled={processing}
+                                            >
+                                                {processing ? "Menyimpan..." : "Simpan Catatan"}
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+                                        {Array.isArray(catatan) && catatan.length > 0 ? (
+                                            catatan.map((noteItem, index) => (
+                                                <div
+                                                    key={index} // Use index since id is not available
+                                                    className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white"
+                                                >
+                                                    <div className="flex flex-col h-full justify-between">
+                                                        <h3 className="text-lg font-medium text-gray-800 mb-8">
+                                                            {noteItem.catatan}
+                                                        </h3>
+                                                        <div className="flex items-center justify-between mt-auto">
+                                                            <span className="text-sm text-gray-600">
+                                                                {new Date(noteItem.tanggal).toLocaleDateString(
+                                                                    "id-ID",
+                                                                    {
+                                                                        year: "numeric",
+                                                                        month: "long",
+                                                                        day: "numeric",
+                                                                    }
+                                                                )}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-600">Belum ada catatan.</p>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            )}
                             </div>
                             <RightSide fase={fase} />
                         </div>
