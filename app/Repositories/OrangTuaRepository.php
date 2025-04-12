@@ -41,4 +41,11 @@ class OrangTuaRepository implements OrangTuaRepositoryInterface
     {
         return OrangTua::count();
     }
+
+    public function getOrangTuaByAnakId($id)
+    {
+        return OrangTua::whereHas('anaks', function ($query) use ($id) {
+            $query->where('anak_id', $id);
+        })->get();
+    }
 }
