@@ -21,7 +21,8 @@ interface PageProps extends InertiaPageProps {
 }
 
 export default function DetailLaporan() {
-    const { orangtua, laporan = [], error } = usePage<PageProps>().props;
+    const { props } = usePage<PageProps>();
+    const { orangtua, laporan = [], error } = props;
     const [selectedAnak, setSelectedAnak] = useState<string>("");
     const [isTableLoading, setIsTableLoading] = useState(false);
 
@@ -43,7 +44,7 @@ export default function DetailLaporan() {
                 }
             );
         }
-    }, [orangtua]);
+    }, [orangtua, selectedAnak]);
 
     const [formData, setFormData] = useState<Partial<Orangtua>>(
         orangtua ?? {
@@ -54,6 +55,19 @@ export default function DetailLaporan() {
             anaks: [],
         }
     );
+
+    // Update formData when orangtua changes
+    useEffect(() => {
+        setFormData(
+            orangtua ?? {
+                nama: "",
+                nik: "",
+                no_jkn: "",
+                tempat_lahir: "",
+                anaks: [],
+            }
+        );
+    }, [orangtua]);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -94,18 +108,26 @@ export default function DetailLaporan() {
 
     // Fungsi untuk menangani ekspor PDF
     const handleExportPDF = () => {
-        if (selectedAnak && orangtua) {
-            const anakName =
-                orangtua.anaks?.find(
-                    (anak) => anak.anak_id.toString() === selectedAnak
-                )?.nama || "Unknown";
-            generateLaporanPDF({
-                orangtua,
-                laporan,
-                selectedAnakId: selectedAnak,
-                anakName,
-            });
+        if (!selectedAnak) {
+            alert("Pilih anak terlebih dahulu!");
+            return;
         }
+        if (!orangtua) {
+            alert("Data orang tua tidak tersedia!");
+            return;
+        }
+        if (laporan.length === 0) {
+            alert("Tidak ada laporan untuk diekspor!");
+            return;
+        }
+        const anakName =
+            orangtua.anaks?.find((anak) => anak.anak_id.toString() === selectedAnak)?.nama || "Unknown";
+        generateLaporanPDF({
+            orangtua,
+            laporan,
+            selectedAnakId: selectedAnak,
+            anakName,
+        });
     };
 
     if (error) {
@@ -127,9 +149,7 @@ export default function DetailLaporan() {
             <Layout>
                 <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
                     <div className="lg:p-8 p-4">
-                        <div className="text-gray-500">
-                            Data orangtua tidak tersedia.
-                        </div>
+                        <div className="text-gray-500">Data orangtua tidak tersedia.</div>
                     </div>
                 </div>
             </Layout>
@@ -143,9 +163,7 @@ export default function DetailLaporan() {
                     <h1 className="text-2xl font-bold mb-6">Form Laporan</h1>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h2 className="text-xl font-semibold mb-4">
-                                Detail Orang Tua
-                            </h2>
+                            <h2 className="text-xl font-semibold mb-4">Detail Orang Tua</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label
@@ -216,9 +234,7 @@ export default function DetailLaporan() {
                                     />
                                 </div>
                             </div>
-                            <h2 className="text-xl font-semibold mb-4 mt-4">
-                                Pemilihan Anak
-                            </h2>
+                            <h2 className="text-xl font-semibold mb-4 mt-4">Pemilihan Anak</h2>
                             <div>
                                 <label
                                     htmlFor="anak"
@@ -240,10 +256,7 @@ export default function DetailLaporan() {
                                     </option>
                                     {orangtua.anaks?.length > 0 ? (
                                         orangtua.anaks.map((anak) => (
-                                            <option
-                                                key={anak.anak_id}
-                                                value={anak.anak_id}
-                                            >
+                                            <option key={anak.anak_id} value={anak.anak_id}>
                                                 {anak.nama}
                                             </option>
                                         ))
@@ -293,15 +306,9 @@ export default function DetailLaporan() {
                                                 >
                                                     {row.tantangan}
                                                 </th>
-                                                <td className="px-6 py-4">
-                                                    {row.fase}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {row.tanggal}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {row.status}
-                                                </td>
+                                                <td className="px-6 py-4">{row.fase}</td>
+                                                <td className="px-6 py-4">{row.tanggal}</td>
+                                                <td className="px-6 py-4">{row.status}</td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-start gap-3">
                                                         <button
