@@ -11,6 +11,8 @@ class Catatan extends Model
    
     protected $table = 'catatan';
 
+    protected $primaryKey = 'catatan_id';
+
     protected $fillable = [
         'anak_id',
         'fase_id',

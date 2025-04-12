@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tantangan_id')->index();
             $table->string('gambar_url')->nullable();
             $table->date('tanggal_selesai')->default(now());
+            $table->boolean('sudah_klaim')->default(false); // available, completed, expired
             $table->timestamps();
 
             $table->foreign('anak_id')->references('anak_id')->on('anaks');

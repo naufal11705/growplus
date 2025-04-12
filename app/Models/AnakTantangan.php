@@ -16,6 +16,8 @@ class AnakTantangan extends Model
         'anak_id',
         'tantangan_id',
         'gambar_url',
+        'tanggal_selesai',
+        'sudah_klaim',
     ];
 
     public function anak()

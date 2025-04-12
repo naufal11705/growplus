@@ -11,7 +11,6 @@ interface PageProps extends InertiaPageProps {
 export default function Laporan() {
     const { orangtuas } = usePage<PageProps>().props;
 
-
     return (
         <Layout>
             <div className="lg:p-8 p-1 sm:ml-64 lg:mt-12 mt-8 md:mt-14">
@@ -37,7 +36,7 @@ export default function Laporan() {
                                             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{orangtua.jenis_kelamin}</td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-start gap-3">
-                                                    <a href="/petugas/laporan/detail"
+                                                    <a href={`/petugas/laporan/detail/${orangtua.orangtua_id}`}
                                                         className="inline-flex cursor-pointer items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                                     >
                                                         <Eye className="w-3.5 h-3.5" />

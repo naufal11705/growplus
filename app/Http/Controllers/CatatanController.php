@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\CatatanRepositoryInterface;
 use App\Http\Requests\CatatanStoreRequest;
+use App\Http\Requests\CatatanUpdateRequest;
 use App\Models\Catatan;
 
 class CatatanController extends Controller
@@ -63,9 +64,13 @@ class CatatanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CatatanUpdateRequest $request, string $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->catatanRepository->updateCatatans($id, $validatedData);
+
+        return back()->with('success', 'Catatan berhasil diperbarui');
     }
 
     /**
