@@ -25,8 +25,11 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
     const [selectedTantanganIndex, setSelectedTantanganIndex] = useState<number | null>(null);
     const [selectedTantanganId, setSelectedTantanganId] = useState<number | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [note, setNote] = useState(""); // New state for note input
+    const [note, setNote] = useState("");
     const [noteError, setNoteError] = useState<string | null>(null);
+    const [editNote, setEditNote] = useState<string>("");
+    const [editIndex, setEditIndex] = useState<number | null>(null);
+    const [editCatatanId, setEditCatatanId] = useState<number | null>(null)
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
@@ -125,6 +128,63 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
             }
         );
     };
+
+    const handleEditClick = (index: number, noteItem: Catatan & { id?: number }) => {
+        setEditIndex(index);
+        setEditNote(noteItem.catatan);
+        setEditCatatanId(noteItem.catatan_id || null); // Store id if available
+    };
+
+    const handleEditSubmit = (e: React.FormEvent) => {
+        console.log("Edit ID:", editCatatanId);
+        e.preventDefault();
+        if (!editNote.trim()) {
+            setNoteError("Catatan tidak boleh kosong");
+            return;
+        }
+
+        if (editCatatanId === null || editIndex === null) return;
+
+        setProcessing(true);
+        setNoteError(null);
+
+        router.put(
+            `/catatan/${editCatatanId}`,
+            {
+                fase_id: fase.fase_id,
+                anak_id: anak_id,
+                catatan: editNote,
+                tanggal: new Date().toISOString().split("T")[0],
+                _token: csrf_token,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    setEditNote("");
+                    setEditIndex(null);
+                    setEditCatatanId(null);
+                    setProcessing(false);
+                    router.reload({ only: ["catatan"] });
+                },
+                onError: (errors: any) => {
+                    const errorDetails = Object.entries(errors)
+                        .map(([key, value]) => `${key}: ${(value as string[]).join(", ")}`)
+                        .join("; ");
+                    console.log("Patch errors:", errors);
+                    setNoteError(errorDetails || "Gagal memperbarui catatan. Silakan coba lagi.");
+                    setProcessing(false);
+                },
+            }
+        );
+    };
+
+    const handleEditCancel = () => {
+        setEditIndex(null);
+        setEditNote("");
+        setEditCatatanId(null);
+        setNoteError(null);
+    }
 
     return (
         <Layout>
@@ -274,31 +334,58 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
                                             </form>
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-                                            {Array.isArray(catatan) && catatan.length > 0 ? (
+                                        {Array.isArray(catatan) && catatan.length > 0 ? (
                                                 catatan.map((noteItem, index) => (
                                                     <div
-                                                        key={index} // Use index since id is not available
+                                                        key={index}
                                                         className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white"
                                                     >
-                                                        <div className="flex flex-col h-full justify-between">
-                                                            <h3 className="text-lg font-medium text-gray-800 mb-8">
-                                                                {noteItem.catatan}
-                                                            </h3>
-                                                            <div className="flex items-center justify-between mt-auto">
-                                                                <span className="text-sm text-gray-600">
-                                                                    {new Date(noteItem.tanggal).toLocaleDateString(
-                                                                        "id-ID",
-                                                                        {
-                                                                            year: "numeric",
-                                                                            month: "long",
-                                                                            day: "numeric",
-                                                                        }
-                                                                    )}
-                                                                </span>
-                                                                {<a href="">
+                                                        {editIndex === index ? (
+                                                            <form onSubmit={handleEditSubmit}>
+                                                                <textarea
+                                                                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine"
+                                                                    value={editNote}
+                                                                    onChange={(e) => setEditNote(e.target.value)}
+                                                                    disabled={processing}
+                                                                ></textarea>
+                                                                <div className="flex gap-2 mt-4">
+                                                                    <button
+                                                                        type="submit"
+                                                                        className="px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-blue-400 disabled:cursor-not-allowed"
+                                                                        disabled={processing}
+                                                                    >
+                                                                        {processing ? "Menyimpan..." : "Simpan"}
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="px-4 py-2 bg-gray-300 font-bold text-gray-800 rounded-lg hover:bg-gray-400"
+                                                                        onClick={handleEditCancel}
+                                                                        disabled={processing}
+                                                                    >
+                                                                        Batal
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        ) : (
+                                                            <div className="flex flex-col h-full justify-between">
+                                                                <h3 className="text-lg font-medium text-gray-800 mb-8">
+                                                                    {noteItem.catatan}
+                                                                </h3>
+                                                                <div className="flex items-center justify-between mt-auto">
+                                                                    <span className="text-sm text-gray-600">
+                                                                        {new Date(noteItem.tanggal).toLocaleDateString(
+                                                                            "id-ID",
+                                                                            {
+                                                                                year: "numeric",
+                                                                                month: "long",
+                                                                                day: "numeric",
+                                                                            }
+                                                                        )}
+                                                                    </span>
                                                                     <button
                                                                         className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
                                                                         aria-label="Edit note"
+                                                                        onClick={() => handleEditClick(index, noteItem)}
                                                                     >
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
@@ -314,9 +401,9 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan
                                                                             <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
                                                                         </svg>
                                                                     </button>
-                                                                </a>}
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        )}
                                                     </div>
                                                 ))
                                             ) : (

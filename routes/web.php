@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/anak-tantangan', [AnakTantanganController::class, 'destroy']);
             Route::get('/imunisasi/{kecamatan}', [ImunisasiController::class, 'getImunisasiByKecamatan']);
             Route::post('/catatan', [CatatanController::class, 'store']);
+            Route::put('/catatan/{id}', [CatatanController::class, 'update']);
         });
     });
 
