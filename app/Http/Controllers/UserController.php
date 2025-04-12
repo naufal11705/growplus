@@ -13,22 +13,26 @@ use App\Repositories\Interfaces\AnakRepositoryInterface;
 use App\Repositories\Interfaces\FaseRepositoryInterface;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use App\Repositories\Interfaces\AnakTantanganRepositoryInterface;
+use App\Repositories\Interfaces\CatatanRepositoryInterface;
+use App\Models\Catatan;
 
 class UserController extends Controller
 {
 
-    protected $orangTuaRepository, $anakRepository, $faseRepository, $anakTantanganRepository;
+    protected $orangTuaRepository, $anakRepository, $faseRepository, $anakTantanganRepository, $catatanRepository;
 
     public function __construct(
         OrangTuaRepositoryInterface $orangTuaRepository,
         AnakRepositoryInterface $anakRepository,
         FaseRepositoryInterface $faseRepository,
-        AnakTantanganRepositoryInterface $anakTantanganRepository
+        AnakTantanganRepositoryInterface $anakTantanganRepository,
+        CatatanRepositoryInterface $catatanRepository
     ) {
         $this->orangTuaRepository = $orangTuaRepository;
         $this->anakRepository = $anakRepository;
         $this->faseRepository = $faseRepository;
         $this->anakTantanganRepository = $anakTantanganRepository;
+        $this->catatanRepository = $catatanRepository;
     }
 
     public function dashboard()
@@ -51,7 +55,7 @@ class UserController extends Controller
 
             foreach ($anakIds as $anakId) {
                 $totalPoints += $this->anakTantanganRepository->countTotalPoints($anakId);
-                $streakForThisAnak = $this->anakTantanganRepository->getAnakTantangansByAnakId($anakId);
+                $streakForThisAnak = $this->anakTantanganRepository->getAnakTantangansByAnakId($anakId)->count();
                 $totalStreak += $streakForThisAnak;
             }
 
@@ -128,6 +132,11 @@ class UserController extends Controller
             );
         }
 
+        $catatan = Catatan::where('anak_id', $anak_id)
+            ->where('fase_id', $fase_id)
+            ->get()
+            ->toArray();
+
         $anak = $this->anakRepository->getAnakById($anak_id);
         $tantangansDone = $anak_id ? $this->anakTantanganRepository->getAnakTantangansByAnakId($anak_id) : [];
 
@@ -138,6 +147,7 @@ class UserController extends Controller
             'tantangansDone' => $tantangansDone,
             'anak' => $anak,
             'anak_id' => $anak_id,
+            'catatan' => $catatan,
         ]);
     }
 

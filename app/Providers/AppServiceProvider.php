@@ -24,6 +24,8 @@ use App\Repositories\Interfaces\TantanganRepositoryInterface;
 use App\Repositories\AnakTantanganRepository;
 use App\Repositories\PuskesmasRepository;
 use App\Repositories\TantanganRepository;
+use App\Repositories\Interfaces\CatatanRepositoryInterface;
+use App\Repositories\CatatanRepository;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(TantanganRepositoryInterface::class, TantanganRepository::class);
         $this->app->singleton(ArtikelRepositoryInterface::class, ArtikelRepository::class);
         $this->app->singleton(AnakTantanganRepositoryInterface::class, AnakTantanganRepository::class);
+        $this->app->singleton(CatatanRepositoryInterface::class, CatatanRepository::class);
     }
 
     /**

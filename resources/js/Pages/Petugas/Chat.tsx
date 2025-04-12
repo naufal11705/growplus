@@ -69,31 +69,98 @@ const ChatInterface: React.FC = () => {
     }
   }, [])
 
-  // Initialize chat data (no mock data; can be replaced with API call)
+  // Initialize chat data
   useEffect(() => {
-    // In a real app, fetch chat threads and messages from an API here
-    // Example:
-    /*
-    const fetchChatData = async () => {
-      try {
-        const threadsResponse = await fetch('/api/chat/threads');
-        const threadsData = await threadsResponse.json();
-        setChatThreads(threadsData);
+    // Mock data for demonstration
+    const mockThreads: ChatThread[] = [
+      {
+        id: "chat-1",
+        name: "Anderson Cooper",
+        lastMessage: "Could you please help me with the project?",
+        lastMessageTime: new Date(Date.now() - 1800000),
+        unreadCount: 2,
+        isOnline: true,
+        isTyping: true,
+      },
+      {
+        id: "chat-2",
+        name: "Sarah Team",
+        lastMessage: "Meeting at 3pm tomorrow. Don't forget to prepare your presentation.",
+        lastMessageTime: new Date(Date.now() - 3600000),
+        unreadCount: 0,
+      },
+      {
+        id: "chat-3",
+        name: "Development Group",
+        lastMessage: "New release tomorrow",
+        lastMessageTime: new Date(Date.now() - 86400000),
+        unreadCount: 5,
+      },
+      {
+        id: "chat-4",
+        name: "Jessica Williams",
+        lastMessage: "Thanks for your help!",
+        lastMessageTime: new Date(Date.now() - 172800000),
+        unreadCount: 0,
+        isOnline: true,
+      },
+    ]
 
-        if (threadsData.length > 0 && !isMobile) {
-          setCurrentChatId(threadsData[0].id);
-          setShowThreads(false);
+    setChatThreads(mockThreads)
 
-          const messagesResponse = await fetch(`/api/chat/messages/${threadsData[0].id}`);
-          const messagesData = await messagesResponse.json();
-          setMessages(messagesData);
-        }
-      } catch (error) {
-        console.error('Error fetching chat data:', error);
-      }
-    };
-    fetchChatData();
-    */
+    // On mobile, don't select a chat initially
+    if (!isMobile) {
+      setCurrentChatId("chat-1")
+      setShowThreads(false)
+    }
+
+    const mockMessages: Message[] = [
+      {
+        id: "msg-1",
+        senderId: "user-456",
+        senderName: "Anderson Cooper",
+        content: "Hey there! How's the project coming along?",
+        timestamp: new Date(Date.now() - 3600000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-2",
+        senderId: currentUserId,
+        senderName: "You",
+        content:
+          "It's going well! I'm working on the final touches. I should be able to send you a preview by the end of the day.",
+        timestamp: new Date(Date.now() - 3000000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-3",
+        senderId: "user-456",
+        senderName: "Anderson Cooper",
+        content:
+          "Could you please help me with the project? I'm having some trouble understanding the requirements. The client mentioned something about needing additional features that weren't in the original scope. I'm not sure how to proceed with this.",
+        timestamp: new Date(Date.now() - 1800000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-4",
+        senderId: currentUserId,
+        senderName: "You",
+        content: "Sure, I'd be happy to help. Let's schedule a call to discuss the details.",
+        timestamp: new Date(Date.now() - 900000),
+        isDeleted: false,
+        attachments: [
+          {
+            id: "att-1",
+            type: "file",
+            url: "#",
+            name: "project_requirements.pdf",
+            size: 2500000,
+          },
+        ],
+      },
+    ]
+
+    setMessages(mockMessages)
   }, [isMobile])
 
   // Scroll to bottom when messages change
@@ -116,7 +183,7 @@ const ChatInterface: React.FC = () => {
     const uploadAttachments = async (): Promise<Attachment[]> => {
       if (attachments.length === 0) return []
 
-      // Simulate upload - in a real app, use fetch or axios to upload files
+      // Mock upload - in a real app, you would use fetch or axios to upload files
       return attachments.map((file, index) => ({
         id: `attachment-${Date.now()}-${index}`,
         type: file.type.startsWith("image/") ? "image" : "file",
@@ -126,7 +193,7 @@ const ChatInterface: React.FC = () => {
       }))
     }
 
-    // Simulate sending a message
+    // Simulate sending a message to the server
     setTimeout(async () => {
       const uploadedAttachments = await uploadAttachments()
 
@@ -158,6 +225,9 @@ const ChatInterface: React.FC = () => {
             : thread,
         ),
       )
+
+      // In a real app, you would send this message to your backend
+      // which would then broadcast it via Pusher/WebSockets
     }, 500)
   }
 
@@ -296,54 +366,49 @@ const ChatInterface: React.FC = () => {
           <h1 className="text-xl font-semibold text-gray-800">Conversations</h1>
         </div>
         <div className="flex-1 overflow-y-auto">
-          {chatThreads.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500">
-              <p>No conversations available</p>
-            </div>
-          ) : (
-            chatThreads.map((thread) => (
-              <div
-                key={thread.id}
-                onClick={() => {
-                  setCurrentChatId(thread.id)
-                  setShowThreads(false)
-                }}
-                className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
-              >
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold">
-                    {thread.name.charAt(0)}
-                  </div>
-                  {thread.isOnline && (
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+          {chatThreads.map((thread) => (
+            <div
+              key={thread.id}
+              onClick={() => {
+                setCurrentChatId(thread.id)
+                setShowThreads(false)
+              }}
+              className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+            >
+              <div className="relative">
+                <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold">
+                  {thread.name.charAt(0)}
+                </div>
+                {thread.isOnline && (
+                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                )}
+              </div>
+              <div className="ml-3 flex-1 overflow-hidden">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-gray-800">{thread.name}</span>
+                  <span className="text-xs text-gray-500">
+                    {thread.lastMessageTime && formatMessageDate(thread.lastMessageTime)}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-500 truncate">
+                  {thread.isTyping ? "Typing..." : thread.lastMessage}
+                </div>
+                <div className="flex justify-end mt-1">
+                  {thread.unreadCount > 0 && (
+                    <span className="bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[20px] text-center">
+                      {thread.unreadCount}
+                    </span>
                   )}
                 </div>
-                <div className="ml-3 flex-1 overflow-hidden">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium text-gray-800">{thread.name}</span>
-                    <span className="text-xs text-gray-500">
-                      {thread.lastMessageTime && formatMessageDate(thread.lastMessageTime)}
-                    </span>
-                  </div>
-                  <div className="text-sm text-gray-500 truncate">
-                    {thread.isTyping ? "Typing..." : thread.lastMessage || ""}
-                  </div>
-                  <div className="flex justify-end mt-1">
-                    {thread.unreadCount > 0 && (
-                      <span className="bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[20px] text-center">
-                        {thread.unreadCount}
-                      </span>
-                    )}
-                  </div>
-                </div>
               </div>
-            ))
-          )}
+            </div>
+          ))}
         </div>
       </div>
     )
   }
 
+  // Render chat view
   const renderChatView = () => {
     const currentChat = chatThreads.find((thread) => thread.id === currentChatId)
 
@@ -433,7 +498,7 @@ const ChatInterface: React.FC = () => {
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
-              <p>No messages yet</p>
+              <p>No messages found</p>
             </div>
           ) : (
             <>
@@ -481,6 +546,7 @@ const ChatInterface: React.FC = () => {
                             {message.isDeleted ? message.content : truncateMessage(message.content, message.id)}
                           </div>
 
+                          {/* Attachments */}
                           {message.attachments && message.attachments.length > 0 && (
                             <div className="mt-2 space-y-2">
                               {message.attachments.map((attachment) => (
@@ -488,7 +554,7 @@ const ChatInterface: React.FC = () => {
                                   {attachment.type === "image" ? (
                                     <div className="relative group">
                                       <img
-                                        src={attachment.url}
+                                        src={attachment.url || "/placeholder.svg"}
                                         alt={attachment.name}
                                         className="max-w-full rounded-lg max-h-60 object-contain border border-gray-200"
                                       />
@@ -606,7 +672,7 @@ const ChatInterface: React.FC = () => {
                 {file.type.startsWith("image/") ? (
                   <div className="relative w-20 h-20 group">
                     <img
-                      src={URL.createObjectURL(file)}
+                      src={URL.createObjectURL(file) || "/placeholder.svg"}
                       alt={file.name}
                       className="w-full h-full object-cover rounded-lg border border-gray-200"
                     />

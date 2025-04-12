@@ -4,6 +4,7 @@ import ImageUploadModal from "@/Components/Widget/ModalChallenges";
 import { useState, useEffect } from "react";
 import Layout from "@/Layouts/Layout";
 import { Fase } from "@/types/fase";
+import { Catatan } from "@/types/catatan";
 import { router } from "@inertiajs/react";
 import useCsrfToken from "@/Utils/csrfToken";
 import { motion } from "framer-motion";
@@ -12,9 +13,10 @@ interface DetailTantanganProps {
     fase: Fase;
     tantangansDone: { anak_id: number; tantangan_id: number }[];
     anak_id: number;
+    catatan: Catatan[];
 }
 
-export default function DetailTantangan({ fase, tantangansDone, anak_id }: DetailTantanganProps) {
+export default function DetailTantangan({ fase, tantangansDone, anak_id, catatan }: DetailTantanganProps) {
     const csrf_token = useCsrfToken();
     const [activeTab, setActiveTab] = useState("Deskripsi");
     const [checkedTantangans, setCheckedTantangans] = useState<boolean[]>([]);
@@ -23,6 +25,9 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
     const [selectedTantanganIndex, setSelectedTantanganIndex] = useState<number | null>(null);
     const [selectedTantanganId, setSelectedTantanganId] = useState<number | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [note, setNote] = useState(""); // New state for note input
+    const [noteError, setNoteError] = useState<string | null>(null);
+    
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
@@ -86,6 +91,42 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
         setErrorMessage(null);
     };
 
+    const handleNoteSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!note.trim()) {
+            setNoteError("Catatan tidak boleh kosong");
+            return;
+        }
+
+        setProcessing(true);
+        setNoteError(null);
+
+        router.post(
+            "/catatan",
+            {
+                fase_id: fase.fase_id,
+                anak_id: anak_id,
+                catatan: note,
+                _token: csrf_token,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onSuccess: () => {
+                    setNote("");
+                    setProcessing(false);
+                },
+                onError: (errors: any) => {
+                    const errorDetails = Object.entries(errors)
+                        .map(([key, value]) => `${key}: ${(value as string[]).join(", ")}`)
+                        .join("; ");
+                    setNoteError(errorDetails || "Gagal menyimpan catatan. Silakan coba lagi.");
+                    setProcessing(false);
+                },
+            }
+        );
+    };
+
     return (
         <Layout>
             <div key={fase.fase_id} className="w-full lg:p-8">
@@ -97,7 +138,7 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                     )}
                     {processing && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black/20">
-                            <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+                            <div className="animate-spin h-8 w-8 border-4 border-wine border-t-transparent rounded-full"></div>
                         </div>
                     )}
                     <div className="relative rounded-xl sm:ml-64 md:h-72 lg:pl-8">
@@ -186,12 +227,10 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                                         className="w-5 h-5 text-pinky bg-gray-100 border-gray-300 rounded-md"
                                                         checked={checkedTantangans[index] || false}
                                                         onChange={() => handleCheckboxClick(index, tantangan.tantangan_id)}
-                                                        disabled={checkedTantangans[index] || processing}
+                                                        disabled={processing}
                                                     />
                                                     <span
-                                                        className={`text-sm font-medium text-gray-900 ${
-                                                            checkedTantangans[index] ? "line-through text-gray-500" : ""
-                                                        }`}
+                                                        className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? "line-through text-gray-500" : ""}`}
                                                     >
                                                         {tantangan.activity}
                                                     </span>
@@ -200,6 +239,72 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                         </div>
                                     </div>
                                 )}
+                                {activeTab === "Catatan" && (
+    <motion.div
+        key={activeTab}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+    >
+        <div id="catatanSection">
+            <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
+                Tuliskan Catatan
+            </h2>
+            {noteError && (
+                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                    {noteError}
+                </div>
+            )}
+            <form onSubmit={handleNoteSubmit}>
+                <textarea
+                    className="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wine"
+                    placeholder="Tulis catatan Anda di sini..."
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    disabled={processing}
+                ></textarea>
+                <button
+                    type="submit"
+                    className="mt-4 px-4 py-2 bg-wine font-bold text-white rounded-lg hover:bg-dark-wine disabled:bg-blue-400 disabled:cursor-not-allowed"
+                    disabled={processing}
+                >
+                    {processing ? "Menyimpan..." : "Simpan Catatan"}
+                </button>
+            </form>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+            {Array.isArray(catatan) && catatan.length > 0 ? (
+                catatan.map((noteItem, index) => (
+                    <div
+                        key={index} // Use index since id is not available
+                        className="rounded-lg border border-gray-200 p-6 shadow-sm bg-white"
+                    >
+                        <div className="flex flex-col h-full justify-between">
+                            <h3 className="text-lg font-medium text-gray-800 mb-8">
+                                {noteItem.catatan}
+                            </h3>
+                            <div className="flex items-center justify-between mt-auto">
+                                <span className="text-sm text-gray-600">
+                                    {new Date(noteItem.tanggal).toLocaleDateString(
+                                        "id-ID",
+                                        {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        }
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <p className="text-gray-600">Belum ada catatan.</p>
+            )}
+        </div>
+    </motion.div>
+)}
                             </div>
                             <RightSide fase={fase} />
                         </div>
@@ -212,6 +317,29 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                 onUpload={handleImageUpload}
                 title="Upload Bukti Tantangan"
             />
+            {/* {isPreviewModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                    <div className="w-full max-w-md rounded-lg bg-white shadow-xl p-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-lg font-semibold">Preview Gambar</h2>
+                            <button
+                                onClick={handlePreviewModalClose}
+                                className="rounded-full p-1 hover:bg-gray-100"
+                                aria-label="Close"
+                            >
+                                <XIcon className="h-5 w-5 text-gray-500" />
+                            </button>
+                        </div>
+                        {previewImageUrl && (
+                            <img
+                                src={previewImageUrl}
+                                alt="Uploaded Image"
+                                className="w-full h-auto rounded-lg"
+                            />
+                        )}
+                    </div>
+                </div>
+            )} */}
         </Layout>
     );
 }

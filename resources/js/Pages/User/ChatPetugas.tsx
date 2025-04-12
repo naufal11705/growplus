@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from "react"
-import Layout from "@/Layouts/Layout"
-import { router } from "@inertiajs/react"
+import Layout from "@/Layouts/Layout";
 
 // Types
 type Message = {
@@ -34,15 +33,8 @@ type ChatThread = {
   isTyping?: boolean
 }
 
-interface ChatInterfaceProps {
-  user: {
-    pengguna_id: number
-    email: string
-  }
-}
-
 // Main Component
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
+const ChatInterface: React.FC = () => {
   // State
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState("")
@@ -60,8 +52,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
-  // Gunakan pengguna_id dari props
-  const currentUserId = user.pengguna_id.toString()
+  // Mock user ID (in a real app, this would come from authentication)
+  const currentUserId = "user-123"
 
   // Check if device is mobile
   useEffect(() => {
@@ -77,48 +69,71 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
     }
   }, [])
 
-  // Initialize chat data from backend
+  // Initialize chat data
   useEffect(() => {
-    // Ambil data chat threads dari backend
-    router.get(
-      "/chat/threads",
-      { pengguna_id: currentUserId },
+    // Mock data for demonstration
+    const mockThreads: ChatThread[] = [
       {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: (page: any) => {
-          const threads = page.props.threads || []
-          setChatThreads(threads)
-          if (threads.length > 0) {
-            setCurrentChatId(threads[0].id)
-          }
-        },
-        onError: (errors: any) => {
-          console.error("Error fetching chat threads:", errors)
-        },
-      }
-    )
-  }, [currentUserId])
+        id: "chat-1",
+        name: "Anderson Cooper",
+        lastMessage: "Could you please help me with the project?",
+        lastMessageTime: new Date(Date.now() - 1800000),
+        unreadCount: 0,
+        isOnline: true,
+      },
+    ]
 
-  // Fetch messages when currentChatId changes
-  useEffect(() => {
-    if (currentChatId) {
-      router.get(
-        `/chat/messages/${currentChatId}`,
-        { pengguna_id: currentUserId },
-        {
-          preserveState: true,
-          preserveScroll: true,
-          onSuccess: (page: any) => {
-            setMessages(page.props.messages || [])
+    setChatThreads(mockThreads)
+    setCurrentChatId("chat-1")
+
+    const mockMessages: Message[] = [
+      {
+        id: "msg-1",
+        senderId: "user-456",
+        senderName: "Anderson Cooper",
+        content: "Hey there! How's the project coming along?",
+        timestamp: new Date(Date.now() - 3600000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-2",
+        senderId: currentUserId,
+        senderName: "You",
+        content:
+          "It's going well! I'm working on the final touches. I should be able to send you a preview by the end of the day.",
+        timestamp: new Date(Date.now() - 3000000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-3",
+        senderId: "user-456",
+        senderName: "Anderson Cooper",
+        content:
+          "Could you please help me with the project? I'm having some trouble understanding the requirements. The client mentioned something about needing additional features that weren't in the original scope. I'm not sure how to proceed with this.",
+        timestamp: new Date(Date.now() - 1800000),
+        isDeleted: false,
+      },
+      {
+        id: "msg-4",
+        senderId: currentUserId,
+        senderName: "You",
+        content: "Sure, I'd be happy to help. Let's schedule a call to discuss the details.",
+        timestamp: new Date(Date.now() - 900000),
+        isDeleted: false,
+        attachments: [
+          {
+            id: "att-1",
+            type: "file",
+            url: "#",
+            name: "project_requirements.pdf",
+            size: 2500000,
           },
-          onError: (errors: any) => {
-            console.error("Error fetching messages:", errors)
-          },
-        }
-      )
-    }
-  }, [currentChatId, currentUserId])
+        ],
+      },
+    ]
+
+    setMessages(mockMessages)
+  }, [currentUserId])
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -127,95 +142,65 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
 
   // Filter messages based on search query
   const filteredMessages = messages.filter((message) =>
-    message.content.toLowerCase().includes(searchQuery.toLowerCase())
+    message.content.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   // Handle sending a message
   const handleSendMessage = () => {
     if (inputMessage.trim() === "" && attachments.length === 0) return
-    if (!currentChatId) return
 
     setIsLoading(true)
 
+    // In a real app, you would upload attachments to a server here
     const uploadAttachments = async (): Promise<Attachment[]> => {
       if (attachments.length === 0) return []
 
-      // Mengunggah file ke server
-      const formData = new FormData()
-      attachments.forEach((file, index) => {
-        formData.append(`attachments[${index}]`, file)
-      })
-
-      // Kirim file ke server
-      const response = await fetch("/chat/upload-attachments", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || "",
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to upload attachments")
-      }
-
-      return response.json()
+      // Mock upload - in a real app, you would use fetch or axios to upload files
+      return attachments.map((file, index) => ({
+        id: `attachment-${Date.now()}-${index}`,
+        type: file.type.startsWith("image/") ? "image" : "file",
+        url: URL.createObjectURL(file), // In a real app, this would be the URL from your server
+        name: file.name,
+        size: file.size,
+      }))
     }
 
-    uploadAttachments()
-      .then((uploadedAttachments) => {
-        const newMessage: Message = {
-          id: `msg-${Date.now()}`,
-          senderId: currentUserId,
-          senderName: user.email, // Gunakan email sebagai senderName
-          content: inputMessage,
-          timestamp: new Date(),
-          attachments: uploadedAttachments,
-          isDeleted: false,
-        }
+    // Simulate sending a message to the server
+    setTimeout(async () => {
+      const uploadedAttachments = await uploadAttachments()
 
-        router.post(
-          "/chat/send-message",
-          {
-            chat_id: currentChatId,
-            pengguna_id: currentUserId,
-            content: inputMessage,
-            attachments: uploadedAttachments,
-          },
-          {
-            preserveState: true,
-            preserveScroll: true,
-            onSuccess: () => {
-              setMessages((prevMessages) => [...prevMessages, newMessage])
-              setInputMessage("")
-              setAttachments([])
-              setIsLoading(false)
+      const newMessage: Message = {
+        id: `msg-${Date.now()}`,
+        senderId: currentUserId,
+        senderName: "You",
+        content: inputMessage,
+        timestamp: new Date(),
+        attachments: uploadedAttachments,
+        isDeleted: false,
+      }
 
-              // Update chat threads
-              setChatThreads((prevThreads) =>
-                prevThreads.map((thread) =>
-                  thread.id === currentChatId
-                    ? {
-                        ...thread,
-                        lastMessage: inputMessage,
-                        lastMessageTime: new Date(),
-                        unreadCount: 0,
-                      }
-                    : thread
-                )
-              )
-            },
-            onError: (errors: any) => {
-              console.error("Error sending message:", errors)
-              setIsLoading(false)
-            },
-          }
-        )
-      })
-      .catch((error) => {
-        console.error("Error uploading attachments:", error)
-        setIsLoading(false)
-      })
+      setMessages((prevMessages) => [...prevMessages, newMessage])
+      setInputMessage("")
+      setAttachments([])
+      setIsLoading(false)
+
+      // Update the last message in chat threads
+      setChatThreads((prevThreads) =>
+        prevThreads.map((thread) =>
+          thread.id === currentChatId
+            ? {
+                ...thread,
+                lastMessage: inputMessage,
+                lastMessageTime: new Date(),
+                unreadCount: 0,
+              }
+            : thread,
+        ),
+      )
+
+      // In a real app, you would send this message to your backend
+      // which would then broadcast it via Pusher/WebSockets
+    }, 500)
   }
 
   // Handle file selection
@@ -227,25 +212,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
 
   // Handle message deletion
   const handleDeleteMessage = (messageId: string) => {
-    router.post(
-      `/chat/delete-message/${messageId}`,
-      { pengguna_id: currentUserId },
-      {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: () => {
-          setMessages((prevMessages) =>
-            prevMessages.map((msg) =>
-              msg.id === messageId ? { ...msg, isDeleted: true, content: "This message was deleted" } : msg
-            )
-          )
-          setSwipedMessageId(null)
-        },
-        onError: (errors: any) => {
-          console.error("Error deleting message:", errors)
-        },
-      }
+    setMessages((prevMessages) =>
+      prevMessages.map((msg) =>
+        msg.id === messageId ? { ...msg, isDeleted: true, content: "This message was deleted" } : msg,
+      ),
     )
+    setSwipedMessageId(null)
   }
 
   // Handle swipe gesture
@@ -364,8 +336,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
   return (
     <Layout>
       <div className="lg:pl-8 lg:pt-5 p-1 h-full sm:ml-64 lg:mt-12 mt-8 md:mt-14">
-        <div className="">
-          <div className="flex flex-col h-[calc(100vh-200px)] bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="">
+              <div className="flex flex-col h-[calc(100vh-200px)] bg-white rounded-lg shadow-sm overflow-hidden">
             {/* Chat Header */}
             <div className="bg-white p-4 flex items-center justify-between border-b border-gray-200">
               <div className="flex items-center">
@@ -402,8 +374,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ user }) => {
                     </div>
                   </div>
                 )}
-                {/* Tampilkan email pengguna */}
-                <div className="ml-4 text-sm text-gray-600">Email: {user.email}</div>
               </div>
               {!isMobile && (
                 <div className="flex items-center">
