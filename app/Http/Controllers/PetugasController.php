@@ -115,7 +115,7 @@ class PetugasController extends Controller
 
     public function detailLaporan($id)
     {
-        $orangtua = $this->orangtuaRepository->getOrangtuaById($id)->load('anak');
+        $orangtua = $this->orangtuaRepository->getOrangtuaById($id)->load('anaks');
         return Inertia::render('Petugas/Functions/Laporan/Detail', [
             'orangtua' => (new LaporanResource($orangtua))->toArray(request()),
         ]);
@@ -128,6 +128,7 @@ class PetugasController extends Controller
             ->get()
             ->map(function ($anakTantangan) {
                 return [
+                    'id' => $anakTantangan->id, // Add the ID if needed in the frontend
                     'tantangan' => $anakTantangan->tantangan->activity,
                     'fase' => $anakTantangan->tantangan->fase->judul ?? 'Tidak Diketahui',
                     'tanggal' => $anakTantangan->tanggal_selesai
@@ -137,10 +138,14 @@ class PetugasController extends Controller
                 ];
             })->toArray();
 
-            dd($laporan);
+        $orangtua = AnakTantangan::where('anak_id', $anak_id)
+            ->first()
+            ->anak
+            ->orangtua ?? null;
 
-        return Inertia::render('Petugas/DetailLaporan', [
+        return Inertia::render('Petugas/Functions/Laporan/Detail', [
             'laporan' => $laporan,
+            'orangtua' => $orangtua,
         ]);
     }
 }
