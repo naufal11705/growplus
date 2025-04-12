@@ -25,6 +25,7 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [note, setNote] = useState(""); // New state for note input
     const [noteError, setNoteError] = useState<string | null>(null);
+    
 
     useEffect(() => {
         if (fase.tantangans && fase.tantangans.length > 0) {
@@ -224,11 +225,10 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                                                         className="w-5 h-5 text-pinky bg-gray-100 border-gray-300 rounded-md"
                                                         checked={checkedTantangans[index] || false}
                                                         onChange={() => handleCheckboxClick(index, tantangan.tantangan_id)}
-                                                        disabled={checkedTantangans[index] || processing}
+                                                        disabled={processing}
                                                     />
                                                     <span
-                                                        className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? "line-through text-gray-500" : ""
-                                                            }`}
+                                                        className={`text-sm font-medium text-gray-900 ${checkedTantangans[index] ? "line-through text-gray-500" : ""}`}
                                                     >
                                                         {tantangan.activity}
                                                     </span>
@@ -317,6 +317,29 @@ export default function DetailTantangan({ fase, tantangansDone, anak_id }: Detai
                 onUpload={handleImageUpload}
                 title="Upload Bukti Tantangan"
             />
+            {/* {isPreviewModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                    <div className="w-full max-w-md rounded-lg bg-white shadow-xl p-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-lg font-semibold">Preview Gambar</h2>
+                            <button
+                                onClick={handlePreviewModalClose}
+                                className="rounded-full p-1 hover:bg-gray-100"
+                                aria-label="Close"
+                            >
+                                <XIcon className="h-5 w-5 text-gray-500" />
+                            </button>
+                        </div>
+                        {previewImageUrl && (
+                            <img
+                                src={previewImageUrl}
+                                alt="Uploaded Image"
+                                className="w-full h-auto rounded-lg"
+                            />
+                        )}
+                    </div>
+                </div>
+            )} */}
         </Layout>
     );
 }
