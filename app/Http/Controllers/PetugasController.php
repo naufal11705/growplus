@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LaporanResource;
 use App\Models\Petugas;
 use App\Repositories\Interfaces\OrangTuaRepositoryInterface;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Repositories\Interfaces\PuskesmasRepositoryInterface;
 use App\Events\ImunisasiNotification;
 use App\Http\Requests\ImunisasiStoreRequest;
 use App\Http\Requests\ImunisasiUpdateRequest;
+use App\Models\AnakTantangan;
 use App\Models\Imunisasi;
 use Inertia\Inertia;
 use Exception;
@@ -108,6 +110,37 @@ class PetugasController extends Controller
     {
         return Inertia::render('Petugas/Laporan', [
             'orangtuas' => $this->orangtuaRepository->getAllOrangtua(),
+        ]);
+    }
+
+    public function detailLaporan($id)
+    {
+        $orangtua = $this->orangtuaRepository->getOrangtuaById($id)->load('anak');
+        return Inertia::render('Petugas/Functions/Laporan/Detail', [
+            'orangtua' => (new LaporanResource($orangtua))->toArray(request()),
+        ]);
+    }
+
+    public function getLaporanByAnak($anak_id)
+    {
+        $laporan = AnakTantangan::where('anak_id', $anak_id)
+            ->with(['tantangan.fase']) // Eager load relationships
+            ->get()
+            ->map(function ($anakTantangan) {
+                return [
+                    'tantangan' => $anakTantangan->tantangan->activity,
+                    'fase' => $anakTantangan->tantangan->fase->judul ?? 'Tidak Diketahui',
+                    'tanggal' => $anakTantangan->tanggal_selesai
+                        ? \Carbon\Carbon::parse($anakTantangan->tanggal_selesai)->format('Y-m-d')
+                        : '-',
+                    'status' => $anakTantangan->sudah_klaim ? 'Selesai' : 'Belum Diklaim',
+                ];
+            })->toArray();
+
+            dd($laporan);
+
+        return Inertia::render('Petugas/DetailLaporan', [
+            'laporan' => $laporan,
         ]);
     }
 }
